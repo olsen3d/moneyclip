@@ -1,0 +1,42 @@
+Resources:
+
+https://demo.moneytracker.cc/
+https://levelup.gitconnected.com/create-a-simple-expense-manager-with-javascript-4e2cf2097fba
+https://finnhub.io/faq
+https://finnhub.io/docs/api#market-news
+https://www.npmjs.com/package/finnhub
+https://www.digitalocean.com/community/tutorials/nodejs-cron-jobs-by-examples
+
+a wallet/bank app BETTERMENT CLONE WITH INVESTMENT CHARTS AND GRAPHS
+--> transaction cards
+----> show company or product
+----> show amount
+----> transaction type and date
+----> plus sign to expand to show more info 
+
+resources:
+https://www.dafont.com/made-tommy.font?fpp=200&af=on&text=MONEYCLIP
+https://www.google.com/search?q=money+clip&tbm=isch&ved=2ahUKEwj4z5uyn-HrAhVIheAKHfAjC2cQ2-cCegQIABAA&oq=money+clip&gs_lcp=CgNpbWcQAzIECAAQQzIFCAAQsQMyBAgAEEMyAggAMgIIADICCAAyAggAMgQIABBDMgIIADICCABQ8YOPA1jxg48DYPCFjwNoAHAAeACAAVmIAVmSAQExmAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=jIBbX_jZOsiKggfwx6y4Bg&bih=797&biw=1440#imgrc=SLVW_EWMW_ABNM
+/* Color Theme Swatches in Hex */
+.money-clip-1-hex { color: #FFFFFF; }
+.money-clip-2-hex { color: #D8EBE1; }
+.money-clip-3-hex { color: #93C499; }
+.money-clip-4-hex { color: #3C6C70; }
+.money-clip-5-hex { color: #193B42; }
+https://www.betterment.com/uploads/2020/08/web_summary_mobile_portfolio.png
+
+
+Schema:
+
+ACCOUNT - ID NAME(HOUSE SAVINGS) ENUM(CHECK, SAVE, INVEST) BALANCE($AMOUNT)
+  DEPOSIT - ID AMOUNT DATE
+  WITHDRAWL - ID AMOUNT DATE
+  INTEREST - ID AMOUNT DATE
+  MARKET - ID AMOUNT DATE
+
+deposits,withdrawls,interests,markets BelongsTo ACCOUNT
+
+cron job running 24/7 called UPDATE ACCOUNTS
+  loops through all ACCOUNTS
+    with enum SAVE and calculates interest by taking the account balance and multiply by interest rate (1.7%). create an interest and update the accounts balance 
+    with enum INVEST and calls finnhub api for VTI(USA total market) and VEA(developed markets) and VWO(emerging markets) and AGG(bonds)
