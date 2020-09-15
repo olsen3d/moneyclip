@@ -40,3 +40,10 @@ cron job running 24/7 called UPDATE ACCOUNTS
   loops through all ACCOUNTS
     with enum SAVE and calculates interest by taking the account balance and multiply by interest rate (1.7%). create an interest and update the accounts balance 
     with enum INVEST and calls finnhub api for VTI(USA total market) and VEA(developed markets) and VWO(emerging markets) and AGG(bonds)
+
+Market update example
+deposit 500$ = 50000 amount (everything in pennies)
+40% to VTI
+30% to VEA
+20% to VWO
+10% to AGG
