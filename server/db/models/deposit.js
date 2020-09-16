@@ -15,9 +15,8 @@ const Deposit = db.define('deposit', {
 })
 
 Deposit.addHook('afterCreate', async deposit => {
-  console.log(deposit.accountId)
+  console.log(`Updating account # : ${deposit.accountId}`)
   const account = await Account.findByPk(deposit.accountId)
-  console.log(account.balance)
   await account.update({balance: account.balance + deposit.amount})
   console.log(account.balance)
 })
