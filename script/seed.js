@@ -2,6 +2,9 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const {Account} = require('../server/db/models')
+const {Deposit} = require('../server/db/models')
+const {Withdrawl} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -11,8 +14,35 @@ async function seed() {
     User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'})
   ])
+  const mike = await User.create({email: 'mike@mike.com', password: '123'})
 
-  console.log(`seeded ${users.length} users`)
+  const [checkingAcc, savingAcc, investingAcc] = await Promise.all([
+    Account.create({
+      name: 'Mikes checking',
+      balance: 0,
+      status: 'CHECKING',
+      userId: mike.id
+    }),
+    Account.create({
+      name: 'Mikes savings',
+      balance: 0,
+      status: 'SAVING',
+      userId: mike.id
+    }),
+    Account.create({
+      name: 'Mikes investing',
+      balance: 0,
+      status: 'INVESTING',
+      userId: mike.id
+    })
+  ])
+
+  await Deposit.create({amount: 10000, accountId: checkingAcc.id})
+  await Deposit.create({amount: 2000, accountId: checkingAcc.id})
+
+  await Deposit.create({amount: 5000, accountId: savingAcc.id})
+  await Withdrawl.create({amount: 2000, accountId: savingAcc.id})
+
   console.log(`seeded successfully`)
 }
 
