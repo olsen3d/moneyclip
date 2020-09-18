@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const {UUID, UUIDV4, INTEGER} = Sequelize
 const Account = require('./account')
 const db = require('../db')
+const colors = require('colors')
 
 const uuidDef = {
   type: UUID,
@@ -11,14 +12,24 @@ const uuidDef = {
 
 const Deposit = db.define('deposit', {
   id: uuidDef,
-  amount: INTEGER
+  amount: INTEGER,
+  net: INTEGER,
+  balance: INTEGER
 })
 
 Deposit.addHook('afterCreate', async deposit => {
-  console.log(`Updating account # : ${deposit.accountId}`)
   const account = await Account.findByPk(deposit.accountId)
-  await account.update({balance: account.balance + deposit.amount})
-  console.log(account.balance)
+  await account.update({
+    net: account.net + deposit.amount,
+    balance: account.balance + deposit.amount
+  })
+  await deposit.update({net: account.net, balance: account.balance})
+  console.log(`deposit net: ${deposit.net}, balance: ${deposit.balance}`.blue)
+  console.log(
+    `account net: ${account.net}, earnings: ${account.earnings}, balance: ${
+      account.balance
+    }`.blue
+  )
 })
 
 module.exports = Deposit

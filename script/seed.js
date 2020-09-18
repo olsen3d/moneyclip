@@ -37,12 +37,6 @@ async function seed() {
     })
   ])
 
-  await Deposit.create({amount: 10000, accountId: checkingAcc.id})
-  await Deposit.create({amount: 2000, accountId: checkingAcc.id})
-
-  await Deposit.create({amount: 5000, accountId: savingAcc.id})
-  await Withdrawl.create({amount: 2000, accountId: savingAcc.id})
-
   console.log(`seeded successfully`)
 }
 

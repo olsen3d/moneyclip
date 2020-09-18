@@ -14,6 +14,8 @@ const Account = db.define('account', {
   status: {
     type: ENUM('CHECKING', 'SAVING', 'INVESTING')
   },
+  net: INTEGER,
+  earnings: INTEGER,
   balance: INTEGER
 })
 

@@ -10,7 +10,9 @@ const uuidDef = {
 
 const Market = db.define('market', {
   id: uuidDef,
-  amount: INTEGER
+  amount: INTEGER,
+  earnings: INTEGER,
+  balance: INTEGER
 })
 
 module.exports = Market
