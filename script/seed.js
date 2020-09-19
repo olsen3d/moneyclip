@@ -3,10 +3,7 @@
 const db = require('../server/db')
 const colors = require('colors')
 const {User} = require('../server/db/models')
-const {Account} = require('../server/db/models')
-const {Deposit} = require('../server/db/models')
-const {Withdrawl} = require('../server/db/models')
-const {Interest} = require('../server/db/models')
+const {Account, Transaction, Interest} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -46,39 +43,41 @@ async function seed() {
     console.log(date)
     if (randomTransaction < 0.4) {
       console.log(`withdrawing ${randomAmount}`.yellow)
-      await Withdrawl.create({
+      await Transaction.create({
         amount: randomAmount,
+        type: 'WITHDRAWAL',
         date: date,
-        accountId: checkingAcc.id
+        accountId: savingAcc.id
       })
     } else {
       console.log(`depositing ${randomAmount}`.blue)
-      await Deposit.create({
+      await Transaction.create({
         amount: randomAmount,
+        type: 'DEPOSIT',
         date: date,
-        accountId: checkingAcc.id
+        accountId: savingAcc.id
       })
     }
   }
 
   const calcInterest = async date => {
-    const account = await Account.findByPk(checkingAcc.id)
+    const account = await Account.findByPk(savingAcc.id)
     const balance = account.balance
     const interest = 0.04
-    const earnings = Math.floor(balance * interest)
-    if (balance > 0) {
-      console.log('------------------------------')
-      console.log(date)
-      console.log(`interest earned ${earnings}`.green)
-      await Interest.create({
-        amount: earnings,
-        accountId: checkingAcc.id
-      })
-    }
+    let earnings = Math.floor(balance * interest)
+    if (earnings < 0) earnings = 0
+    console.log('------------------------------')
+    console.log(date)
+    console.log(`interest earned ${earnings}`.green)
+    await Interest.create({
+      amount: earnings,
+      date: date,
+      accountId: savingAcc.id
+    })
   }
 
   for (let month = 0; month < 8; month++) {
-    for (let day = 1; day < 28; day++) {
+    for (let day = 1; day <= 28; day++) {
       const hours = Math.floor(Math.random() * 12)
       const minutes = Math.floor(Math.random() * 59)
       const seconds = Math.floor(Math.random() * 59)
