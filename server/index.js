@@ -125,4 +125,4 @@ if (require.main === module) {
   createApp()
 }
 
-calcTest()
+//calcTest()

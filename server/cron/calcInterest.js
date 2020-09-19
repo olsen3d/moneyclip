@@ -5,28 +5,29 @@ const {Interest} = require('../db/models')
 const colors = require('colors')
 
 const calcTest = () => {
-  console.log('running a cron job every 5 seconds'.blink)
+  console.log('running a job every 5 seconds'.rainbow.bold)
   cron.schedule('1,6,11,16,21,26,31,36,41,46,51,56 * * * * *', () => {
     const randomTransaction = Math.random()
     const randomAmount = Math.floor(Math.random() * 1000)
-    console.log('-------------------')
+    console.log('------------------------------')
     if (randomTransaction < 0.3) {
       console.log(`withdrawing ${randomAmount}`.yellow)
       Withdrawl.create({
         amount: randomAmount,
-        accountId: '1c870e50-86ca-4174-9c37-28eda10d614e'
+        accountId: '3d871889-8fc5-4df9-8043-81210f87b461'
       })
-    } else if (randomTransaction < 0.6) {
+    } else if (randomTransaction < 0.8) {
       console.log(`depositing ${randomAmount}`.blue)
       Deposit.create({
         amount: randomAmount,
-        accountId: '1c870e50-86ca-4174-9c37-28eda10d614e'
+        date: new Date(),
+        accountId: '3d871889-8fc5-4df9-8043-81210f87b461'
       })
     } else {
       console.log(`interest earned ${randomAmount}`.green)
       Interest.create({
         amount: randomAmount,
-        accountId: '1c870e50-86ca-4174-9c37-28eda10d614e'
+        accountId: '3d871889-8fc5-4df9-8043-81210f87b461'
       })
     }
   })

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const {UUID, UUIDV4, INTEGER} = Sequelize
+const {UUID, UUIDV4, INTEGER, DATE} = Sequelize
 const Account = require('./account')
 const db = require('../db')
 const colors = require('colors')
@@ -14,7 +14,8 @@ const Deposit = db.define('deposit', {
   id: uuidDef,
   amount: INTEGER,
   net: INTEGER,
-  balance: INTEGER
+  balance: INTEGER,
+  date: DATE
 })
 
 Deposit.addHook('afterCreate', async deposit => {
