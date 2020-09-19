@@ -69,8 +69,9 @@ async function seed() {
     console.log('------------------------------')
     console.log(date)
     console.log(`interest earned ${earnings}`.green)
-    await Interest.create({
+    await Transaction.create({
       amount: earnings,
+      type: 'INTEREST',
       date: date,
       accountId: savingAcc.id
     })

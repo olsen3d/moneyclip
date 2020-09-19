@@ -12,45 +12,49 @@ const uuidDef = {
 
 const Transaction = db.define('transaction', {
   id: uuidDef,
-  type: ENUM('DEPOSIT', 'WITHDRAWAL'),
+  type: ENUM('DEPOSIT', 'WITHDRAWAL', 'INTEREST', 'MARKET'),
   amount: INTEGER,
   net: INTEGER,
+  earnings: INTEGER,
   balance: INTEGER,
   date: DATE
 })
 
 Transaction.addHook('afterCreate', async transaction => {
   const account = await Account.findByPk(transaction.accountId)
-  if (transaction.type === 'DEPOSIT') {
-    await account.update({
-      net: account.net + transaction.amount,
-      balance: account.balance + transaction.amount
-    })
-    await transaction.update({net: account.net, balance: account.balance})
-    console.log(
-      `deposit net: ${transaction.net}, balance: ${transaction.balance}`.blue
-    )
-    console.log(
-      `account net: ${account.net}, earnings: ${account.earnings}, balance: ${
-        account.balance
-      }`.blue
-    )
-  } else {
-    await account.update({
-      net: account.net - transaction.amount,
-      balance: account.balance - transaction.amount
-    })
-    await transaction.update({net: account.net, balance: account.balance})
-    console.log(
-      `withdrawal net: ${transaction.net}, balance: ${transaction.balance}`
-        .yellow
-    )
-    console.log(
-      `account net: ${account.net}, earnings: ${account.earnings}, balance: ${
-        account.balance
-      }`.yellow
-    )
+  switch (transaction.type) {
+    case 'DEPOSIT':
+      await account.update({
+        net: account.net + transaction.amount,
+        balance: account.balance + transaction.amount
+      })
+      break
+    case 'WITHDRAWAL':
+      await account.update({
+        net: account.net - transaction.amount,
+        balance: account.balance - transaction.amount
+      })
+      break
+    case 'INTEREST':
+      await account.update({
+        earnings: account.earnings + transaction.amount,
+        balance: account.balance + transaction.amount
+      })
+      break
+    case 'MARKET':
+      await account.update({
+        earnings: account.earnings + transaction.amount,
+        balance: account.balance + transaction.amount
+      })
+      break
+    default:
+      break
   }
+  await transaction.update({
+    net: account.net,
+    earnings: account.earnings,
+    balance: account.balance
+  })
 })
 
 module.exports = Transaction
