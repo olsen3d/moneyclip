@@ -24,23 +24,13 @@ Transaction.addHook('afterCreate', async transaction => {
   const account = await Account.findByPk(transaction.accountId)
   switch (transaction.type) {
     case 'DEPOSIT':
+    case 'WITHDRAWAL':
       await account.update({
         net: account.net + transaction.amount,
         balance: account.balance + transaction.amount
       })
       break
-    case 'WITHDRAWAL':
-      await account.update({
-        net: account.net - transaction.amount,
-        balance: account.balance - transaction.amount
-      })
-      break
     case 'INTEREST':
-      await account.update({
-        earnings: account.earnings + transaction.amount,
-        balance: account.balance + transaction.amount
-      })
-      break
     case 'MARKET':
       await account.update({
         earnings: account.earnings + transaction.amount,
