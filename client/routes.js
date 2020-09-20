@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Accounts} from './components'
+import {Login, Signup, Home, Accounts} from './components'
 import {me} from './store'
+import {loadAccounts} from '../store/thunks'
 
 /**
  * COMPONENT
@@ -11,6 +12,11 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+  }
+
+  componentDidUpdate() {
+    console.log('updated')
+    if (this.props.isLoggedIn) this.props.loadMyAccounts(state.user.userId)
   }
 
   render() {
@@ -24,7 +30,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/home" component={Home} />
             <Route path="/accounts" component={Accounts} />
           </Switch>
         )}
@@ -50,6 +56,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    loadMyAccounts() {
+      dispatch(loadAccounts(userId))
     }
   }
 }
