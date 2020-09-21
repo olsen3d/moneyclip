@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, Home, Accounts} from './components'
 import {me} from './store'
-import {loadAccounts} from '../store/thunks'
+import {loadAccounts} from './store/thunks'
 
 /**
  * COMPONENT
@@ -14,9 +14,12 @@ class Routes extends Component {
     this.props.loadInitialData()
   }
 
-  componentDidUpdate() {
-    console.log('updated')
-    if (this.props.isLoggedIn) this.props.loadMyAccounts(state.user.userId)
+  componentDidUpdate(prevProps) {
+    if (prevProps.user !== this.props.user) {
+      if (this.props.user.id) {
+        this.props.loadMyAccounts(this.props.user.id)
+      }
+    }
   }
 
   render() {
@@ -48,7 +51,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 
@@ -57,7 +61,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    loadMyAccounts() {
+    loadMyAccounts(userId) {
       dispatch(loadAccounts(userId))
     }
   }

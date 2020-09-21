@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <div id="profile">
       <h3>{user.email}</h3>
-      <ul />
+      <ul>
+        {accounts.map(account => <li key={account.id}>{account.name}</li>)}
+      </ul>
     </div>
   )
 }

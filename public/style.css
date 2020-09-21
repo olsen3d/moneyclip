@@ -1,5 +1,10 @@
+@font-face {
+  font-family: 'regularFont';
+  src: url('./regularFont.otf');
+}
+
 body {
-  font-family: sans-serif;
+  font-family: regularFont;
   margin: 0;
 }
 
@@ -21,11 +26,18 @@ label {
   flex-direction: column;
   padding: 0.5rem;
   height: 100vh;
+  max-width: 200px;
+  width: 20vw;
+  margin: 0;
 }
 
-#sidebar > * {
+#sidebar > *:not(:first-child) {
   color: white;
   margin-top: 1rem;
+}
+
+.logoContainer {
+  margin: 0 1rem 0 0;
 }
 
 nav a {
