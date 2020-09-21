@@ -7,7 +7,7 @@ export default function Home() {
   const dispatch = useDispatch()
   return (
     <div id="profile">
-      <h3>{user.email}</h3>
+      <h3 className="boldFont">Welcome back, {user.email}</h3>
       <ul>
         {accounts.map(account => <li key={account.id}>{account.name}</li>)}
       </ul>

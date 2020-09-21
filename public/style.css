@@ -3,6 +3,16 @@
   src: url('./regularFont.otf');
 }
 
+@font-face {
+  font-family: 'boldFont';
+  src: url('./boldFont.otf');
+}
+
+@font-face {
+  font-family: 'lightFont';
+  src: url('./lightFont.otf');
+}
+
 body {
   font-family: regularFont;
   margin: 0;
@@ -10,6 +20,14 @@ body {
 
 a {
   text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.selected {
+  text-decoration: underline;
 }
 
 label {
@@ -24,7 +42,7 @@ label {
   background-color: #193b42;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
+  padding: 0.8rem;
   height: 100vh;
   max-width: 200px;
   width: 20vw;
@@ -37,7 +55,19 @@ label {
 }
 
 .logoContainer {
-  margin: 0 1rem 0 0;
+  margin: 0 0.8rem 0 0;
+}
+
+.regularFont {
+  font-family: regularFont;
+}
+
+.boldFont {
+  font-family: boldFont;
+}
+
+.lightFont {
+  font-family: lightFont;
 }
 
 nav a {
