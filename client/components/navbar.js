@@ -9,6 +9,7 @@ export default function Navbar() {
   const dispatch = useDispatch()
   const match = useRouteMatch('/:component')
   const currentPage = match.params.component
+  if (!user.id) return null
   return (
     <div id="sidebar">
       <div className="logoContainer">
