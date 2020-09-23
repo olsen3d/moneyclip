@@ -7,7 +7,7 @@ export default function Accounts() {
   if (accounts.length === 0) return <p>No Accounts</p>
   return (
     <div id="profile">
-      <p className="boldFont">All Accounts ({accounts.length})</p>
+      <p className="boldFont header">All Accounts ({accounts.length})</p>
       <ul>
         {accounts.map(account => (
           <AccountOverview key={account.id} account={account} />

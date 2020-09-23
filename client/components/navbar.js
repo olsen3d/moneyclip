@@ -16,13 +16,13 @@ export default function Navbar() {
         <img width="90%" src="/img/moneyclipLogo.png" />
       </div>
       <Link className="boldFont" to="/home">
-        HOME
+        Home
       </Link>
       <Link className="boldFont" to="/news">
-        NEWS
+        News Feed
       </Link>
       <Link className="boldFont" to="/accounts">
-        ACCOUNTS
+        Accounts
       </Link>
       <ul>
         {accounts &&
@@ -33,7 +33,7 @@ export default function Navbar() {
           ))}
       </ul>
       <a className="boldFont" href="#" onClick={() => dispatch(logout())}>
-        LOGOUT
+        Logout
       </a>
     </div>
   )

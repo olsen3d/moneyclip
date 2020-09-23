@@ -14,9 +14,6 @@ export default function Home() {
           return acc + curr.balance
         }, 0) * 0.01}
       </span>
-      <ul>
-        {accounts.map(account => <li key={account.id}>{account.name}</li>)}
-      </ul>
     </div>
   )
 }
