@@ -11,7 +11,7 @@ const uuidDef = {
 const Account = db.define('account', {
   id: uuidDef,
   name: TEXT,
-  status: {
+  type: {
     type: ENUM('CHECKING', 'SAVING', 'INVESTING')
   },
   net: INTEGER,

@@ -7,7 +7,13 @@ export default function Home() {
   const dispatch = useDispatch()
   return (
     <div id="profile">
-      <h3 className="boldFont">Welcome back, {user.email}</h3>
+      <p className="boldFont">Welcome back, {user.email}</p>
+      <span className="regularFont">Net Worth: </span>
+      <span className="boldFont">
+        ${accounts.reduce((acc, curr) => {
+          return acc + curr.balance
+        }, 0) * 0.01}
+      </span>
       <ul>
         {accounts.map(account => <li key={account.id}>{account.name}</li>)}
       </ul>

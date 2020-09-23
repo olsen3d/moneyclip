@@ -19,24 +19,24 @@ async function seed() {
     Account.create({
       name: 'Mikes checking',
       balance: 0,
-      status: 'CHECKING',
+      type: 'CHECKING',
       userId: mike.id
     }),
     Account.create({
       name: 'Mikes savings',
       balance: 0,
-      status: 'SAVING',
+      type: 'SAVING',
       userId: mike.id
     }),
     Account.create({
       name: 'Mikes investing',
       balance: 0,
-      status: 'INVESTING',
+      type: 'INVESTING',
       userId: mike.id
     })
   ])
 
-  const createTransaction = async date => {
+  const createTransaction = async (date, acc) => {
     const randomTransaction = Math.random()
     const randomAmount = Math.floor(Math.random() * 1000)
     console.log('------------------------------')
@@ -47,7 +47,7 @@ async function seed() {
         amount: randomAmount,
         type: 'WITHDRAWAL',
         date: date,
-        accountId: savingAcc.id
+        accountId: acc.id
       })
     } else {
       console.log(`depositing ${randomAmount}`.blue)
@@ -55,13 +55,13 @@ async function seed() {
         amount: randomAmount,
         type: 'DEPOSIT',
         date: date,
-        accountId: savingAcc.id
+        accountId: acc.id
       })
     }
   }
 
-  const calcInterest = async date => {
-    const account = await Account.findByPk(savingAcc.id)
+  const calcInterest = async (date, acc) => {
+    const account = await Account.findByPk(acc.id)
     const balance = account.balance
     const interest = 0.04
     let earnings = Math.floor(balance * interest)
@@ -73,7 +73,7 @@ async function seed() {
       amount: earnings,
       type: 'INTEREST',
       date: date,
-      accountId: savingAcc.id
+      accountId: acc.id
     })
   }
 
@@ -91,8 +91,9 @@ async function seed() {
         minutes,
         seconds
       )
-      if (day === 1) await calcInterest(dateInterest)
-      await createTransaction(dateTransaction)
+      if (day === 1) await calcInterest(dateInterest, savingAcc)
+      await createTransaction(dateTransaction, checkingAcc)
+      await createTransaction(dateTransaction, savingAcc)
     }
   }
 

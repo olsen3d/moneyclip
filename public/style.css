@@ -79,3 +79,7 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#profile {
+  margin: 0.5rem 1rem 1rem 1rem;
+}
