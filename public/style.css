@@ -22,6 +22,10 @@ html {
   font-size: 14px;
 }
 
+.font16 {
+  font-size: 16px;
+}
+
 p {
   margin: 0;
 }
@@ -31,7 +35,7 @@ ul {
 }
 
 body {
-  font-family: regularFont;
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
 
@@ -115,7 +119,7 @@ form div {
 }
 
 #profile {
-  width: 80vw;
+  width: 100vw;
   background-color: #eeeeee;
   padding: 1rem 1rem 1rem 1rem;
 }
@@ -126,12 +130,16 @@ form div {
   justify-content: space-between;
   background-color: #ffffff;
   padding: 0.5rem;
-  margin: 0.5rem;
+  margin: 1rem;
   max-width: 700px;
+  border-left: 5px solid #3c6c70;
+  border-bottom: 5px solid #3c6c70;
+  border-bottom-left-radius: 1rem;
 }
 
-.accountOverviewContainer > * {
-  flex: 1;
+.accountOverviewContainer:hover {
+  border-left: 5px solid #193b42;
+  border-bottom: 5px solid #193b42;
 }
 
 .accountLogo {
@@ -141,14 +149,23 @@ form div {
 }
 
 .accountBalance {
+  display: flex;
+  flex-direction: column;
   text-align: right;
+}
+
+.accountEarnings {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 
 .accountName {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   margin-left: 1rem;
+  border-left: 1px solid #dddddd;
+  padding-left: 0.5rem;
 }
 
 #landingPage {
@@ -162,9 +179,19 @@ form div {
   justify-content: center;
 }
 
+.alignRight {
+  text-align: right;
+}
+
 .header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 775px;
+  margin: 0;
   font-size: 1.5rem;
   color: #333333;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #cccccc;
 }
 
 .mainContent {
