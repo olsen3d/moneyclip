@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import AccountOverview from './AccountOverview'
+import AccountPreview from './AccountPreview'
 
 export default function Accounts() {
   const accounts = useSelector(state => state.accounts)
@@ -13,7 +13,7 @@ export default function Accounts() {
       </div>
       <ul>
         {accounts.map(account => (
-          <AccountOverview key={account.id} account={account} />
+          <AccountPreview key={account.id} account={account} />
         ))}
       </ul>
     </div>

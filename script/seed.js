@@ -23,13 +23,13 @@ async function seed() {
       userId: mike.id
     }),
     Account.create({
-      name: 'Mikes savings',
+      name: 'House down payment',
       balance: 0,
       type: 'SAVING',
       userId: mike.id
     }),
     Account.create({
-      name: 'Mikes investing',
+      name: 'Retirement',
       balance: 0,
       type: 'INVESTING',
       userId: mike.id
