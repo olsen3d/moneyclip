@@ -47,11 +47,11 @@ body {
   border: none;
 }
 
-a {
+.link {
   text-decoration: none;
 }
 
-a:hover {
+.link:hover {
   text-decoration: underline;
 }
 
@@ -137,6 +137,32 @@ form div {
   border-bottom-left-radius: 1rem;
 }
 
+.accountSmallPreview {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+.smallLogo {
+  margin-right: 0.25rem;
+}
+
+.accountLink {
+  color: #333333;
+  text-decoration: none;
+}
+
+.accountNavLink {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.accountNavLink:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .accountOverviewContainer:hover {
   border-left: 5px solid #193b42;
   border-bottom: 5px solid #193b42;
@@ -146,18 +172,21 @@ form div {
   display: flex;
   flex-direction: row;
   margin: 0;
+  flex: 2;
 }
 
 .accountBalance {
   display: flex;
   flex-direction: column;
   text-align: right;
+  flex: 1;
 }
 
 .accountEarnings {
   display: flex;
   flex-direction: column;
   text-align: left;
+  flex: 1;
 }
 
 .accountName {

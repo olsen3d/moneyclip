@@ -2,6 +2,7 @@ import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
 import {logout} from '../store'
+import AccountSmallPreview from './AccountSmallPreview'
 
 export default function Navbar() {
   const user = useSelector(state => state.user)
@@ -15,24 +16,25 @@ export default function Navbar() {
       <div className="logoContainer">
         <img width="90%" src="/img/moneyclipLogo.png" />
       </div>
-      <Link className="boldFont" to="/home">
+      <Link className="boldFont link" to="/home">
         Home
       </Link>
-      <Link className="boldFont" to="/news">
+      <Link className="boldFont link" to="/news">
         News Feed
       </Link>
-      <Link className="boldFont" to="/accounts">
+      <Link className="boldFont link" to="/accounts">
         Accounts
       </Link>
       <ul>
-        {accounts &&
+        {accounts ? (
           accounts.map(account => (
-            <li className="lightFont" key={account.id}>
-              {account.name}
-            </li>
-          ))}
+            <AccountSmallPreview key={account.id} account={account} />
+          ))
+        ) : (
+          <li>no accounts</li>
+        )}
       </ul>
-      <a className="boldFont" href="#" onClick={() => dispatch(logout())}>
+      <a className="boldFont link" href="#" onClick={() => dispatch(logout())}>
         Logout
       </a>
     </div>
