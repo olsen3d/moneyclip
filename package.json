@@ -47,6 +47,7 @@
     "connect-session-sequelize": "^6.0.0",
     "express": "^4.16.4",
     "express-session": "^1.15.1",
+    "finnhub": "^1.2.1",
     "history": "^4.9.0",
     "morgan": "^1.9.1",
     "node-cron": "^2.0.3",
@@ -62,7 +63,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^5.3.1",
+    "sequelize": "^5.22.3",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
@@ -95,7 +96,7 @@
     "lint-staged": "^8.1.5",
     "mocha": "^6.1.4",
     "nodemon": "^1.18.3",
-    "npm-merge-driver": "^2.3.5",
+    "npm-merge-driver": "^2.3.6",
     "prettier": "1.11.1",
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",

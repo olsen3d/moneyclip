@@ -43,7 +43,21 @@ cron job running 24/7 called UPDATE ACCOUNTS
 
 Market update example
 deposit 500$ = 50000 amount (everything in pennies)
-40% to VTI
-30% to VEA
-20% to VWO
-10% to AGG
+
+BALANCED
+40% to VTI total stocks low risk
+30% to VEA developed mid risk
+20% to VWO emerging high risk
+10% to AGG bonds lowest risk
+
+AGGRESIVE
+30 VTI
+20 VEA
+45 VWO
+5 AGG
+
+SAFE
+40
+30
+10
+20
