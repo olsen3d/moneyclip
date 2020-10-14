@@ -14,6 +14,9 @@ const Account = db.define('account', {
   type: {
     type: ENUM('CHECKING', 'SAVING', 'INVESTING')
   },
+  strategy: {
+    type: ENUM('CONSERVATIVE', 'BALANCED', 'AGGRESSIVE')
+  },
   net: INTEGER,
   earnings: INTEGER,
   balance: INTEGER

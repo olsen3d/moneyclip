@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
 const colors = require('colors')
+const calcMarket = require('./cron/calcMarket')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -123,3 +124,5 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+calcMarket()

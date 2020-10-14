@@ -50,14 +50,14 @@ BALANCED
 20% to VWO emerging high risk
 10% to AGG bonds lowest risk
 
-AGGRESIVE
+AGGRESSIVE
 30 VTI
 20 VEA
 45 VWO
 5 AGG
 
-SAFE
-40
+CONSERVATIVE
 30
+40
 10
 20
