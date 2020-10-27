@@ -45,19 +45,19 @@ Market update example
 deposit 500$ = 50000 amount (everything in pennies)
 
 BALANCED
+10% to AGG bonds lowest risk
 40% to VTI total stocks low risk
 30% to VEA developed mid risk
 20% to VWO emerging high risk
-10% to AGG bonds lowest risk
 
 AGGRESSIVE
-30 VTI
-20 VEA
-45 VWO
 5 AGG
+20 VTI
+30 VEA
+45 VWO
 
 CONSERVATIVE
-30
-40
-10
-20
+25 AGG
+30 VTI
+40 VEA
+5 VWO

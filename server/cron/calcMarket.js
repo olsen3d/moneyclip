@@ -6,7 +6,7 @@ const {fetchQuotes} = require('../api/finnhub')
 
 const calcMarket = () => {
   console.log('starting cron test'.rainbow.bold)
-  cron.schedule('5,12,20 * * * * *', async () => {
+  cron.schedule('5 * * * * *', async () => {
     const quotes = await fetchQuotes()
     console.log(quotes)
   })
