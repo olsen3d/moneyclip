@@ -8,8 +8,8 @@ export default function Navbar() {
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
   const dispatch = useDispatch()
-  const match = useRouteMatch('/:component')
-  const currentPage = match.params.component
+  //const match = useRouteMatch('/:component')
+  //const currentPage = match.params.component
   if (!user.id) return null
   return (
     <div id="sidebar">
@@ -21,6 +21,9 @@ export default function Navbar() {
       </Link>
       <Link className="boldFont link" to="/news">
         News Feed
+      </Link>
+      <Link className="boldFont link" to="/watchList">
+        Watch List
       </Link>
       <Link className="boldFont link" to="/accounts">
         Accounts

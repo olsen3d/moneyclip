@@ -16,8 +16,8 @@ export default function Accounts() {
   const onSubmit = newAccount => {
     newAccount.userId = user.id
     console.log(newAccount)
-    setAccountModal(false)
     dispatch(createAccount(newAccount))
+    setAccountModal(false)
   }
 
   if (accountModal) {
@@ -42,7 +42,6 @@ export default function Accounts() {
             type="button"
             onClick={() => setAccountModal(true)}
             className="linkDark"
-            to="/home"
           >
             Add New
           </button>

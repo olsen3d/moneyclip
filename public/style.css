@@ -160,6 +160,13 @@ form div {
   border-left: 5px solid #3c6c70;
   border-bottom: 5px solid #3c6c70;
   border-bottom-left-radius: 1rem;
+  transition: all 0.25s;
+}
+
+.accountOverviewContainer:hover {
+  border-left: 5px solid #193b42;
+  border-bottom: 5px solid #193b42;
+  margin-left: 30px;
 }
 
 .accountSmallPreview {
@@ -178,10 +185,6 @@ form div {
   text-decoration: none;
 }
 
-.accountOverviewContainer:hover {
-  margin-left: 30px;
-}
-
 .accountNavLink {
   color: #ffffff;
   text-decoration: none;
@@ -190,11 +193,6 @@ form div {
 .accountNavLink:hover {
   color: #ffffff;
   text-decoration: underline;
-}
-
-.accountOverviewContainer:hover {
-  border-left: 5px solid #193b42;
-  border-bottom: 5px solid #193b42;
 }
 
 .accountLogo {

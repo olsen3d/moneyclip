@@ -6,10 +6,12 @@ import {
   LOAD_TRANSACTIONS,
   CREATE_TRANSACTION,
   UPDATE_TRANSACTION,
-  REMOVE_TRANSACTION
+  REMOVE_TRANSACTION,
+  LOAD_NEWS
 } from './conststants'
 
 const loadAccountsAction = accounts => ({type: LOAD_ACCOUNTS, accounts})
 const createAccountAction = account => ({type: CREATE_ACCOUNT, account})
+const loadNewsAction = news => ({type: LOAD_NEWS, news})
 
-export {loadAccountsAction, createAccountAction}
+export {loadAccountsAction, createAccountAction, loadNewsAction}

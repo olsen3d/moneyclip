@@ -61,3 +61,17 @@ CONSERVATIVE
 30 VTI
 40 VEA
 5 VWO
+
+news
+
+{
+"category": "technology",
+"datetime": 1603847252,
+"headline": "India could contribute up to 20% of Amazon's growth in next 5 years, tech investor Gene Munster says",
+"id": 5512816,
+"image": "https://image.cnbcfm.com/api/v1/image/105647729-1545854107440gettyimages-1035470846.jpeg?v=1603770493",
+"related": "",
+"source": "CNBC",
+"summary": "Amazon has announced investments of at least $6 billion in India, including a $1 billion pledge in January to help small businesses in the country.",
+"url": "https://www.cnbc.com/2020/10/28/india-could-contribute-up-to-20percent-of-amazons-growth-in-next-5-years.html"
+}
