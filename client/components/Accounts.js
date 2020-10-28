@@ -3,17 +3,21 @@ import {useSelector, useDispatch} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AccountPreview from './AccountPreview'
 import NewAccountModal from './NewAccountModal'
+import {createAccount} from '../store/thunks'
 
 export default function Accounts() {
   const [accountModal, setAccountModal] = useState(false)
   const [depositModal, setDepositModal] = useState(false)
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
   if (accounts.length === 0) return <p>No Accounts</p>
 
-  const onSubmit = input => {
-    console.log(input)
+  const onSubmit = newAccount => {
+    newAccount.userId = user.id
+    console.log(newAccount)
     setAccountModal(false)
-    //create an account
+    dispatch(createAccount(newAccount))
   }
 
   if (accountModal) {

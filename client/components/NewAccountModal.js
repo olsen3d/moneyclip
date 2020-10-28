@@ -9,7 +9,7 @@ const descriptions = {
 }
 
 export default function NewPet({onSubmit, onCancel}) {
-  const [type, setType] = useState('')
+  const [type, setType] = useState('CHECKING')
   const [name, setName] = useState('')
   const [desc, setDesc] = useState(descriptions.CHECKING)
   const [strategy, setStrategy] = useState('')
@@ -25,9 +25,9 @@ export default function NewPet({onSubmit, onCancel}) {
   }
 
   return (
-    <div className="new-pet page">
+    <div>
       <h1>Add a new account</h1>
-      <div className="box">
+      <div>
         <form onSubmit={submit}>
           <select
             value={type}
@@ -49,13 +49,14 @@ export default function NewPet({onSubmit, onCancel}) {
             required
           />
           <button onClick={cancel} type="button" name="cancel">
-            Cancel
+            Back
           </button>
           <button type="submit" name="submit">
             Create
           </button>
         </form>
         <div>{desc}</div>
+        {type === 'INVESTING' ? <div> donut chart render here</div> : null}
       </div>
     </div>
   )

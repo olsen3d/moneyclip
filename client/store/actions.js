@@ -10,5 +10,6 @@ import {
 } from './conststants'
 
 const loadAccountsAction = accounts => ({type: LOAD_ACCOUNTS, accounts})
+const createAccountAction = account => ({type: CREATE_ACCOUNT, account})
 
-export {loadAccountsAction}
+export {loadAccountsAction, createAccountAction}

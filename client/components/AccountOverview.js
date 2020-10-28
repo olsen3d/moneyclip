@@ -9,7 +9,6 @@ export default function AccountOverview() {
   const account = useSelector(state =>
     state.accounts.find(acc => acc.id === match.params.accountId)
   )
-  console.log(account)
   if (!account) return <h1>Loading</h1>
   return (
     <div id="profile">

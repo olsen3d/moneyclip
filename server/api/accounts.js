@@ -18,3 +18,12 @@ router.get('/:id', async (req, res, next) => {
     next(error)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newAccount = await Account.create(req.body)
+    res.send(newAccount)
+  } catch (error) {
+    next(error)
+  }
+})

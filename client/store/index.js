@@ -18,6 +18,8 @@ const accountsReducer = (state = [], action) => {
   switch (action.type) {
     case LOAD_ACCOUNTS:
       return action.accounts
+    case CREATE_ACCOUNT:
+      return [...state, action.account]
     default:
       return []
   }

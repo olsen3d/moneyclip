@@ -178,6 +178,10 @@ form div {
   text-decoration: none;
 }
 
+.accountOverviewContainer:hover {
+  margin-left: 30px;
+}
+
 .accountNavLink {
   color: #ffffff;
   text-decoration: none;
