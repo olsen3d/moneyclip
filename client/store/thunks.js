@@ -17,7 +17,7 @@ const createAccount = account => async dispatch => {
 
 const loadNews = _ => async dispatch => {
   let news = (await axios.get(`/api/finnhub/news`)).data
-  news = news.filter((story, index) => index < 11)
+  news = news.filter((story, index) => index < 8)
   return dispatch(loadNewsAction(news))
 }
 

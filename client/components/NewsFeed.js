@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import NewsPreview from './NewsPreview'
 import {loadNews} from '../store/thunks'
