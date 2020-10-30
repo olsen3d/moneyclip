@@ -56,7 +56,7 @@ export default function Accounts() {
           </button>
         </span>
       </div>
-      <ul>
+      <ul className="listWidth">
         {accounts.map(account => (
           <AccountPreview key={account.id} account={account} />
         ))}

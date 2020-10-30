@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import AccountPreview from './AccountPreview'
+import NewsPreview from './NewsPreview'
 import {loadNews} from '../store/thunks'
 
 export default function NewsFeed() {
@@ -21,7 +21,10 @@ export default function NewsFeed() {
           </button>
         </span>
       </div>
-      <ul>{news && news.map(story => <h3>{story.headline}</h3>)}</ul>
+      <ul className="listWidth">
+        {news &&
+          news.map(story => <NewsPreview key={story.id} story={story} />)}
+      </ul>
     </div>
   )
 }

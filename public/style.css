@@ -167,6 +167,7 @@ form div {
   border-left: 5px solid #193b42;
   border-bottom: 5px solid #193b42;
   margin-left: 30px;
+  box-shadow: 5px 5px 5px #aaaaaa;
 }
 
 .accountSmallPreview {
@@ -174,6 +175,10 @@ form div {
   flex-direction: row;
   text-align: left;
   margin: 0.5rem 0 0.5rem 0;
+}
+
+.listWidth {
+  max-width: 760px;
 }
 
 .smallLogo {
