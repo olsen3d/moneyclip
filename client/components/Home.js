@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import ChartTest from './ChartTest'
 
 export default function Home() {
   const user = useSelector(state => state.user)
@@ -14,6 +15,7 @@ export default function Home() {
           return acc + curr.balance
         }, 0) * 0.01}
       </span>
+      <ChartTest />
     </div>
   )
 }

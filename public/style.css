@@ -182,7 +182,13 @@ form div {
 }
 
 .listWidth {
-  max-width: 760px;
+  max-width: 770px;
+}
+
+.listBar {
+  padding-inline-start: 10px;
+  border-left: 1px solid #aaaaaa;
+  margin-left: 20px;
 }
 
 .smallLogo {

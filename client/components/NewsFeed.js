@@ -17,7 +17,7 @@ export default function NewsFeed() {
             onClick={() => dispatch(loadNews())}
             className="linkDark"
           >
-            Refresh
+            Load | Refresh
           </button>
         </span>
       </div>

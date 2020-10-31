@@ -28,7 +28,7 @@ export default function Navbar() {
       <Link className="boldFont link" to="/accounts">
         Accounts
       </Link>
-      <ul>
+      <ul className="listBar">
         {accounts ? (
           accounts.map(account => (
             <AccountSmallPreview key={account.id} account={account} />
