@@ -20,10 +20,24 @@ export default function ChartTest() {
     const radius = bodyHeight / 2
 
     const pie = d3.pie().value(d => d.balance)
+    let extent = d3.extent(data, d => d.balance)
+    const colors = [
+      '#192529',
+      '#223537',
+      '#2B4645',
+      '#345752',
+      '#3F695E',
+      '#4C7B68',
+      '#5B8E70',
+      '#6EA178',
+      '#83B37E',
+      '#9BC583',
+      '#B6D787'
+    ]
 
     const colorScale = d3
       .scaleOrdinal()
-      .range(d3.schemeCategory10)
+      .range(['#dd983e', '#2B4645', '#5B8E70', '#6EA178', '#83B37E', '#9BC583'])
       .domain(data.map(d => d.name))
 
     const arc = d3
@@ -78,9 +92,8 @@ export default function ChartTest() {
   }
 
   return (
-    <div>
-      <h3>ChartTest</h3>
-      <svg style={{height: '300', width: '500'}}>
+    <div className="accountOverviewContainer">
+      <svg style={{height: '300', width: '350'}}>
         <g ref={d3Container} style={{transform: 'translate(150px, 150px)'}} />
       </svg>
     </div>
