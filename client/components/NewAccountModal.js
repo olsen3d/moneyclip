@@ -8,7 +8,7 @@ const descriptions = {
     'this is an investing account. You can deposit and withdrawl funds. Your funds will be invested according to one of the 3 different investment strategies below:'
 }
 
-export default function NewPet({onSubmit, onCancel}) {
+export default function NewAccount({onSubmit, onCancel}) {
   const [type, setType] = useState('CHECKING')
   const [name, setName] = useState('')
   const [desc, setDesc] = useState(descriptions.CHECKING)
@@ -25,8 +25,15 @@ export default function NewPet({onSubmit, onCancel}) {
   }
 
   return (
-    <div>
-      <h1>Add a new account</h1>
+    <div id="profile">
+      <div className="header">
+        <span className="lightFont">Add a new Account</span>
+        <span className="regularFont alignRight textButton">
+          <button type="button" onClick={cancel} className="linkDark">
+            Back
+          </button>
+        </span>
+      </div>
       <div>
         <form onSubmit={submit}>
           <select
@@ -48,9 +55,6 @@ export default function NewPet({onSubmit, onCancel}) {
             onChange={e => setName(e.target.value)}
             required
           />
-          <button onClick={cancel} type="button" name="cancel">
-            Back
-          </button>
           <button type="submit" name="submit">
             Create
           </button>

@@ -10,8 +10,6 @@ import {
   REMOVE_ACCOUNT,
   LOAD_TRANSACTIONS,
   CREATE_TRANSACTION,
-  UPDATE_TRANSACTION,
-  REMOVE_TRANSACTION,
   LOAD_NEWS
 } from './conststants'
 
@@ -21,6 +19,11 @@ const accountsReducer = (state = [], action) => {
       return action.accounts
     case CREATE_ACCOUNT:
       return [...state, action.account]
+    case CREATE_TRANSACTION:
+      return state.map(acc => {
+        if (acc.id === action.transaction.id) return action.transaction
+        else return acc
+      })
     default:
       return state
   }

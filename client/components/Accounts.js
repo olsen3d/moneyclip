@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import AccountPreview from './AccountPreview'
 import NewAccountModal from './NewAccountModal'
 import NewTransactionModal from './NewTransactionModal'
-import {createAccount} from '../store/thunks'
+import {createAccount, createTransaction} from '../store/thunks'
 
 export default function Accounts() {
   const [accountModal, setAccountModal] = useState(false)
@@ -20,7 +20,7 @@ export default function Accounts() {
   }
 
   const onSubmitTransaction = transaction => {
-    dispatch(createTransaction())
+    dispatch(createTransaction(transaction))
     setTransactionModal(false)
   }
 

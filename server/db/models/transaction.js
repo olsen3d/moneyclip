@@ -2,7 +2,6 @@ const Sequelize = require('sequelize')
 const {UUID, UUIDV4, INTEGER, DATE, ENUM} = Sequelize
 const Account = require('./account')
 const db = require('../db')
-const colors = require('colors')
 
 const uuidDef = {
   type: UUID,
