@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import NewsPreview from './NewsPreview'
 import {loadNews} from '../store/thunks'
@@ -6,6 +6,10 @@ import {loadNews} from '../store/thunks'
 export default function NewsFeed() {
   const dispatch = useDispatch()
   const news = useSelector(state => state.news)
+
+  useEffect(() => {
+    news.length || dispatch(loadNews())
+  }, [])
 
   return (
     <div id="profile">
@@ -17,7 +21,7 @@ export default function NewsFeed() {
             onClick={() => dispatch(loadNews())}
             className="linkDark"
           >
-            Load | Refresh
+            Refresh
           </button>
         </span>
       </div>

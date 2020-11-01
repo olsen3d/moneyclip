@@ -148,6 +148,7 @@ form div {
     90deg,
     rgba(2, 0, 36, 1) 0%,
     rgba(231, 231, 231, 1) 0%,
+    rgba(255, 255, 255, 1) 70%,
     rgba(255, 255, 255, 1) 100%
   );
   padding: 1rem 1rem 1rem 1rem;
