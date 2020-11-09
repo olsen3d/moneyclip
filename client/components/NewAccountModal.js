@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import StrategyChart from './StrategyChart'
 
 const descriptions = {
   CHECKING: 'this is a checking account. You can deposit and withdrawl funds',
@@ -12,7 +13,6 @@ export default function NewAccount({onSubmit, onCancel}) {
   const [type, setType] = useState('CHECKING')
   const [name, setName] = useState('')
   const [desc, setDesc] = useState(descriptions.CHECKING)
-  const [strategy, setStrategy] = useState('')
 
   const submit = e => {
     e.preventDefault()
@@ -60,7 +60,11 @@ export default function NewAccount({onSubmit, onCancel}) {
           </button>
         </form>
         <div>{desc}</div>
-        {type === 'INVESTING' ? <div> donut chart render here</div> : null}
+        {type === 'INVESTING' ? (
+          <div>
+            <StrategyChart />
+          </div>
+        ) : null}
       </div>
     </div>
   )

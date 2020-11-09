@@ -25,7 +25,7 @@ export default function NewsFeed() {
           </button>
         </span>
       </div>
-      <ul className="listWidth">
+      <ul className="">
         {news &&
           news.map(story => <NewsPreview key={story.id} story={story} />)}
       </ul>
