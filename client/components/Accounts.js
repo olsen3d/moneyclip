@@ -65,6 +65,12 @@ export default function Accounts() {
           </button>
         </span>
       </div>
+      <span className="regularFont">Net Worth: </span>
+      <span className="boldFont">
+        ${accounts.reduce((acc, curr) => {
+          return acc + curr.balance
+        }, 0) * 0.01}
+      </span>
       <ul className="">
         {accounts.map(account => (
           <AccountPreview key={account.id} account={account} />

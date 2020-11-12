@@ -65,18 +65,27 @@ export default function StrategyChart() {
   }
 
   function change(pie, arc, colorScale, data) {
-    console.log('change')
-    let g = d3
+    let slice = d3
       .select(d3Container.current)
       .selectAll('.arc')
       .data(pie(data))
 
-    g.enter().append('g')
-    g
-      .append('path')
-      .attr('d', arc)
+    slice
+      .enter()
+      .insert('path')
       .attr('fill', d => colorScale(d.data.name))
+
+    slice
       .transition()
+      .duration(1000)
+      .attrTween('d', function(d) {
+        this._current = this._current || d
+        var interpolate = d3.interpolate(this._current, d)
+        this._current = interpolate(0)
+        return function(t) {
+          return arc(interpolate(t))
+        }
+      })
   }
 
   return (
