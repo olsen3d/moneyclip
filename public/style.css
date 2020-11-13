@@ -134,6 +134,10 @@ label {
   font-family: thinFont;
 }
 
+.largeFont {
+  font-size: 1.5rem;
+}
+
 .white {
   color: white;
 }
@@ -296,6 +300,8 @@ polyline {
 
 .subHeader {
   margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 #tooltip {
@@ -314,4 +320,17 @@ polyline {
   fill: none;
   stroke: red;
   stroke-width: 2px;
+}
+
+.summaryBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 775px;
+}
+
+.summaryCard {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
 }

@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import React from 'react'
+import {useSelector} from 'react-redux'
 import ChartTest from './ChartTest'
+import SummaryBar from './SummaryBar'
 
 export default function Home() {
   const user = useSelector(state => state.user)
@@ -21,12 +22,7 @@ export default function Home() {
         </span>
       </div>
       <div className="subHeader">
-        <span className="regularFont">Net Worth: </span>
-        <span className="boldFont">
-          ${accounts.reduce((acc, curr) => {
-            return acc + curr.balance
-          }, 0) * 0.01}
-        </span>
+        <SummaryBar accounts={accounts} />
       </div>
       <ChartTest />
     </div>
