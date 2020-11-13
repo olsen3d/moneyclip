@@ -27,77 +27,112 @@ export default function StrategyChart() {
   const [strategy, setStrategy] = useState('conservative')
   const d3Container = useRef(null)
 
-  useEffect(() => {
-    showData(strategies.conservative)
-  }, [])
+  //create the main chart
+  const chart = d3
+    .select(d3Container.current)
+    .append('svg')
+    .attr('id', 'chart')
+    .attr('width', 800)
+    .attr('height', 300)
+    .append('g')
 
-  function showData(data) {
-    const bodyHeight = 200
-    const radius = bodyHeight / 2
+  const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
 
-    const pie = d3.pie().value(d => d.value)
-    let extent = d3.extent(data, d => d.value)
-    const colors = [
-      '#192529',
-      '#223537',
-      '#2B4645',
-      '#345752',
-      '#3F695E',
-      '#4C7B68',
-      '#5B8E70',
-      '#6EA178',
-      '#83B37E',
-      '#9BC583',
-      '#B6D787'
-    ]
+  //append classes to the chart
+  chart.append('g').attr('class', 'slices')
+  chart.append('g').attr('class', 'labels')
+  chart.append('g').attr('class', 'lines')
 
-    const colorScale = d3
-      .scaleOrdinal()
-      .range(['#dd983e', '#2B4645', '#5B8E70', '#6EA178', '#83B37E', '#9BC583'])
-      .domain(data.map(d => d.name))
+  const width = 400
+  const height = 200
+  const radius = Math.min(width, height) / 2
 
-    const arc = d3
-      .arc()
-      .outerRadius(bodyHeight / 2)
-      .innerRadius(40)
+  const pie = d3
+    .pie()
+    .padAngle(0.025)
+    .sort(null)
+    .value(d => d.value)
 
-    change(pie, arc, colorScale, data)
+  const arc = d3
+    .arc()
+    .innerRadius(radius * 0.8)
+    .outerRadius(radius * 0.4)
+
+  const outerArc = d3
+    .arc()
+    .outerRadius(radius * 1)
+    .innerRadius(radius * 1)
+
+  chart.attr(
+    'transform',
+    'translate(' + (width / 2 + 100) + ',' + (height / 2 + 25) + ')'
+  )
+
+  chart.append('g').classed('labels', true)
+  chart.append('g').classed('lines', true)
+
+  redraw(strategies.conservative)
+
+  function redraw(data) {
+    console.log('redraw', data)
+    chart
+      .selectAll('path')
+      .data(pie(data), function(d) {
+        return d.data.name
+      })
+      .transition()
+      .enter()
+      .append('path')
+      .attr('d', arc)
+      .attr('class', 'arc')
+      .attr('fill', (d, i) => color(i))
   }
 
-  function change(pie, arc, colorScale, data) {
-    let slice = d3
-      .select(d3Container.current)
-      .selectAll('.arc')
-      .data(pie(data))
+  // const polyline = chart
+  //   .select('.lines')
+  //   .selectAll('polyline')
+  //   .data(pie(data))
+  //   .enter()
+  //   .append('polyline')
+  //   .attr('points', function(d) {
+  //     const pos = outerArc.centroid(d)
+  //     pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1)
+  //     return [arc.centroid(d), outerArc.centroid(d), pos]
+  //   })
 
-    slice
-      .enter()
-      .insert('path')
-      .attr('fill', d => colorScale(d.data.name))
+  // const label = chart
+  //   .select('.labels')
+  //   .selectAll('text')
+  //   .data(pie(data))
+  //   .enter()
+  //   .append('text')
+  //   .attr('dy', '.35em')
+  //   .html(function(d) {
+  //     return `${d.data.name}`
+  //   })
+  //   .attr('transform', function(d) {
+  //     const pos = outerArc.centroid(d)
+  //     pos[0] = radius * 1 * (midAngle(d) < Math.PI ? 1 : -1)
+  //     return `translate(${pos[0]},${pos[1]})`
+  //   })
+  //   .style('text-anchor', function(d) {
+  //     return midAngle(d) < Math.PI ? 'start' : 'end'
+  //   })
 
-    slice
-      .transition()
-      .duration(1000)
-      .attrTween('d', function(d) {
-        this._current = this._current || d
-        var interpolate = d3.interpolate(this._current, d)
-        this._current = interpolate(0)
-        return function(t) {
-          return arc(interpolate(t))
-        }
-      })
+  function midAngle(d) {
+    return d.startAngle + (d.endAngle - d.startAngle) / 2
   }
 
   return (
     <div className="">
-      <svg style={{height: '300', width: '350'}}>
+      <svg style={{height: '500', width: '750'}}>
         <g ref={d3Container} style={{transform: 'translate(150px, 150px)'}} />
       </svg>
       <select
         value={strategy}
         onChange={e => {
           setStrategy(e.target.value)
-          showData(strategies[e.target.value])
+          redraw(strategies[e.target.value])
         }}
       >
         <option value="conservative">conservative</option>

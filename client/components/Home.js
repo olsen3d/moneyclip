@@ -20,12 +20,14 @@ export default function Home() {
           </button>
         </span>
       </div>
-      <span className="regularFont">Net Worth: </span>
-      <span className="boldFont">
-        ${accounts.reduce((acc, curr) => {
-          return acc + curr.balance
-        }, 0) * 0.01}
-      </span>
+      <div className="subHeader">
+        <span className="regularFont">Net Worth: </span>
+        <span className="boldFont">
+          ${accounts.reduce((acc, curr) => {
+            return acc + curr.balance
+          }, 0) * 0.01}
+        </span>
+      </div>
       <ChartTest />
     </div>
   )

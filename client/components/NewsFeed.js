@@ -25,9 +25,11 @@ export default function NewsFeed() {
           </button>
         </span>
       </div>
-      <span className="regularFont">
-        Top financial, business, and technology stories{' '}
-      </span>
+      <div className="subHeader">
+        <span className="regularFont">
+          Top financial, business, and technology stories{' '}
+        </span>
+      </div>
       <ul className="">
         {news &&
           news.map(story => <NewsPreview key={story.id} story={story} />)}

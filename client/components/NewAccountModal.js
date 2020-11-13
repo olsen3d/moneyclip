@@ -34,7 +34,7 @@ export default function NewAccount({onSubmit, onCancel}) {
           </button>
         </span>
       </div>
-      <div>
+      <div className="subHeader">
         <form onSubmit={submit}>
           <select
             value={type}

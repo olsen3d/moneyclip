@@ -1,6 +1,7 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import {useRouteMatch} from 'react-router-dom'
+import LineChart from './LineChart'
 
 export default function AccountOverview() {
   let match = useRouteMatch({
@@ -12,7 +13,15 @@ export default function AccountOverview() {
   if (!account) return <h1>Loading</h1>
   return (
     <div id="profile">
-      <h1>Account {account.id}</h1>
+      <div className="header">
+        <span className="lightFont">{account.name}</span>
+      </div>
+      <div className="subHeader">
+        <span className="regularFont">{account.type} Account</span>
+      </div>
+      <div>
+        <LineChart account={account} />
+      </div>
     </div>
   )
 }

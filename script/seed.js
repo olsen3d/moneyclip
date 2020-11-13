@@ -38,18 +38,18 @@ async function seed() {
 
   const createTransaction = async (date, acc) => {
     const randomTransaction = Math.random()
-    const randomAmount = Math.floor(Math.random() * 1000)
+    const randomAmount = Math.floor(Math.random() * 10000)
     console.log('------------------------------')
     console.log(date)
-    if (randomTransaction < 0.4) {
+    if (randomTransaction < 0.1) {
       console.log(`withdrawing ${randomAmount}`.yellow)
       await Transaction.create({
-        amount: randomAmount,
+        amount: randomAmount * -1,
         type: 'WITHDRAWAL',
         date: date,
         accountId: acc.id
       })
-    } else {
+    } else if (randomTransaction < 0.3) {
       console.log(`depositing ${randomAmount}`.blue)
       await Transaction.create({
         amount: randomAmount,

@@ -1,14 +1,17 @@
 /* eslint-disable complexity */
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import * as d3 from 'd3'
+import AccountPreview from './AccountPreview'
 
 export default function ChartTest() {
   const accounts = useSelector(state =>
     state.accounts.filter(acc => acc.balance !== 0)
   )
   const d3Container = useRef(null)
+  const [currentAccount, setCurrentAccount] = useState(accounts[0])
 
+  //only create the chart once
   useEffect(
     () => {
       if (accounts.length && d3.select('#chart').empty()) {
@@ -18,20 +21,33 @@ export default function ChartTest() {
     [accounts]
   )
 
+  //mouse over tooltip function
+  function showTooltip(data, coords) {
+    setCurrentAccount(data)
+    d3
+      .select('#tooltip')
+      .style('top', `${coords[1] + 2}px`)
+      .style('left', `${coords[0] + 2}px`)
+      .style('display', 'block')
+  }
+
   function showData(data) {
-    const svg = d3
+    //create the main chart
+    const chart = d3
       .select(d3Container.current)
       .append('svg')
       .attr('id', 'chart')
-      .attr('width', 960)
-      .attr('height', 500)
+      .attr('width', 800)
+      .attr('height', 300)
       .append('g')
 
-    svg.append('g').attr('class', 'slices')
-    svg.append('g').attr('class', 'labels')
-    svg.append('g').attr('class', 'lines')
+    //append classes to the chart
+    chart.append('g').attr('class', 'slices')
+    chart.append('g').attr('class', 'labels')
+    chart.append('g').attr('class', 'lines')
+
     const width = 400
-    const height = 300
+    const height = 200
     const radius = Math.min(width, height) / 2
     const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
     const pie = d3
@@ -57,12 +73,12 @@ export default function ChartTest() {
       .outerRadius(radius * 1)
       .innerRadius(radius * 1)
 
-    svg.attr(
+    chart.attr(
       'transform',
       'translate(' + (width / 2 + 100) + ',' + (height / 2 + 25) + ')'
     )
 
-    svg
+    chart
       .selectAll('path')
       .data(bigPie(data))
       .enter()
@@ -70,10 +86,10 @@ export default function ChartTest() {
       .attr('d', arc)
       .attr('class', 'arc')
       .attr('fill', (d, i) => color(i))
-      .on('mouseenter', function(d) {
+      .on('mouseenter', function() {
         const current = this
-        const others = svg.selectAll('.arc').filter(function() {
-          return this != current
+        const others = chart.selectAll('.arc').filter(function() {
+          return this !== current
         })
         others
           .transition()
@@ -85,21 +101,25 @@ export default function ChartTest() {
           .attr('d', bigArc)
           .attr('opacity', 1)
       })
+      .on('mousemove', function(event, dataPoint) {
+        showTooltip(dataPoint.data, [event.clientX, event.clientY])
+      })
       .on('mouseleave', function(d) {
         const current = this
         const others = d3.selectAll('.arc').filter(function() {
-          return this != current
+          return this !== current
         })
         others.transition().attr('opacity', 1)
         d3
           .select(this)
           .transition()
           .attr('d', arc)
+        d3.select('#tooltip').style('display', 'none')
       })
-    svg.append('g').classed('labels', true)
-    svg.append('g').classed('lines', true)
+    chart.append('g').classed('labels', true)
+    chart.append('g').classed('lines', true)
 
-    const polyline = svg
+    const polyline = chart
       .select('.lines')
       .selectAll('polyline')
       .data(pie(data))
@@ -111,7 +131,7 @@ export default function ChartTest() {
         return [arc.centroid(d), outerArc.centroid(d), pos]
       })
 
-    const label = svg
+    const label = chart
       .select('.labels')
       .selectAll('text')
       .data(pie(data))
@@ -137,6 +157,9 @@ export default function ChartTest() {
 
   return (
     <div>
+      <div id="tooltip">
+        {currentAccount ? <AccountPreview account={currentAccount} /> : null}
+      </div>
       <div ref={d3Container} />
     </div>
   )

@@ -293,3 +293,25 @@ polyline {
   font-size: 0.9em;
   font-style: italic;
 }
+
+.subHeader {
+  margin-top: 0.5rem;
+}
+
+#tooltip {
+  position: absolute;
+  display: none;
+  width: 550px;
+}
+
+.lineNet {
+  fill: none;
+  stroke: blue;
+  stroke-width: 2px;
+}
+
+.lineBalance {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px;
+}
