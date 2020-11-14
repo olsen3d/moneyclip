@@ -42,11 +42,13 @@ export default function LineChart({account}) {
 
     let lineBalance = d3
       .line()
+      .curve(d3.curveStepAfter)
       .x(d => xScale(d.date))
       .y(d => yScale(+d.balance * 0.01))
 
     let areaBalance = d3
       .area()
+      .curve(d3.curveStepAfter)
       .x(d => xScale(d.date))
       .y0(yScale(0))
       .y1(d => yScale(+d.balance * 0.01))
@@ -70,6 +72,7 @@ export default function LineChart({account}) {
       .line()
       .x(d => xScale(d.date))
       .y(d => yScale(+d.net * 0.01))
+      .curve(d3.curveStepAfter)
 
     chart
       .append('path')
