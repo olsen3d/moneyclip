@@ -27,100 +27,63 @@ export default function StrategyChart() {
   const [strategy, setStrategy] = useState('conservative')
   const d3Container = useRef(null)
 
-  //create the main chart
-  const chart = d3
-    .select(d3Container.current)
-    .append('svg')
-    .attr('id', 'chart')
-    .attr('width', 800)
-    .attr('height', 300)
-    .append('g')
-
-  const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
-
-  //append classes to the chart
-  chart.append('g').attr('class', 'slices')
-  chart.append('g').attr('class', 'labels')
-  chart.append('g').attr('class', 'lines')
-
   const width = 400
   const height = 200
   const radius = Math.min(width, height) / 2
 
+  const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
+
   const pie = d3
     .pie()
-    .padAngle(0.025)
+    .value(d => d.balance)
     .sort(null)
-    .value(d => d.value)
 
   const arc = d3
     .arc()
     .innerRadius(radius * 0.8)
     .outerRadius(radius * 0.4)
 
-  const outerArc = d3
-    .arc()
-    .outerRadius(radius * 1)
-    .innerRadius(radius * 1)
+  const chart = d3
+    .select(d3Container.current)
+    .append('svg')
+    .attr('width', 800)
+    .attr('height', 300)
+    .append('g')
+    .attr(
+      'transform',
+      'translate(' + (width / 2 + 100) + ',' + (height / 2 + 25) + ')'
+    )
 
-  chart.attr(
-    'transform',
-    'translate(' + (width / 2 + 100) + ',' + (height / 2 + 25) + ')'
-  )
-
-  chart.append('g').classed('labels', true)
-  chart.append('g').classed('lines', true)
-
-  redraw(strategies.conservative)
+  let path = chart
+    .selectAll('path')
+    .data(pie(strategies.conservative))
+    .enter()
+    .append('path')
+    .attr('fill', function(d, i) {
+      return color(i)
+    })
+    .attr('d', arc)
+    .each(function(d) {
+      this._current = d
+    }) // store the initial angles
 
   function redraw(data) {
-    console.log('redraw', data)
-    chart
-      .selectAll('path')
-      .data(pie(data), function(d) {
-        return d.data.name
-      })
+    pie.value(function(d) {
+      return d[data]
+    }) // change the value function
+    path = path.data(pie) // compute the new angles
+    path
       .transition()
-      .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('class', 'arc')
-      .attr('fill', (d, i) => color(i))
+      .duration(750)
+      .attrTween('d', arcTween) // redraw the arcs
   }
 
-  // const polyline = chart
-  //   .select('.lines')
-  //   .selectAll('polyline')
-  //   .data(pie(data))
-  //   .enter()
-  //   .append('polyline')
-  //   .attr('points', function(d) {
-  //     const pos = outerArc.centroid(d)
-  //     pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1)
-  //     return [arc.centroid(d), outerArc.centroid(d), pos]
-  //   })
-
-  // const label = chart
-  //   .select('.labels')
-  //   .selectAll('text')
-  //   .data(pie(data))
-  //   .enter()
-  //   .append('text')
-  //   .attr('dy', '.35em')
-  //   .html(function(d) {
-  //     return `${d.data.name}`
-  //   })
-  //   .attr('transform', function(d) {
-  //     const pos = outerArc.centroid(d)
-  //     pos[0] = radius * 1 * (midAngle(d) < Math.PI ? 1 : -1)
-  //     return `translate(${pos[0]},${pos[1]})`
-  //   })
-  //   .style('text-anchor', function(d) {
-  //     return midAngle(d) < Math.PI ? 'start' : 'end'
-  //   })
-
-  function midAngle(d) {
-    return d.startAngle + (d.endAngle - d.startAngle) / 2
+  function arcTween(a) {
+    var i = d3.interpolate(this._current, a)
+    this._current = i(0)
+    return function(t) {
+      return arc(i(t))
+    }
   }
 
   return (

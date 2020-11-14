@@ -2,6 +2,7 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import ChartTest from './ChartTest'
 import SummaryBar from './SummaryBar'
+import StrategyChart from './StrategyChart'
 
 export default function Home() {
   const user = useSelector(state => state.user)
@@ -25,6 +26,7 @@ export default function Home() {
         <SummaryBar accounts={accounts} />
       </div>
       <ChartTest />
+      {/* <StrategyChart /> */}
     </div>
   )
 }
