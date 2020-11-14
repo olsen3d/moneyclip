@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import AccountPreview from './AccountPreview'
 import NewAccountModal from './NewAccountModal'
 import NewTransactionModal from './NewTransactionModal'
+import SummaryBar from './SummaryBar'
 import {createAccount, createTransaction} from '../store/thunks'
 
 export default function Accounts() {
@@ -66,12 +67,7 @@ export default function Accounts() {
         </span>
       </div>
       <div className="subHeader">
-        <span className="regularFont">Net Worth: </span>
-        <span className="boldFont">
-          ${accounts.reduce((acc, curr) => {
-            return acc + curr.balance
-          }, 0) * 0.01}
-        </span>
+        <SummaryBar accounts={accounts} />
       </div>
       <ul className="">
         {accounts.map(account => (

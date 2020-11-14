@@ -334,3 +334,11 @@ polyline {
   flex-direction: column;
   margin-top: 1rem;
 }
+
+.positive {
+  color: #086e6c;
+}
+
+.negative {
+  color: #ff0000;
+}

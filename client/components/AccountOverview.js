@@ -2,6 +2,7 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import {useRouteMatch} from 'react-router-dom'
 import LineChart from './LineChart'
+import SummaryBar from './SummaryBar'
 
 export default function AccountOverview() {
   let match = useRouteMatch({
@@ -15,9 +16,18 @@ export default function AccountOverview() {
     <div id="profile">
       <div className="header">
         <span className="lightFont">{account.name}</span>
+        <span className="regularFont alignRight textButton">
+          <button
+            type="button"
+            onClick={console.log('back')}
+            className="linkDark"
+          >
+            Back
+          </button>
+        </span>
       </div>
       <div className="subHeader">
-        <span className="regularFont">{account.type} Account</span>
+        <SummaryBar accounts={account} />
       </div>
       <div>
         <LineChart account={account} />
