@@ -19,6 +19,15 @@ export default function AccountOverview() {
         <span className="regularFont alignRight textButton">
           <button
             type="button"
+            onClick={() => setTransactionModal(true)}
+            className="linkDark"
+            to="/home"
+          >
+            Transaction
+          </button>
+          <span> | </span>
+          <button
+            type="button"
             onClick={console.log('back')}
             className="linkDark"
           >

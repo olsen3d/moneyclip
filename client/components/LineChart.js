@@ -21,7 +21,7 @@ export default function LineChart({account}) {
     let bodyHeight = 200
     let bodyWidth = 400
 
-    let maxValue = d3.max(transactions, d => +d.balance)
+    let maxValue = d3.max(transactions, d => +d.balance * 0.01)
 
     let yScale = d3
       .scaleLinear()
@@ -43,24 +43,69 @@ export default function LineChart({account}) {
     let lineBalance = d3
       .line()
       .x(d => xScale(d.date))
-      .y(d => yScale(+d.balance))
+      .y(d => yScale(+d.balance * 0.01))
+
+    let areaBalance = d3
+      .area()
+      .x(d => xScale(d.date))
+      .y0(yScale(0))
+      .y1(d => yScale(+d.balance * 0.01))
+
+    chart
+      .append('path')
+      .datum(transactions)
+      .attr('d', areaBalance)
+      .style('fill', 'url(#mygrad)')
 
     chart
       .append('path')
       .datum(transactions)
       .attr('d', lineBalance)
-      .attr('class', 'lineBalance')
+      .attr('stroke', '#086e6c')
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.7)
+      .style('fill', 'none')
 
     let lineNet = d3
       .line()
       .x(d => xScale(d.date))
-      .y(d => yScale(+d.net))
+      .y(d => yScale(+d.net * 0.01))
 
     chart
       .append('path')
       .datum(transactions)
       .attr('d', lineNet)
-      .attr('class', 'lineNet')
+      .attr('stroke', '#333333')
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.7)
+      .style('fill', 'none')
+
+    const gradient = chart
+      .append('defs')
+      .append('linearGradient')
+      .attr('id', 'mygrad')
+      .attr('x1', '0%')
+      .attr('x2', '0%')
+      .attr('y1', '0%')
+      .attr('y2', '100%')
+
+    gradient
+      .append('stop')
+      .attr('offset', '0%')
+      .style('stop-color', '#cce5df')
+      .style('stop-opacity', 1)
+
+    gradient
+      .append('stop')
+      .attr('offset', '25%')
+      .style('stop-color', '#cce5df')
+      .style('stop-opacity', 1)
+
+    gradient
+      .append('stop')
+      .attr('offset', '100%')
+      .style('stop-color', 'white')
+      .style('stop-opacity', 0)
   }
 
   return (

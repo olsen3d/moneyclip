@@ -310,18 +310,6 @@ polyline {
   width: 550px;
 }
 
-.lineNet {
-  fill: none;
-  stroke: blue;
-  stroke-width: 2px;
-}
-
-.lineBalance {
-  fill: none;
-  stroke: red;
-  stroke-width: 2px;
-}
-
 .summaryBar {
   display: flex;
   flex-direction: row;
