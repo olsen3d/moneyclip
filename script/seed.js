@@ -77,7 +77,7 @@ async function seed() {
     })
   }
 
-  for (let month = 0; month < 8; month++) {
+  for (let month = 0; month < 10; month++) {
     for (let day = 1; day <= 28; day++) {
       const hours = Math.floor(Math.random() * 12)
       const minutes = Math.floor(Math.random() * 59)
