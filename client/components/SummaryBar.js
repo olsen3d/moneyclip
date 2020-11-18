@@ -24,7 +24,7 @@ export default function SummaryBar({accounts}) {
   return (
     <div className="summaryBar">
       <div className="summaryCard">
-        <div className="thinFont">value </div>
+        <div className="thinFont">Value </div>
         <div className="regularFont largeFont">${value}</div>
       </div>
 
@@ -32,10 +32,10 @@ export default function SummaryBar({accounts}) {
         <div className="thinFont">Gain </div>
         <div
           className={`regularFont largeFont ${
-            gain > 0 ? 'positive' : 'negative'
+            gain >= 0 ? 'positive' : 'negative'
           }`}
         >
-          {gain > 0 ? `+$${gain}` : `-$${gain}`}
+          {gain >= 0 ? `+$${gain}` : `-$${gain}`}
         </div>
       </div>
 
@@ -43,7 +43,7 @@ export default function SummaryBar({accounts}) {
         <div className="thinFont alignRight">Return </div>
         <div
           className={`regularFont largeFont ${
-            roi > 0 ? 'positive' : 'negative'
+            roi >= 0 ? 'positive' : 'negative'
           }`}
         >
           {roi > 0 ? `+%${roi}` : `-%${roi}`}

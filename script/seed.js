@@ -3,7 +3,7 @@
 const db = require('../server/db')
 const colors = require('colors')
 const {User} = require('../server/db/models')
-const {Account, Transaction, Interest} = require('../server/db/models')
+const {Account, Transaction, Portfolio} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -32,9 +32,18 @@ async function seed() {
       name: 'Retirement',
       balance: 0,
       type: 'INVESTING',
+      strategy: 'AGGRESSIVE',
       userId: mike.id
     })
   ])
+
+  const port = await Portfolio.create({
+    AGG: 0,
+    VTI: 0,
+    VEA: 0,
+    VWO: 0,
+    accountId: investingAcc.id
+  })
 
   const createTransaction = async (date, acc) => {
     const randomTransaction = Math.random()

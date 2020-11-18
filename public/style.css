@@ -104,9 +104,10 @@ label {
   flex-direction: column;
   padding: 0.8rem 0.8rem 0 0.8rem;
   height: 100vh;
-  max-width: 200px;
+  max-width: 250px;
   width: 20vw;
   margin: 0;
+  /* position: fixed; */
 }
 
 #sidebar > *:not(:first-child) {
@@ -183,7 +184,7 @@ form div {
   border-left: 5px solid #193b42;
   border-bottom: 5px solid #193b42;
   margin-left: 30px;
-  box-shadow: 5px 5px 5px #aaaaaa;
+  box-shadow: 5px 5px 5px #cccccc;
 }
 
 .accountSmallPreview {

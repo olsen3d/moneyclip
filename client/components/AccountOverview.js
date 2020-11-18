@@ -1,16 +1,31 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import {useRouteMatch} from 'react-router-dom'
 import LineChart from './LineChart'
 import SummaryBar from './SummaryBar'
 
 export default function AccountOverview() {
+  const [accountData, setAccountData] = useState(null)
   let match = useRouteMatch({
     path: '/accounts/:accountId/'
   })
   const account = useSelector(state =>
     state.accounts.find(acc => acc.id === match.params.accountId)
   )
+
+  useEffect(
+    () => {
+      account && setAccountData(account.transactions)
+    },
+    [account]
+  )
+
+  const lastYear = () => {
+    const newData = accountData.filter((val, i) => i > 60)
+
+    setAccountData(newData)
+  }
+
   if (!account) return <h1>Loading</h1>
   return (
     <div id="profile">
@@ -26,11 +41,7 @@ export default function AccountOverview() {
             Transaction
           </button>
           <span> | </span>
-          <button
-            type="button"
-            onClick={console.log('back')}
-            className="linkDark"
-          >
+          <button type="button" onClick={null} className="linkDark">
             Back
           </button>
         </span>
@@ -39,7 +50,10 @@ export default function AccountOverview() {
         <SummaryBar accounts={account} />
       </div>
       <div>
-        <LineChart account={account} />
+        {accountData && <LineChart accountData={accountData} />}
+        <button type="button" onClick={lastYear} className="linkDark">
+          filter
+        </button>
       </div>
     </div>
   )

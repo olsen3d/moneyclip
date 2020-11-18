@@ -23,12 +23,12 @@ export default function ChartTest() {
 
   //mouse over tooltip function
   function showTooltip(data, coords) {
-    setCurrentAccount(data)
-    d3
-      .select('#tooltip')
-      .style('top', `${coords[1] + 2}px`)
-      .style('left', `${coords[0] + 2}px`)
-      .style('display', 'block')
+    // setCurrentAccount(data)
+    // d3
+    //   .select('#tooltip')
+    //   .style('top', `${coords[1] + 2}px`)
+    //   .style('left', `${coords[0] + 2}px`)
+    //   .style('display', 'block')
   }
 
   function showData(data) {
@@ -75,7 +75,7 @@ export default function ChartTest() {
 
     chart.attr(
       'transform',
-      'translate(' + (width / 2 + 100) + ',' + (height / 2 + 25) + ')'
+      'translate(' + (width / 2 + 40) + ',' + (height / 2 + 25) + ')'
     )
 
     chart
@@ -97,7 +97,7 @@ export default function ChartTest() {
           .attr('opacity', 0.3)
         d3
           .select(this)
-          .transition()
+          .transition(100)
           .attr('d', bigArc)
           .attr('opacity', 1)
       })

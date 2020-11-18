@@ -5,14 +5,14 @@ const {finnhubKey} = require('../../secrets')
 const baseURL = 'https://finnhub.io/api/v1/'
 
 const fetchQuotes = async () => {
-  const [VTI, VEA, VWO, AGG] = await Promise.all([
+  const [AGG, VTI, VEA, VWO] = await Promise.all([
+    (await axios.get(`${baseURL}quote?symbol=AGG&token=${finnhubKey}`)).data.c,
     (await axios.get(`${baseURL}quote?symbol=VTI&token=${finnhubKey}`)).data.c,
     (await axios.get(`${baseURL}quote?symbol=VEA&token=${finnhubKey}`)).data.c,
-    (await axios.get(`${baseURL}quote?symbol=VWO&token=${finnhubKey}`)).data.c,
-    (await axios.get(`${baseURL}quote?symbol=AGG&token=${finnhubKey}`)).data.c
+    (await axios.get(`${baseURL}quote?symbol=VWO&token=${finnhubKey}`)).data.c
   ]).catch(error => console.log(error))
 
-  return [VTI, VEA, VWO, AGG]
+  return {AGG, VTI, VEA, VWO}
 }
 
 const fetchNews = async () => {

@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import * as d3 from 'd3'
 
-export default function LineChart({account}) {
+export default function LineChart({accountData}) {
   const d3Container = useRef(null)
 
   useEffect(
@@ -11,9 +11,9 @@ export default function LineChart({account}) {
         .select(d3Container.current)
         .selectAll('*')
         .remove()
-      showData(account.transactions)
+      showData(accountData)
     },
-    [account]
+    [accountData]
   )
 
   function showData(transactions) {
@@ -30,12 +30,16 @@ export default function LineChart({account}) {
     let bodyHeight = 200
     let bodyWidth = 400
 
+    let minValue = Math.min(
+      d3.min(transactions, d => +d.balance * 0.01),
+      d3.min(transactions, d => +d.net * 0.01)
+    )
     let maxValue = d3.max(transactions, d => +d.balance * 0.01)
 
     let yScale = d3
       .scaleLinear()
       .range([bodyHeight, 0]) // the range is inverted because svg space is inverted
-      .domain([0, maxValue])
+      .domain([minValue, maxValue])
 
     chart.append('g').call(d3.axisLeft(yScale))
 
@@ -59,7 +63,7 @@ export default function LineChart({account}) {
       .area()
       .curve(d3.curveStepAfter)
       .x(d => xScale(d.date))
-      .y0(yScale(0))
+      .y0(yScale(minValue))
       .y1(d => yScale(+d.balance * 0.01))
 
     chart
@@ -71,6 +75,8 @@ export default function LineChart({account}) {
     chart
       .append('path')
       .datum(transactions)
+      .transition()
+      .duration(1000)
       .attr('d', lineBalance)
       .attr('stroke', '#086e6c')
       .attr('stroke-width', 2)
@@ -86,6 +92,8 @@ export default function LineChart({account}) {
     chart
       .append('path')
       .datum(transactions)
+      .transition()
+      .duration(1000)
       .attr('d', lineNet)
       .attr('stroke', '#333333')
       .attr('stroke-width', 2)
