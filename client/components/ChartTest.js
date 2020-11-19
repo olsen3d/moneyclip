@@ -109,11 +109,15 @@ export default function ChartTest() {
         const others = d3.selectAll('.arc').filter(function() {
           return this !== current
         })
-        others.transition().attr('opacity', 1)
+        others
+          .transition()
+          .attr('d', arc)
+          .attr('opacity', 1)
         d3
           .select(this)
           .transition()
           .attr('d', arc)
+          .attr('opacity', 1)
         d3.select('#tooltip').style('display', 'none')
       })
     chart.append('g').classed('labels', true)

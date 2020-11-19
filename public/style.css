@@ -85,6 +85,11 @@ body {
   text-decoration: underline;
 }
 
+.linkDark:visited {
+  color: #333333;
+  text-decoration: none;
+}
+
 .selected {
   text-decoration: underline;
 }

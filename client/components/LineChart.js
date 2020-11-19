@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React, {useRef, useState, useEffect} from 'react'
+import React, {useRef, useEffect} from 'react'
 import * as d3 from 'd3'
 
 export default function LineChart({accountData}) {
@@ -28,7 +28,7 @@ export default function LineChart({accountData}) {
     const chart = d3.select(d3Container.current)
 
     let bodyHeight = 200
-    let bodyWidth = 400
+    let bodyWidth = 500
 
     let minValue = Math.min(
       d3.min(transactions, d => +d.balance * 0.01),
@@ -55,13 +55,13 @@ export default function LineChart({accountData}) {
 
     let lineBalance = d3
       .line()
-      .curve(d3.curveStepAfter)
+      .curve(d3.curveLinear)
       .x(d => xScale(d.date))
       .y(d => yScale(+d.balance * 0.01))
 
     let areaBalance = d3
       .area()
-      .curve(d3.curveStepAfter)
+      .curve(d3.curveLinear)
       .x(d => xScale(d.date))
       .y0(yScale(minValue))
       .y1(d => yScale(+d.balance * 0.01))

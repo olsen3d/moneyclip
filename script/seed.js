@@ -50,7 +50,7 @@ async function seed() {
     const randomAmount = Math.floor(Math.random() * 10000)
     console.log('------------------------------')
     console.log(date)
-    if (randomTransaction < 0.1) {
+    if (randomTransaction < 0.01) {
       console.log(`withdrawing ${randomAmount}`.yellow)
       await Transaction.create({
         amount: randomAmount * -1,
@@ -58,7 +58,7 @@ async function seed() {
         date: date,
         accountId: acc.id
       })
-    } else if (randomTransaction < 0.3) {
+    } else if (randomTransaction < 0.03) {
       console.log(`depositing ${randomAmount}`.blue)
       await Transaction.create({
         amount: randomAmount,
@@ -72,7 +72,7 @@ async function seed() {
   const calcInterest = async (date, acc) => {
     const account = await Account.findByPk(acc.id)
     const balance = account.balance
-    const interest = 0.04
+    const interest = 0.04 / 12 //4% over 12 months a year
     let earnings = Math.floor(balance * interest)
     if (earnings < 0) earnings = 0
     console.log('------------------------------')

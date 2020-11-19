@@ -7,18 +7,18 @@ const strategies = {
     VEA: 0.4,
     VWO: 0.05
   },
-  BALANCED: [
-    {name: 'AGG', value: 0.1},
-    {name: 'VTI', value: 0.4},
-    {name: 'VEA', value: 0.3},
-    {name: 'VWO', value: 0.2}
-  ],
-  AGGRESSIVE: [
-    {name: 'AGG', value: 0.05},
-    {name: 'VTI', value: 0.2},
-    {name: 'VEA', value: 0.3},
-    {name: 'VWO', value: 0.45}
-  ]
+  BALANCED: {
+    AGG: 0.1,
+    VTI: 0.4,
+    VEA: 0.3,
+    VWO: 0.2
+  },
+  AGGRESSIVE: {
+    AGG: 0.05,
+    VTI: 0.2,
+    VEA: 0.3,
+    VWO: 0.45
+  }
 }
 
 const strategy = {
@@ -40,15 +40,36 @@ const VTI_AMOUNT = deposit * strategy.VTI / VTI_PRICE / 100
 const VEA_AMOUNT = deposit * strategy.VEA / VEA_PRICE / 100
 const VWO_AMOUNT = deposit * strategy.VWO / VWO_PRICE / 100
 
-console.log(AGG_AMOUNT, VTI_AMOUNT, VEA_AMOUNT, VWO_AMOUNT)
+//console.log(AGG_AMOUNT, VTI_AMOUNT, VEA_AMOUNT, VWO_AMOUNT)
 
-const total =
-  AGG_PRICE * AGG_AMOUNT +
-  VTI_PRICE * VTI_AMOUNT +
-  VEA_PRICE * VEA_AMOUNT +
-  VWO_PRICE * VWO_AMOUNT
+const account = {
+  net: 85000,
+  strategy: 'AGGRESSIVE'
+}
 
-//0.42506163393692087 1.0818810882858243 6.684491978609625 9.437919463087248
+const portfolio = {
+  AGG: 0.3603221704111912,
+  VTI: 0.9280489136368598,
+  VEA: 5.7174887892376685,
+  VWO: 8.061116965226553
+}
 
-//an investing account has a portfolio with the amount of each stock in it
-//account.getPortfolio()
+//const quotes = { AGG: 117.95, VTI: 184.18, VEA: 44.6, VWO: 47.45 }
+const quotes = {AGG: 117.95, VTI: 183.18, VEA: 44.6, VWO: 47.45}
+
+//find out how much was spent on each stock
+//take the net and divide it up by the strategy percentages
+
+const adjustment = Object.entries(quotes)
+  .reduce((acc, [stock, price]) => {
+    const spent = account.net * strategies[account.strategy][stock] / 100
+    const currentValue = price * portfolio[stock]
+    acc += currentValue - spent
+    return acc
+  }, 0)
+  .toFixed(2)
+
+// const spending = net * strategy.VEA / 100
+// const currentValue = quotes.VEA * portfolio.VEA
+// const adjustment = currentValue.toFixed(2) - spending
+console.log(adjustment)

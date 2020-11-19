@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
-import {useRouteMatch} from 'react-router-dom'
+import {Link, useRouteMatch} from 'react-router-dom'
 import LineChart from './LineChart'
 import SummaryBar from './SummaryBar'
 
@@ -21,7 +21,7 @@ export default function AccountOverview() {
   )
 
   const lastYear = () => {
-    const newData = accountData.filter((val, i) => i > 60)
+    const newData = accountData.filter((val, i) => i > 10)
 
     setAccountData(newData)
   }
@@ -42,7 +42,9 @@ export default function AccountOverview() {
           </button>
           <span> | </span>
           <button type="button" onClick={null} className="linkDark">
-            Back
+            <Link to="/accounts" className="linkDark">
+              Back
+            </Link>
           </button>
         </span>
       </div>
