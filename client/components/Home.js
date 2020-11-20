@@ -1,12 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 import ChartTest from './ChartTest'
 import SummaryBar from './SummaryBar'
-import StrategyChart from './StrategyChart'
+import AccountDataDisplay from './accountDataDisplay'
 
 export default function Home() {
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
+
   return (
     <div id="profile">
       <div className="header">
@@ -26,7 +27,6 @@ export default function Home() {
         <SummaryBar accounts={accounts} />
       </div>
       <ChartTest />
-      {/* <StrategyChart /> */}
     </div>
   )
 }

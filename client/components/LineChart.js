@@ -87,7 +87,7 @@ export default function LineChart({accountData}) {
       .line()
       .x(d => xScale(d.date))
       .y(d => yScale(+d.net * 0.01))
-      .curve(d3.curveStepAfter)
+      .curve(d3.curveStepBefore)
 
     chart
       .append('path')

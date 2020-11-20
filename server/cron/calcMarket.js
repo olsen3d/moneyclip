@@ -26,6 +26,7 @@ const strategies = {
 }
 
 const calcMarket = async () => {
+  console.log('calculating markets')
   const quotes = await fetchQuotes()
   const accounts = await Account.findAll()
   accounts.forEach(async account => {

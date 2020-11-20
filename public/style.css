@@ -336,3 +336,20 @@ polyline {
 .negative {
   color: #ff0000;
 }
+
+.homeChartContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
+.homeChart {
+}
+
+.accountDataDisplay {
+  padding: 1rem;
+}
+
+.spacer {
+  margin-top: 0.5rem;
+}

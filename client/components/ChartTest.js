@@ -3,6 +3,7 @@ import React, {useRef, useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import * as d3 from 'd3'
 import AccountPreview from './AccountPreview'
+import AccountDataDisplay from './accountDataDisplay'
 
 export default function ChartTest() {
   const accounts = useSelector(state =>
@@ -22,23 +23,17 @@ export default function ChartTest() {
   )
 
   //mouse over tooltip function
-  function showTooltip(data, coords) {
-    // setCurrentAccount(data)
-    // d3
-    //   .select('#tooltip')
-    //   .style('top', `${coords[1] + 2}px`)
-    //   .style('left', `${coords[0] + 2}px`)
-    //   .style('display', 'block')
+  function showTooltip(data) {
+    setCurrentAccount(data)
   }
 
   function showData(data) {
-    //create the main chart
     const chart = d3
       .select(d3Container.current)
       .append('svg')
       .attr('id', 'chart')
-      .attr('width', 800)
-      .attr('height', 300)
+      .attr('width', 500)
+      .attr('height', 260)
       .append('g')
 
     //append classes to the chart
@@ -56,7 +51,7 @@ export default function ChartTest() {
       .value(d => d.balance)
     const bigPie = d3
       .pie()
-      .padAngle(0.025)
+      // .padAngle(0.025)
       .sort(null)
       .value(d => d.balance)
     const arc = d3
@@ -68,6 +63,11 @@ export default function ChartTest() {
       .innerRadius(radius * 0.85)
       .outerRadius(radius * 0.35)
 
+    const lineArc = d3
+      .arc()
+      .outerRadius(radius * 0.8)
+      .innerRadius(radius * 0.8)
+
     const outerArc = d3
       .arc()
       .outerRadius(radius * 1)
@@ -75,7 +75,7 @@ export default function ChartTest() {
 
     chart.attr(
       'transform',
-      'translate(' + (width / 2 + 40) + ',' + (height / 2 + 25) + ')'
+      'translate(' + (width / 2 + 20) + ',' + (height / 2 + 25) + ')'
     )
 
     chart
@@ -100,9 +100,17 @@ export default function ChartTest() {
           .transition(100)
           .attr('d', bigArc)
           .attr('opacity', 1)
+        d3
+          .selectAll('polyline')
+          .transition()
+          .attr('stroke-opacity', 0.2)
+        d3
+          .selectAll('text')
+          .transition()
+          .attr('opacity', 0.2)
       })
       .on('mousemove', function(event, dataPoint) {
-        showTooltip(dataPoint.data, [event.clientX, event.clientY])
+        showTooltip(dataPoint.data)
       })
       .on('mouseleave', function(d) {
         const current = this
@@ -118,7 +126,21 @@ export default function ChartTest() {
           .transition()
           .attr('d', arc)
           .attr('opacity', 1)
+        d3
+          .selectAll('polyline')
+          .transition()
+          .attr('stroke-opacity', 1)
+        d3
+          .selectAll('text')
+          .transition()
+          .attr('opacity', 1)
+
         d3.select('#tooltip').style('display', 'none')
+
+        showTooltip(accounts)
+      })
+      .on('click', function(event, dataPoint) {
+        console.log(dataPoint.data.id)
       })
     chart.append('g').classed('labels', true)
     chart.append('g').classed('lines', true)
@@ -132,7 +154,7 @@ export default function ChartTest() {
       .attr('points', function(d) {
         const pos = outerArc.centroid(d)
         pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1)
-        return [arc.centroid(d), outerArc.centroid(d), pos]
+        return [lineArc.centroid(d), outerArc.centroid(d), pos]
       })
 
     const label = chart
@@ -160,11 +182,9 @@ export default function ChartTest() {
   }
 
   return (
-    <div>
-      <div id="tooltip">
-        {currentAccount ? <AccountPreview account={currentAccount} /> : null}
-      </div>
-      <div ref={d3Container} />
+    <div className="homeChartContainer">
+      <div className="homeChart" ref={d3Container} />
+      <AccountDataDisplay data={currentAccount || accounts} />
     </div>
   )
 }
