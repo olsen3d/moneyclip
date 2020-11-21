@@ -9,6 +9,7 @@ export default function AccountDataDisplay({data}) {
     //   return acc
     // }, {balance: 0})
   }
+  console.log(accountData)
   return accountData.transactions ? (
     <div className="accountDataDisplay">
       <div>

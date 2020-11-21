@@ -75,3 +75,11 @@ news
 "summary": "Amazon has announced investments of at least $6 billion in India, including a $1 billion pledge in January to help small businesses in the country.",
 "url": "https://www.cnbc.com/2020/10/28/india-could-contribute-up-to-20percent-of-amazons-growth-in-next-5-years.html"
 }
+
+TODO
+
+account NAME
+account status bar - value gain etc.
+account line CHART / filter time
+account transactions
+account settings - delete rename

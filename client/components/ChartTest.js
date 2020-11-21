@@ -75,7 +75,7 @@ export default function ChartTest() {
 
     chart.attr(
       'transform',
-      'translate(' + (width / 2 + 20) + ',' + (height / 2 + 25) + ')'
+      'translate(' + (width / 2 + 20) + ',' + (height / 2 + 5) + ')'
     )
 
     chart

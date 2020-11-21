@@ -56,12 +56,3 @@ const calcMarket = async () => {
 //calcMarket()
 
 module.exports = calcMarket
-
-/*
-fetch all investing accounts
-get account
-get current net and strategy to find the current amount invested in each stock
-
-
-
-*/
