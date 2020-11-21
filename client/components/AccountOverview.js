@@ -49,6 +49,7 @@ export default function AccountOverview() {
         </span>
       </div>
       <div className="subHeader">
+        <span className="regularFont">{`${account.type} ACCOUNT`}</span>
         <SummaryBar accounts={account} />
       </div>
       <div>
@@ -56,6 +57,9 @@ export default function AccountOverview() {
         <button type="button" onClick={lastYear} className="linkDark">
           filter
         </button>
+      </div>
+      <div className="header">
+        <span className="lightFont">Transactions</span>
       </div>
     </div>
   )

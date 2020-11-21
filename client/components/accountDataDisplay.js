@@ -3,13 +3,21 @@ import React from 'react'
 export default function AccountDataDisplay({data}) {
   let accountData = data
   if (data.length) {
-    accountData = data[0]
-    // accountData = data.reduce((acc, val) => {
-    //   acc.balance += val.balance
-    //   return acc
-    // }, {balance: 0})
+    accountData = {
+      name: 'All Accounts',
+      type: 'ALL',
+      transactions: [],
+      net: 0,
+      earnings: 0,
+      balance: 0
+    }
+    data.forEach(account => {
+      accountData.transactions.push(...account.transactions)
+      accountData.net += account.net
+      accountData.earnings += account.earnings
+      accountData.balance += account.balance
+    })
   }
-  console.log(accountData)
   return accountData.transactions ? (
     <div className="accountDataDisplay">
       <div>

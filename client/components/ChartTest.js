@@ -2,17 +2,17 @@
 import React, {useRef, useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import * as d3 from 'd3'
-import AccountPreview from './AccountPreview'
 import AccountDataDisplay from './accountDataDisplay'
+
+const TTime = 300
 
 export default function ChartTest() {
   const accounts = useSelector(state =>
     state.accounts.filter(acc => acc.balance !== 0)
   )
-  const d3Container = useRef(null)
   const [currentAccount, setCurrentAccount] = useState(accounts[0])
+  const d3Container = useRef(null)
 
-  //only create the chart once
   useEffect(
     () => {
       if (accounts.length && d3.select('#chart').empty()) {
@@ -22,7 +22,6 @@ export default function ChartTest() {
     [accounts]
   )
 
-  //mouse over tooltip function
   function showTooltip(data) {
     setCurrentAccount(data)
   }
@@ -93,20 +92,24 @@ export default function ChartTest() {
         })
         others
           .transition()
+          .duration(TTime)
           .attr('d', arc)
           .attr('opacity', 0.3)
         d3
           .select(this)
-          .transition(100)
+          .transition()
+          .duration(TTime)
           .attr('d', bigArc)
           .attr('opacity', 1)
         d3
           .selectAll('polyline')
           .transition()
+          .duration(TTime)
           .attr('stroke-opacity', 0.2)
         d3
           .selectAll('text')
           .transition()
+          .duration(TTime)
           .attr('opacity', 0.2)
       })
       .on('mousemove', function(event, dataPoint) {
@@ -119,20 +122,24 @@ export default function ChartTest() {
         })
         others
           .transition()
+          .duration(TTime)
           .attr('d', arc)
           .attr('opacity', 1)
         d3
           .select(this)
           .transition()
+          .duration(TTime)
           .attr('d', arc)
           .attr('opacity', 1)
         d3
           .selectAll('polyline')
           .transition()
+          .duration(TTime)
           .attr('stroke-opacity', 1)
         d3
           .selectAll('text')
           .transition()
+          .duration(TTime)
           .attr('opacity', 1)
 
         d3.select('#tooltip').style('display', 'none')
@@ -142,6 +149,7 @@ export default function ChartTest() {
       .on('click', function(event, dataPoint) {
         console.log(dataPoint.data.id)
       })
+
     chart.append('g').classed('labels', true)
     chart.append('g').classed('lines', true)
 

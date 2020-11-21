@@ -67,6 +67,7 @@ export default function Accounts() {
         </span>
       </div>
       <div className="subHeader">
+        <span className="regularFont">Overview of your accounts</span>
         <SummaryBar accounts={accounts} />
       </div>
       <ul className="">

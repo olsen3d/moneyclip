@@ -24,6 +24,7 @@ export default function Home() {
         </span>
       </div>
       <div className="subHeader">
+        <span className="regularFont">Overview of your financials</span>
         <SummaryBar accounts={accounts} />
       </div>
       <ChartTest />

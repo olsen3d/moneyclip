@@ -83,3 +83,10 @@ account status bar - value gain etc.
 account line CHART / filter time
 account transactions
 account settings - delete rename
+
+.name = 'All Accounts'
+.type = 'ALL'
+.transactions
+.net reduce
+.earnings reduce
+.balance reduce

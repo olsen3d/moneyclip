@@ -103,7 +103,10 @@ const startListening = () => {
   )
 
   // set up our socket control center
-  const io = socketio(server)
+  const io = socketio(server, {
+    pingInterval: 10000,
+    pingTimeout: 60000
+  })
   require('./socket')(io)
 }
 
