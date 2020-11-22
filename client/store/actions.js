@@ -10,6 +10,7 @@ import {
 
 const loadAccountsAction = accounts => ({type: LOAD_ACCOUNTS, accounts})
 const createAccountAction = account => ({type: CREATE_ACCOUNT, account})
+const removeAccountAction = id => ({type: REMOVE_ACCOUNT, id})
 
 const createTransactionAction = transaction => ({
   type: CREATE_TRANSACTION,
@@ -21,6 +22,7 @@ const loadNewsAction = news => ({type: LOAD_NEWS, news})
 export {
   loadAccountsAction,
   createAccountAction,
+  removeAccountAction,
   createTransactionAction,
   loadNewsAction
 }

@@ -50,7 +50,7 @@ body {
   padding: 0;
 }
 
-.textButton > button {
+.textButton {
   background: none;
   color: inherit;
   border: none;
@@ -276,11 +276,11 @@ form div {
   display: flex;
   justify-content: space-between;
   max-width: 775px;
-  margin: 0;
   font-size: 1.5rem;
   color: #333333;
   padding-bottom: 0.25rem;
   border-bottom: 1px solid #cccccc;
+  margin: 0 0 0.5rem 0;
 }
 
 .mainContent {
@@ -305,7 +305,6 @@ polyline {
 }
 
 .subHeader {
-  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
 }

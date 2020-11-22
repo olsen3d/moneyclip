@@ -8,7 +8,7 @@ const TTime = 300
 
 export default function ChartTest() {
   const accounts = useSelector(state =>
-    state.accounts.filter(acc => acc.balance !== 0)
+    state.accounts.filter(acc => acc.balance)
   )
   const [currentAccount, setCurrentAccount] = useState(accounts[0])
   const d3Container = useRef(null)

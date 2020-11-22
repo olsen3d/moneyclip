@@ -12,7 +12,7 @@ export default function Accounts() {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
-  if (accounts.length === 0) return <p>No Accounts</p>
+  //if (accounts.length === 0) return <p>No Accounts</p>
 
   const onSubmitAccount = newAccount => {
     newAccount.userId = user.id
@@ -47,11 +47,11 @@ export default function Accounts() {
     <div id="profile">
       <div className="header">
         <span className="lightFont">All Accounts ({accounts.length})</span>
-        <span className="regularFont alignRight textButton">
+        <span className="regularFont alignRight">
           <button
             type="button"
             onClick={() => setAccountModal(true)}
-            className="linkDark"
+            className="linkDark textButton"
           >
             Add New
           </button>
@@ -59,7 +59,7 @@ export default function Accounts() {
           <button
             type="button"
             onClick={() => setTransactionModal(true)}
-            className="linkDark"
+            className="linkDark textButton"
             to="/home"
           >
             Transaction

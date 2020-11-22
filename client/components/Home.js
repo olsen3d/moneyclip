@@ -12,11 +12,11 @@ export default function Home() {
     <div id="profile">
       <div className="header">
         <span className="lightFont">Home ({user.email})</span>
-        <span className="regularFont alignRight textButton">
+        <span className="regularFont alignRight">
           <button
             type="button"
             onClick={() => console.log('click')}
-            className="linkDark"
+            className="linkDark textButton"
             to="/home"
           >
             Transaction

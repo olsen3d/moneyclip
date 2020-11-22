@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
 import LineChart from './LineChart'
 import SummaryBar from './SummaryBar'
+import {removeAccount} from '../store/thunks'
+import {history} from '../history'
 
 export default function AccountOverview() {
   const [accountData, setAccountData] = useState(null)
@@ -12,6 +14,7 @@ export default function AccountOverview() {
   const account = useSelector(state =>
     state.accounts.find(acc => acc.id === match.params.accountId)
   )
+  const dispatch = useDispatch()
 
   useEffect(
     () => {
@@ -26,22 +29,24 @@ export default function AccountOverview() {
     setAccountData(newData)
   }
 
+  const deleteAccount = () => dispatch(removeAccount(account.id))
+
   if (!account) return <h1>Loading</h1>
   return (
     <div id="profile">
       <div className="header">
         <span className="lightFont">{account.name}</span>
-        <span className="regularFont alignRight textButton">
+        <span className="regularFont alignRight">
           <button
             type="button"
             onClick={() => setTransactionModal(true)}
-            className="linkDark"
+            className="linkDark textButton"
             to="/home"
           >
             Transaction
           </button>
           <span> | </span>
-          <button type="button" onClick={null} className="linkDark">
+          <button type="button" onClick={null} className="linkDark textButton">
             <Link to="/accounts" className="linkDark">
               Back
             </Link>
@@ -61,6 +66,16 @@ export default function AccountOverview() {
       <div className="header">
         <span className="lightFont">Transactions</span>
       </div>
+      <div className="header">
+        <span className="lightFont">Settings</span>
+      </div>
+      <button
+        type="button"
+        onClick={deleteAccount}
+        className="linkDark textButton"
+      >
+        Delete Account
+      </button>
     </div>
   )
 }

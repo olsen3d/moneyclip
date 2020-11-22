@@ -15,11 +15,11 @@ export default function NewsFeed() {
     <div id="profile">
       <div className="header">
         <span className="lightFont">News Feed</span>
-        <span className="regularFont alignRight textButton">
+        <span className="regularFont alignRight">
           <button
             type="button"
             onClick={() => dispatch(loadNews())}
-            className="linkDark"
+            className="linkDark textButton"
           >
             Refresh
           </button>

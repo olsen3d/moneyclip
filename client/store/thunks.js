@@ -2,6 +2,7 @@ import axios from 'axios'
 import {
   loadAccountsAction,
   createAccountAction,
+  removeAccountAction,
   createTransactionAction,
   loadNewsAction
 } from './actions'
@@ -16,6 +17,11 @@ const createAccount = account => async dispatch => {
   return dispatch(createAccountAction(newAccount))
 }
 
+const removeAccount = id => async dispatch => {
+  await axios.delete(`/api/accounts/${id}`)
+  return dispatch(removeAccountAction(id))
+}
+
 const createTransaction = transaction => async dispatch => {
   const newTransaction = (await axios.post('/api/transaction', transaction))
     .data
@@ -28,4 +34,4 @@ const loadNews = _ => async dispatch => {
   return dispatch(loadNewsAction(news))
 }
 
-export {loadAccounts, createAccount, createTransaction, loadNews}
+export {loadAccounts, createAccount, removeAccount, createTransaction, loadNews}

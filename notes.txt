@@ -78,15 +78,26 @@ news
 
 TODO
 
-account NAME
-account status bar - value gain etc.
-account line CHART / filter time
-account transactions
-account settings - delete rename
+accountOverview.js
+  1. account NAME
+  2. account status bar - value gain etc.
+  3. account line CHART / filter time
+  4. account transactions
+  5. account settings - delete rename
 
-.name = 'All Accounts'
-.type = 'ALL'
-.transactions
-.net reduce
-.earnings reduce
-.balance reduce
+redux
+  1. account update
+  2. account remove
+
+models
+  1. transactions withdrawal from an investing account
+
+add new
+  1. strategy chart D3.js
+
+
+watch list
+  1. local state to pick a stock
+  2 .make a trans type card to display
+  3. maximum of 5 due to api limitations
+
