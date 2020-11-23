@@ -87,7 +87,7 @@ accountOverview.js
 
 redux
   1. account update
-  2. account remove
+  2. account remove DONE
 
 models
   1. transactions withdrawal from an investing account
@@ -100,4 +100,3 @@ watch list
   1. local state to pick a stock
   2 .make a trans type card to display
   3. maximum of 5 due to api limitations
-
