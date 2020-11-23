@@ -160,14 +160,14 @@ form div {
 
 #profile {
   width: 100vw;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
+  background-color: #eeeeee;
+  /* background: linear-gradient(
     90deg,
     rgba(2, 0, 36, 1) 0%,
     rgba(231, 231, 231, 1) 0%,
     rgba(255, 255, 255, 1) 60%,
     rgba(255, 255, 255, 1) 100%
-  );
+  ); */
   padding: 1rem 1rem 0 1rem;
 }
 

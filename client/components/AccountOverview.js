@@ -4,7 +4,7 @@ import {Link, useRouteMatch} from 'react-router-dom'
 import LineChart from './LineChart'
 import SummaryBar from './SummaryBar'
 import {removeAccount} from '../store/thunks'
-import {history} from '../history'
+import history from '../history'
 
 export default function AccountOverview() {
   const [accountData, setAccountData] = useState(null)
@@ -29,7 +29,10 @@ export default function AccountOverview() {
     setAccountData(newData)
   }
 
-  const deleteAccount = () => dispatch(removeAccount(account.id))
+  const deleteAccount = () => {
+    history.push('/accounts')
+    dispatch(removeAccount(account.id))
+  }
 
   if (!account) return <h1>Loading</h1>
   return (

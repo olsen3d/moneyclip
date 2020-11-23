@@ -10,21 +10,20 @@ export default function ChartTest() {
   const accounts = useSelector(state =>
     state.accounts.filter(acc => acc.balance)
   )
-  const [currentAccount, setCurrentAccount] = useState(accounts[0])
+  const [currentAccount, setCurrentAccount] = useState(accounts)
   const d3Container = useRef(null)
 
   useEffect(
     () => {
       if (accounts.length && d3.select('#chart').empty()) {
+        setCurrentAccount(accounts)
         showData(accounts)
       }
     },
     [accounts]
   )
 
-  function showTooltip(data) {
-    setCurrentAccount(data)
-  }
+  const showTooltip = data => setCurrentAccount(data)
 
   function showData(data) {
     const chart = d3
@@ -192,7 +191,7 @@ export default function ChartTest() {
   return (
     <div className="homeChartContainer">
       <div className="homeChart" ref={d3Container} />
-      <AccountDataDisplay data={currentAccount || accounts} />
+      <AccountDataDisplay data={currentAccount} />
     </div>
   )
 }
