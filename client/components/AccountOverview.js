@@ -2,13 +2,22 @@ import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
 import LineChart from './LineChart'
+import LineChart2 from './LineChart2'
 import SummaryBar from './SummaryBar'
-import {removeAccount} from '../store/thunks'
+import {removeAccount, createTransaction} from '../store/thunks'
 import history from '../history'
 import Transactions from './Transactions'
+import NewTransactionModal from './NewTransactionModal'
 
 export default function AccountOverview() {
   const [accountData, setAccountData] = useState(null)
+  const [transactionModal, setTransactionModal] = useState(false)
+  const dispatch = useDispatch()
+
+  const onSubmitTransaction = transaction => {
+    dispatch(createTransaction(transaction))
+    setTransactionModal(false)
+  }
 
   let match = useRouteMatch({
     path: '/accounts/:accountId/'
@@ -16,7 +25,6 @@ export default function AccountOverview() {
   const account = useSelector(state =>
     state.accounts.find(acc => acc.id === match.params.accountId)
   )
-  const dispatch = useDispatch()
 
   useEffect(
     () => {
@@ -26,7 +34,7 @@ export default function AccountOverview() {
   )
 
   const lastYear = () => {
-    const newData = accountData.filter((val, i) => i < 30)
+    const newData = accountData.filter((val, i) => i < 365)
     setAccountData(newData)
   }
 
@@ -36,6 +44,15 @@ export default function AccountOverview() {
   }
 
   if (!account) return <h1>Loading</h1>
+
+  if (transactionModal) {
+    return (
+      <NewTransactionModal
+        onSubmit={onSubmitTransaction}
+        onCancel={() => setTransactionModal(false)}
+      />
+    )
+  }
 
   return (
     <div id="profile">
@@ -63,7 +80,12 @@ export default function AccountOverview() {
         <SummaryBar accounts={account} />
       </div>
       <div>
-        {accountData && <LineChart accountData={accountData} />}
+        {accountData && (
+          <div>
+            <LineChart accountData={accountData} />
+            <LineChart2 accountData={accountData} />
+          </div>
+        )}
         <button type="button" onClick={lastYear} className="linkDark">
           filter
         </button>

@@ -12,7 +12,6 @@ export default function Accounts() {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
-  //if (accounts.length === 0) return <p>No Accounts</p>
 
   const onSubmitAccount = newAccount => {
     newAccount.userId = user.id

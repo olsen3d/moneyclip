@@ -27,8 +27,8 @@ export default function LineChart({accountData}) {
 
     const chart = d3.select(d3Container.current)
 
-    let bodyHeight = 200
-    let bodyWidth = 500
+    let bodyHeight = 300
+    let bodyWidth = 450
 
     let minValue = Math.min(
       d3.min(transactions, d => +d.balance * 0.01),
@@ -51,7 +51,12 @@ export default function LineChart({accountData}) {
     chart
       .append('g')
       .attr('transform', `translate(0, ${bodyHeight})`)
-      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b %a')))
+      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b %d %y')))
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('dx', '-.8em')
+      .attr('dy', '.15em')
+      .attr('transform', 'rotate(-45)')
 
     let lineBalance = d3
       .line()
@@ -87,7 +92,7 @@ export default function LineChart({accountData}) {
       .line()
       .x(d => xScale(d.date))
       .y(d => yScale(+d.net * 0.01))
-      .curve(d3.curveStepBefore)
+      .curve(d3.curveStepAfter)
 
     chart
       .append('path')
@@ -130,8 +135,8 @@ export default function LineChart({accountData}) {
 
   return (
     <div>
-      <svg id="container" height="300" width="500">
-        <g ref={d3Container} id="body" transform="translate(50,50)" />
+      <svg id="container" height="400" width="500">
+        <g ref={d3Container} id="body" transform="translate(50,20)" />
         <g id="xAxis" />
         <g id="yAxis" />
       </svg>

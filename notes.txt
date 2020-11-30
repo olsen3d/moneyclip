@@ -76,27 +76,52 @@ news
 "url": "https://www.cnbc.com/2020/10/28/india-could-contribute-up-to-20percent-of-amazons-growth-in-next-5-years.html"
 }
 
-TODO
 
-accountOverview.js
-  1. account NAME
-  2. account status bar - value gain etc.
-  3. account line CHART / filter time
-  4. account transactions
-  5. account settings - delete rename
 
-redux
-  1. account update
-  2. account remove DONE
 
-models
+
+UI >------------------------------------------------------------>
+
+icon improvements
+  1. account icons - checking, saving, investing
+  2. deposit and withdrawal icons
+  3. loading icon with "card shuffle" animation in AE
+
+cards & flexbox
+  1. flexbox 2x2 for cards -  400 x 2 max width: 800?
+  2. centered on maincontent area
+  3. white bg for header, subheader, and summary bar and then each card
+
+stretch goals
+  1. mobile version with burger menu
+
+
+FEATURES >------------------------------------------------------------>
+
+redux store
+  1. account update - name
+
+Header buttons 
+  1. make sure all header buttons work - transaction modals and back buttons
+
+db models
   1. transactions withdrawal from an investing account
-
-add new
-  1. strategy chart D3.js
-
+  2. watch item belongs to an account has watch.name for stock
 
 watch list
   1. local state to pick a stock
-  2 .make a trans type card to display
+  2. make a trans type card to display stock and history
   3. maximum of 5 due to api limitations
+
+charts
+  1. strategy chart D3.js on investing account create
+  2. history line chart for watchlish stocks
+
+transactions compoonent
+  1. display date range next to dropdown
+  2. include market adjustments checkbox (off by default)
+
+
+
+BUGS >------------------------------------------------------------>
+

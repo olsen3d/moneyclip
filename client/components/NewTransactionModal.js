@@ -1,12 +1,31 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import AccountPreview from './AccountPreview'
+import {useRouteMatch} from 'react-router-dom'
 
 export default function NewTransaction({onSubmit, onCancel}) {
   const accounts = useSelector(state => state.accounts)
   const [type, setType] = useState('DEPOSIT')
   const [amount, setAmount] = useState('')
   const [account, setAccount] = useState(accounts[0].id)
+
+  let match = useRouteMatch({
+    path: '/accounts/:accountId/'
+  })
+  const selectedAccount = match
+    ? useSelector(state =>
+        state.accounts.find(acc => acc.id === match.params.accountId)
+      )
+    : null
+
+  useEffect(
+    () => {
+      if (match) {
+        setAccount(selectedAccount.id)
+      }
+    },
+    [match]
+  )
 
   const submit = e => {
     e.preventDefault()
@@ -37,19 +56,22 @@ export default function NewTransaction({onSubmit, onCancel}) {
           )}
         </ul>
         <form onSubmit={submit}>
-          <select
-            value={account}
-            onChange={e => {
-              setAccount(e.target.value)
-            }}
-          >
-            {accounts &&
-              accounts.map(acc => (
-                <option key={acc.id} value={acc.id}>
-                  {acc.name}
-                </option>
-              ))}
-          </select>
+          {!match ? (
+            <select
+              value={account}
+              onChange={e => {
+                setAccount(e.target.value)
+              }}
+            >
+              {accounts &&
+                accounts.map(acc => (
+                  <option key={acc.id} value={acc.id}>
+                    {acc.name}
+                  </option>
+                ))}
+            </select>
+          ) : null}
+
           <select
             value={type}
             onChange={e => {

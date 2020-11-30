@@ -103,6 +103,11 @@ label {
   width: 100vw;
 }
 
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
 #sidebar {
   background-color: #193b42;
   display: flex;
@@ -112,7 +117,18 @@ label {
   max-width: 250px;
   width: 20vw;
   margin: 0;
-  /* position: fixed; */
+  position: fixed;
+}
+
+#sidebarPlaceholder {
+  background-color: #193b42;
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 0.8rem 0 0.8rem;
+  height: 100vh;
+  max-width: 250px;
+  width: 20vw;
+  margin: 0;
 }
 
 #sidebar > *:not(:first-child) {
@@ -333,7 +349,7 @@ polyline {
 }
 
 .negative {
-  color: #ff0000;
+  color: #dd983e;
 }
 
 .homeChartContainer {

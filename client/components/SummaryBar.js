@@ -38,7 +38,7 @@ export default function SummaryBar({accounts}) {
             gain >= 0 ? 'positive' : 'negative'
           }`}
         >
-          {gain >= 0 ? `+$${gain.toFixed(2)}` : `-$${gain.toFixed(2)}`}
+          {`$${gain.toFixed(2)}`}
         </div>
       </div>
 
@@ -49,7 +49,7 @@ export default function SummaryBar({accounts}) {
             roi >= 0 ? 'positive' : 'negative'
           }`}
         >
-          {roi > 0 ? `+%${roi}` : `-%${roi}`}
+          {`%${roi}`}
         </div>
       </div>
     </div>

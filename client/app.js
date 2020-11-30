@@ -7,7 +7,10 @@ const App = () => {
   return (
     <div id="appContainer">
       <Navbar />
-      <Routes />
+      <div className="main">
+        <div id="sidebarPlaceholder" />
+        <Routes />
+      </div>
     </div>
   )
 }
