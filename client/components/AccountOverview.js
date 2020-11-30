@@ -5,9 +5,11 @@ import LineChart from './LineChart'
 import SummaryBar from './SummaryBar'
 import {removeAccount} from '../store/thunks'
 import history from '../history'
+import Transactions from './Transactions'
 
 export default function AccountOverview() {
   const [accountData, setAccountData] = useState(null)
+
   let match = useRouteMatch({
     path: '/accounts/:accountId/'
   })
@@ -24,8 +26,7 @@ export default function AccountOverview() {
   )
 
   const lastYear = () => {
-    const newData = accountData.filter((val, i) => i > 10)
-
+    const newData = accountData.filter((val, i) => i < 30)
     setAccountData(newData)
   }
 
@@ -35,6 +36,7 @@ export default function AccountOverview() {
   }
 
   if (!account) return <h1>Loading</h1>
+
   return (
     <div id="profile">
       <div className="header">
@@ -69,6 +71,9 @@ export default function AccountOverview() {
       <div className="header">
         <span className="lightFont">Transactions</span>
       </div>
+      {account.transactions ? (
+        <Transactions transactions={account.transactions} />
+      ) : null}
       <div className="header">
         <span className="lightFont">Settings</span>
       </div>

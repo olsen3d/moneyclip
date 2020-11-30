@@ -51,7 +51,7 @@ export default function LineChart({accountData}) {
     chart
       .append('g')
       .attr('transform', `translate(0, ${bodyHeight})`)
-      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b')))
+      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b %a')))
 
     let lineBalance = d3
       .line()
@@ -97,7 +97,7 @@ export default function LineChart({accountData}) {
       .attr('d', lineNet)
       .attr('stroke', '#333333')
       .attr('stroke-width', 2)
-      .attr('stroke-opacity', 0.7)
+      .attr('stroke-opacity', 0.4)
       .style('fill', 'none')
 
     const gradient = chart

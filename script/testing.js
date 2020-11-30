@@ -72,4 +72,34 @@ const adjustment = Object.entries(quotes)
 // const spending = net * strategy.VEA / 100
 // const currentValue = quotes.VEA * portfolio.VEA
 // const adjustment = currentValue.toFixed(2) - spending
-console.log(adjustment)
+//console.log(adjustment)
+
+//on every interest/market get the previous balance then calc return
+
+// 4% apr over one year is 0.01 per quarter
+
+//TR = 100 (this balance - prev balance) / prev balance
+//n-Period Total Return = 100 [(1+TR1) (1+TR2) (1+TR3) ... (1+TRn) - 1]
+
+const TR1 = 0.01
+const TR2 = 0.01
+const TR3 = 0.01
+const TR4 = 0.01
+
+const period = 100 * ((1 + TR1) * (1 + TR2) * (1 + TR3) * (1 + TR4) - 1)
+
+//console.log(period)
+
+const current = Math.floor(Date.now() / 1000)
+
+const year = 31536000
+const month3 = 7884864
+const month1 = 2628288
+
+//console.log(current - year)
+//mult finnhub time * 1000 to get a js date
+const date = new Date(1606176000 * 1000)
+console.log(date)
+
+//data.c = closing price
+//data.t = timestamp

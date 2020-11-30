@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
           include: {
             model: Transaction
           },
-          order: [['name', 'ASC'], [Transaction, 'date', 'ASC']]
+          order: [['name', 'ASC'], [Transaction, 'date', 'DESC']]
         })
       )
     } catch (error) {

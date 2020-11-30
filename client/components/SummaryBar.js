@@ -1,4 +1,5 @@
 import React from 'react'
+import {formatter} from '../../script/utils'
 
 export default function SummaryBar({accounts}) {
   const value = accounts.length
@@ -19,13 +20,15 @@ export default function SummaryBar({accounts}) {
       }, 0) * 0.01
     : accounts.earnings * 0.01
 
+  const max = null
+
   const roi = (gain / net * 100).toFixed(2)
 
   return (
     <div className="summaryBar">
       <div className="summaryCard">
         <div className="thinFont">Value </div>
-        <div className="regularFont largeFont">${value}</div>
+        <div className="regularFont largeFont">{formatter.format(value)}</div>
       </div>
 
       <div className="summaryCard">
@@ -35,7 +38,7 @@ export default function SummaryBar({accounts}) {
             gain >= 0 ? 'positive' : 'negative'
           }`}
         >
-          {gain >= 0 ? `+$${gain}` : `-$${gain}`}
+          {gain >= 0 ? `+$${gain.toFixed(2)}` : `-$${gain.toFixed(2)}`}
         </div>
       </div>
 

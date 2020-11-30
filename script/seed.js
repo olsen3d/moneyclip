@@ -4,6 +4,7 @@ const db = require('../server/db')
 const colors = require('colors')
 const {User} = require('../server/db/models')
 const {Account, Transaction, Portfolio} = require('../server/db/models')
+const {fetchMarketHistory} = require('../server/api/finnhub')
 
 async function seed() {
   await db.sync({force: true})
@@ -37,7 +38,7 @@ async function seed() {
     })
   ])
 
-  const port = await Portfolio.create({
+  const portfolio = await Portfolio.create({
     AGG: 0,
     VTI: 0,
     VEA: 0,
@@ -47,18 +48,18 @@ async function seed() {
 
   const createTransaction = async (date, acc) => {
     const randomTransaction = Math.random()
-    const randomAmount = Math.floor(Math.random() * 10000)
+    const randomAmount = Math.floor(Math.random() * 150000)
     console.log('------------------------------')
     console.log(date)
-    if (randomTransaction < 0.01) {
+    if (randomTransaction < 0.005) {
       console.log(`withdrawing ${randomAmount}`.yellow)
       await Transaction.create({
-        amount: randomAmount * -1,
+        amount: Math.floor(randomAmount / 2 * -1),
         type: 'WITHDRAWAL',
         date: date,
         accountId: acc.id
       })
-    } else if (randomTransaction < 0.03) {
+    } else if (randomTransaction < 0.04) {
       console.log(`depositing ${randomAmount}`.blue)
       await Transaction.create({
         amount: randomAmount,
@@ -72,7 +73,7 @@ async function seed() {
   const calcInterest = async (date, acc) => {
     const account = await Account.findByPk(acc.id)
     const balance = account.balance
-    const interest = 0.04 / 12 //4% over 12 months a year
+    const interest = 0.00333 //4% over 12 months a year
     let earnings = Math.floor(balance * interest)
     if (earnings < 0) earnings = 0
     console.log('------------------------------')
@@ -105,6 +106,76 @@ async function seed() {
       await createTransaction(dateTransaction, savingAcc)
     }
   }
+
+  //simulate market
+  //create account
+  //fetch history
+  //create a loop
+  //on each iteration 1/10 to withdrawal, 2/10 to deposit a random amount
+
+  //if deposit: create a deposit transaction
+  //get price of stock and buy amount
+  //put amount in portfolio
+
+  //if withdrawal: create a withdrawal amount
+  //get price of stock divide by amount
+  //subtract amount in portfolio
+
+  //on each iteration calc market >>>
+  //get price
+  //mult price by portfolio amount to get total end value
+  //subtract balance
+  //create market transaction for adjustment
+
+  //investingAcc
+  //portfolio
+
+  const simulateMarketDeposit = async (date, price) => {
+    const randomAmount = Math.floor(Math.random() * 600000)
+    await Transaction.create({
+      amount: randomAmount,
+      type: 'SEED_DEPOSIT',
+      date: new Date(date * 1000),
+      accountId: investingAcc.id
+    })
+    await portfolio.update({
+      VTI: portfolio.VTI + randomAmount / price / 100
+    })
+    await investingAcc.update({
+      net: investingAcc.net + randomAmount,
+      balance: investingAcc.balance + randomAmount
+    })
+  }
+
+  const simulateMarketAdjustment = async (date, price) => {
+    const BV = investingAcc.net / 100
+    const EV = portfolio.VTI * price
+
+    console.log(EV - BV)
+
+    await Transaction.create({
+      amount: Math.floor(EV - BV),
+      type: 'MARKET',
+      date: new Date(date * 1000),
+      accountId: investingAcc.id
+    })
+  }
+
+  const simulateMarket = async () => {
+    const stock = await fetchMarketHistory('VTI')
+
+    for (let i = 0; i < stock.t.length; i++) {
+      const date = stock.t[i]
+      const price = stock.c[i]
+      //console.log(i, date, price)
+      if (i === 0) await simulateMarketDeposit(date, price)
+      const randomTransaction = Math.random()
+      if (randomTransaction < 0.05) await simulateMarketDeposit(date, price)
+      await simulateMarketAdjustment(date, price)
+    }
+  }
+
+  await simulateMarket()
 
   console.log(`seeded successfully`)
 }

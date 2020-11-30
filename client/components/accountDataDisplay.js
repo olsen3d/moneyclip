@@ -1,4 +1,7 @@
 import React from 'react'
+import {formatter} from '../../script/utils'
+
+console.log(formatter)
 
 export default function AccountDataDisplay({data}) {
   let accountData = data
@@ -29,37 +32,47 @@ export default function AccountDataDisplay({data}) {
       <div>
         <span className="regularFont">Deposits: </span>
         <span className="lightFont">
-          {accountData.transactions
-            .filter(trans => trans.type === 'DEPOSIT')
-            .reduce((total, deposit) => {
-              total += deposit.amount
-              return total
-            }, 0)}
+          {formatter.format(
+            accountData.transactions
+              .filter(trans => trans.type === 'DEPOSIT')
+              .reduce((total, deposit) => {
+                total += deposit.amount
+                return total
+              }, 0) * 0.01
+          )}
         </span>
       </div>
       <div>
         <span className="regularFont">Withdrawals: </span>
         <span className="lightFont">
-          {accountData.transactions
-            .filter(trans => trans.type === 'WITHDRAWAL')
-            .reduce((total, withdrawal) => {
-              total += withdrawal.amount
-              return total
-            }, 0)}
+          {formatter.format(
+            accountData.transactions
+              .filter(trans => trans.type === 'WITHDRAWAL')
+              .reduce((total, withdrawal) => {
+                total += withdrawal.amount
+                return total
+              }, 0) * 0.01
+          )}
         </span>
       </div>
       <div>
         <span className="regularFont">Net Deposit: </span>
-        <span className="lightFont">{accountData.net}</span>
+        <span className="lightFont">
+          {formatter.format(accountData.net * 0.01)}
+        </span>
       </div>
       <div>
         <span className="regularFont">Earnings: </span>
-        <span className="lightFont">{accountData.earnings}</span>
+        <span className="lightFont">
+          {formatter.format(accountData.earnings * 0.01)}
+        </span>
       </div>
       <div className="spacer" />
       <div>
         <span className="regularFont">Balance: </span>
-        <span className="lightFont">{accountData.balance}</span>
+        <span className="lightFont">
+          {formatter.format(accountData.balance * 0.01)}
+        </span>
       </div>
     </div>
   ) : null

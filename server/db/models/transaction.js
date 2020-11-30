@@ -34,7 +34,7 @@ const uuidDef = {
 
 const Transaction = db.define('transaction', {
   id: uuidDef,
-  type: ENUM('DEPOSIT', 'WITHDRAWAL', 'INTEREST', 'MARKET'),
+  type: ENUM('DEPOSIT', 'WITHDRAWAL', 'INTEREST', 'MARKET', 'SEED_DEPOSIT'),
   amount: INTEGER,
   net: INTEGER,
   earnings: INTEGER,
@@ -76,6 +76,8 @@ Transaction.addHook('afterCreate', async transaction => {
         earnings: account.earnings + transaction.amount,
         balance: account.balance + transaction.amount
       })
+      break
+    case 'SEED_DEPOSIT':
       break
     default:
       break
