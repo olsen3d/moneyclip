@@ -14,7 +14,7 @@ export default function AccountPreview({account}) {
   if (account.type === 'SAVING') accountImage = '/img/saving.png'
   if (account.type === 'INVESTING') accountImage = '/img/investing.png'
   return (
-    <Link className="accountLink" to={`/accounts/${account.id}`}>
+    <Link className="cardFullLink" to={`/accounts/${account.id}`}>
       <div className="accountOverviewContainer">
         <div className="accountLogo">
           <img width="42px" height="42px" src={accountImage} />

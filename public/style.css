@@ -219,24 +219,11 @@ form div {
 }
 
 .accountOverviewContainer {
+  color: #333333;
+  text-decoration: none;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #ffffff;
-  padding: 0.5rem;
-  margin: 1rem;
-  max-width: 700px;
-  border-left: 5px solid #3c6c70;
-  border-bottom: 5px solid #3c6c70;
-  border-bottom-left-radius: 1rem;
-  transition: all 0.25s;
-}
-
-.accountOverviewContainer:hover {
-  border-left: 5px solid #193b42;
-  border-bottom: 5px solid #193b42;
-  margin-left: 30px;
-  box-shadow: 5px 5px 2px #bbbbbb;
 }
 
 .accountSmallPreview {
@@ -258,11 +245,6 @@ form div {
 
 .smallLogo {
   margin-right: 0.25rem;
-}
-
-.accountLink {
-  color: #333333;
-  text-decoration: none;
 }
 
 .accountNavLink {
@@ -326,10 +308,32 @@ form div {
   padding: 1rem 10%;
 }
 
-.cardOne {
+.cardFull {
   background-color: white;
   padding: 1rem;
   width: 100%;
+  margin-bottom: 1rem;
+  border-bottom: 5px solid #3c6c70;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+.cardFullLink {
+  color: #333333;
+  text-decoration: none;
+  background-color: white;
+  padding: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-bottom: 5px solid #3c6c70;
+  box-shadow: 2px 2px 2px #dddddd;
+  transition: all 0.25s;
+}
+
+.cardFullLink:hover {
+  border-bottom: 5px solid #193b42;
+  margin-left: 2rem;
+  margin-right: -2rem;
+  box-shadow: 5px 5px 2px #bbbbbb;
 }
 
 .cardDouble {

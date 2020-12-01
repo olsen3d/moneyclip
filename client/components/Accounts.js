@@ -44,36 +44,41 @@ export default function Accounts() {
 
   return (
     <div id="mainContent">
-      <div className="header">
-        <span className="lightFont">All Accounts ({accounts.length})</span>
-        <span className="regularFont alignRight">
-          <button
-            type="button"
-            onClick={() => setAccountModal(true)}
-            className="linkDark textButton"
-          >
-            Add New
-          </button>
-          <span> | </span>
-          <button
-            type="button"
-            onClick={() => setTransactionModal(true)}
-            className="linkDark textButton"
-            to="/home"
-          >
-            Transaction
-          </button>
-        </span>
+      <div id="topBar">
+        <div className="header">
+          <span className="largerFont regularFont">
+            All Accounts ({accounts.length})
+          </span>
+          <span className="lightFont alignRight">
+            <button
+              type="button"
+              onClick={() => setAccountModal(true)}
+              className="linkDark textButton"
+            >
+              Add New
+            </button>
+            <span> | </span>
+            <button
+              type="button"
+              onClick={() => setTransactionModal(true)}
+              className="linkDark textButton"
+              to="/home"
+            >
+              Transaction
+            </button>
+          </span>
+        </div>
+        <div className="subHeader">
+          <span className="regularFont">Overview of your accounts</span>
+          <SummaryBar accounts={accounts} />
+        </div>
       </div>
-      <div className="subHeader">
-        <span className="regularFont">Overview of your accounts</span>
-        <SummaryBar accounts={accounts} />
-      </div>
-      <ul className="">
+
+      <div id="cardHolder">
         {accounts.map(account => (
           <AccountPreview key={account.id} account={account} />
         ))}
-      </ul>
+      </div>
     </div>
   )
 }
