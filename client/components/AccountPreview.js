@@ -10,9 +10,9 @@ export default function AccountPreview({account}) {
   })
 
   let accountImage = ''
-  if (account.type === 'CHECKING') accountImage = '/img/checking.png'
-  if (account.type === 'SAVING') accountImage = '/img/saving.png'
-  if (account.type === 'INVESTING') accountImage = '/img/investing.png'
+  if (account.type === 'CHECKING') accountImage = '/img/checkingLight.png'
+  if (account.type === 'SAVING') accountImage = '/img/savingLight.png'
+  if (account.type === 'INVESTING') accountImage = '/img/investingLight.png'
   return (
     <Link className="cardFullLink" to={`/accounts/${account.id}`}>
       <div className="accountOverviewContainer">

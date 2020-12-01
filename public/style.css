@@ -114,7 +114,7 @@ label {
   background-color: #193b42;
   display: flex;
   flex-direction: column;
-  padding: 1.2rem 0.8rem 0 0.8rem;
+  padding: 1rem 0.8rem 0 0.8rem;
   height: 100vh;
   max-width: 250px;
   width: 20vw;
@@ -142,6 +142,11 @@ label {
   margin: 0 0.8rem 0 0;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
 .regularFont {
   font-family: regularFont;
 }
@@ -156,6 +161,10 @@ label {
 
 .thinFont {
   font-family: thinFont;
+}
+
+.mediumLargeFont {
+  font-size: 1.25rem;
 }
 
 .largeFont {
@@ -183,7 +192,7 @@ form div {
 #mainContent {
   width: 100%;
   background-color: #f3f3f3;
-  padding-bottom: 300px;
+  padding-bottom: 250px;
 }
 
 #footer {
@@ -191,11 +200,27 @@ form div {
   width: 100%;
   position: absolute;
   bottom: 0;
-  height: 200px;
+  height: 175px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-  padding: 1rem 10%;
+  padding: 0 10%;
+}
+
+.footerText {
+  margin: 0 3rem;
+}
+
+.shiftDown {
+  margin-bottom: -0.5rem;
+  margin-right: 0.5rem;
+}
+
+#bottomImgContainer {
+  display: flex;
+}
+
+#bottomImg {
+  align-self: flex-end;
 }
 
 #content {
@@ -207,7 +232,7 @@ form div {
 
 #topBar {
   background-color: white;
-  padding: 1.5rem 10%;
+  padding: 1rem 10%;
   box-shadow: 2px 2px 2px #dddddd;
 }
 
@@ -224,6 +249,24 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.transactionOverviewContainer {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+  color: #333333;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 0.5rem 0.5rem 0 0;
+  border-bottom: 5px solid #3c6c70;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+.transactionOverviewContainer:last-child {
+  margin-bottom: 0;
 }
 
 .accountSmallPreview {
@@ -313,6 +356,7 @@ form div {
   padding: 1rem;
   width: 100%;
   margin-bottom: 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
   border-bottom: 5px solid #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
 }
@@ -324,6 +368,7 @@ form div {
   padding: 1rem;
   width: 100%;
   margin-bottom: 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
   border-bottom: 5px solid #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
   transition: all 0.25s;
@@ -353,14 +398,20 @@ form div {
   background-color: white;
   padding: 1rem;
   width: 65%;
+  border-radius: 0.5rem 0.5rem 0 0;
   border-bottom: 5px solid #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
+}
+
+.cardTwoThirdsBlank {
+  width: 65%;
 }
 
 .cardOneThirds {
   background-color: white;
   padding: 1rem;
   width: 32%;
+  border-radius: 0.5rem 0.5rem 0 0;
   border-bottom: 5px solid #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
 }
@@ -404,7 +455,6 @@ polyline {
 }
 
 .summaryBar {
-  margin-top: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -436,6 +486,10 @@ polyline {
 
 .spacer {
   margin-top: 0.5rem;
+}
+
+.smallSpacer {
+  margin-top: 0.2rem;
 }
 
 .navSelected {

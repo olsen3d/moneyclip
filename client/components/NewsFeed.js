@@ -13,27 +13,29 @@ export default function NewsFeed() {
 
   return (
     <div id="mainContent">
-      <div className="header">
-        <span className="lightFont">News Feed</span>
-        <span className="regularFont alignRight">
-          <button
-            type="button"
-            onClick={() => dispatch(loadNews())}
-            className="linkDark textButton"
-          >
-            Refresh
-          </button>
-        </span>
+      <div id="topBar">
+        <div className="header">
+          <span className="largerFont regularFont">News Feed</span>
+          <span className="lightFont alignRight">
+            <button
+              type="button"
+              onClick={() => dispatch(loadNews())}
+              className="linkDark textButton"
+            >
+              Refresh
+            </button>
+          </span>
+        </div>
+        <div className="subHeader">
+          <span className="regularFont">
+            Top financial, business, and technology stories{' '}
+          </span>
+        </div>
       </div>
-      <div className="subHeader">
-        <span className="regularFont">
-          Top financial, business, and technology stories{' '}
-        </span>
-      </div>
-      <ul className="">
+      <div id="cardHolder">
         {news &&
           news.map(story => <NewsPreview key={story.id} story={story} />)}
-      </ul>
+      </div>
     </div>
   )
 }

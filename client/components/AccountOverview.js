@@ -58,7 +58,15 @@ export default function AccountOverview() {
     <div id="mainContent">
       <div id="topBar">
         <div className="header">
-          <span className="largeFont">{account.name}</span>
+          <span className="largerFont regularFont">
+            <img
+              className="shiftDown"
+              width="32px"
+              height="32px"
+              src="/img/investingLight.png"
+            />
+            {account.name}
+          </span>
           <span className="lightFont alignRight">
             <button
               type="button"
@@ -87,24 +95,25 @@ export default function AccountOverview() {
         </div>
       </div>
 
-      <div>
-        {accountData && (
-          <div>
-            <LineChart accountData={accountData} />
-            <LineChart2 accountData={accountData} />
+      <div id="cardHolder">
+        {accountData &&
+          account.type !== 'CHECKING' && (
+            <div>
+              <LineChart accountData={accountData} />
+              <LineChart2 accountData={accountData} />
+              <button type="button" onClick={lastYear} className="linkDark">
+                filter
+              </button>
+            </div>
+          )}
+
+        {account.transactions && (
+          <div className="cardDouble">
+            <Transactions transactions={account.transactions} page={1} />
           </div>
         )}
-        <button type="button" onClick={lastYear} className="linkDark">
-          filter
-        </button>
       </div>
-      <div className="header">
-        <span className="lightFont">Transactions</span>
-      </div>
-      {account.transactions ? (
-        <Transactions transactions={account.transactions} />
-      ) : null}
-      <div className="header">
+      {/* <div className="header">
         <span className="lightFont">Settings</span>
       </div>
       <button
@@ -113,7 +122,7 @@ export default function AccountOverview() {
         className="linkDark textButton"
       >
         Delete Account
-      </button>
+      </button> */}
     </div>
   )
 }

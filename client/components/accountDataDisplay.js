@@ -1,8 +1,6 @@
 import React from 'react'
 import {formatter} from '../../script/utils'
 
-console.log(formatter)
-
 export default function AccountDataDisplay({data}) {
   let accountData = data
   if (data.length) {

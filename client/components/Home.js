@@ -12,7 +12,15 @@ export default function Home() {
     <div id="mainContent">
       <div id="topBar">
         <div className="header">
-          <span className="largerFont regularFont">Home ({user.email})</span>
+          <span className="largerFont regularFont">
+            <img
+              className="shiftDown"
+              width="32px"
+              height="32px"
+              src="/img/homeLight.png"
+            />
+            Home ({user.email})
+          </span>
           <span className="lightFont alignRight">
             <button
               type="button"

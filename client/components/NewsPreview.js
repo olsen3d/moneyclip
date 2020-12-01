@@ -19,7 +19,7 @@ const getTime = time => {
 
 export default function NewsPreview({story}) {
   return (
-    <a className="accountLink" href={story.url}>
+    <a className="cardFullLink" href={story.url}>
       <div className="accountOverviewContainer">
         <div className="accountLogo">
           <img width="42px" height="42px" src={story.image} />

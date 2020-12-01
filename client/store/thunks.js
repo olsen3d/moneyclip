@@ -30,7 +30,7 @@ const createTransaction = transaction => async dispatch => {
 
 const loadNews = _ => async dispatch => {
   let news = (await axios.get(`/api/finnhub/news`)).data
-  news = news.filter((story, index) => index < 8)
+  news = news.filter((story, index) => index < 12)
   return dispatch(loadNewsAction(news))
 }
 

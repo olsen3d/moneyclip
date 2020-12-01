@@ -5,9 +5,13 @@ export default function TransactionPreview({transaction}) {
   const {amount, balance, date, earnings, net, type} = transaction
 
   return (
-    <div className="accountOverviewContainer">
+    <div className="transactionOverviewContainer">
       <div className="accountLogo">
-        <img width="42px" height="42px" src="/img/saving.png" />
+        <img
+          width="42px"
+          height="42px"
+          src={`/img/${amount > 0 ? 'marketUp' : 'marketDown'}.png`}
+        />
         <div className="accountName">
           <p className="regularFont font16">{type}</p>
           <p className="lightFont">
