@@ -56,7 +56,7 @@ export default function NewTransaction({onSubmit, onCancel}) {
           )}
         </ul>
         <form onSubmit={submit}>
-          {!match ? (
+          {!match && (
             <select
               value={account}
               onChange={e => {
@@ -70,7 +70,7 @@ export default function NewTransaction({onSubmit, onCancel}) {
                   </option>
                 ))}
             </select>
-          ) : null}
+          )}
 
           <select
             value={type}

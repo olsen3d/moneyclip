@@ -1,15 +1,21 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 
-import {Navbar} from './components'
+import {Navbar, Footer} from './components'
 import Routes from './routes'
 
 const App = () => {
+  const user = useSelector(state => state.user)
+  console.log(user)
   return (
     <div id="appContainer">
       <Navbar />
       <div className="main">
-        <div id="sidebarPlaceholder" />
-        <Routes />
+        {user.id && <div id="sidebarPlaceholder" />}
+        <div id="content">
+          <Routes />
+          <Footer />
+        </div>
       </div>
     </div>
   )

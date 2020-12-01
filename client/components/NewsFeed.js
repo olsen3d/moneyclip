@@ -12,7 +12,7 @@ export default function NewsFeed() {
   }, [])
 
   return (
-    <div id="profile">
+    <div id="mainContent">
       <div className="header">
         <span className="lightFont">News Feed</span>
         <span className="regularFont alignRight">

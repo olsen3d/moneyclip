@@ -43,7 +43,7 @@ export default function Accounts() {
   }
 
   return (
-    <div id="profile">
+    <div id="mainContent">
       <div className="header">
         <span className="lightFont">All Accounts ({accounts.length})</span>
         <span className="regularFont alignRight">

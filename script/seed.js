@@ -131,7 +131,7 @@ async function seed() {
   //portfolio
 
   const simulateMarketDeposit = async (date, price) => {
-    const randomAmount = Math.floor(Math.random() * 200000)
+    const randomAmount = Math.floor(Math.random() * 150000)
     await Transaction.create({
       amount: randomAmount,
       type: 'SEED_DEPOSIT',
@@ -169,7 +169,7 @@ async function seed() {
       const price = stock.c[i]
       if (i === 0) await simulateMarketDeposit(date, price)
       const randomTransaction = Math.random()
-      if (randomTransaction < 0.01) await simulateMarketDeposit(date, price)
+      if (randomTransaction < 0.02) await simulateMarketDeposit(date, price)
       await simulateMarketAdjustment(date, price)
     }
   }

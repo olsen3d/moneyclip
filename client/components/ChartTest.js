@@ -31,7 +31,7 @@ export default function ChartTest() {
       .append('svg')
       .attr('id', 'chart')
       .attr('width', 500)
-      .attr('height', 260)
+      .attr('height', 280)
       .append('g')
 
     //append classes to the chart
@@ -39,8 +39,8 @@ export default function ChartTest() {
     chart.append('g').attr('class', 'labels')
     chart.append('g').attr('class', 'lines')
 
-    const width = 400
-    const height = 200
+    const width = 380
+    const height = 240
     const radius = Math.min(width, height) / 2
     const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
     const pie = d3
@@ -73,7 +73,7 @@ export default function ChartTest() {
 
     chart.attr(
       'transform',
-      'translate(' + (width / 2 + 20) + ',' + (height / 2 + 5) + ')'
+      'translate(' + (width / 2 + 50) + ',' + (height / 2 + 20) + ')'
     )
 
     chart
@@ -189,9 +189,13 @@ export default function ChartTest() {
   }
 
   return (
-    <div className="homeChartContainer">
-      <div className="homeChart" ref={d3Container} />
-      <AccountDataDisplay data={currentAccount} />
+    <div className="cardDouble">
+      <div className="cardTwoThirds">
+        <div className="homeChart" ref={d3Container} />
+      </div>
+      <div className="cardOneThirds">
+        <AccountDataDisplay data={currentAccount} />
+      </div>
     </div>
   )
 }

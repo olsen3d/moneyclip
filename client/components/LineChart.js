@@ -41,7 +41,17 @@ export default function LineChart({accountData}) {
       .range([bodyHeight, 0]) // the range is inverted because svg space is inverted
       .domain([minValue, maxValue])
 
+    const yGrid = d3
+      .axisLeft(yScale)
+      .tickSize(-bodyWidth)
+      .tickFormat('')
+
     chart.append('g').call(d3.axisLeft(yScale))
+    chart
+      .append('g')
+      .call(yGrid)
+      .attr('stroke-width', 0.5)
+      .attr('stroke-opacity', 0.2)
 
     let xScale = d3
       .scaleTime()
@@ -92,7 +102,7 @@ export default function LineChart({accountData}) {
       .line()
       .x(d => xScale(d.date))
       .y(d => yScale(+d.net * 0.01))
-      .curve(d3.curveStepAfter)
+      .curve(d3.curveLinear)
 
     chart
       .append('path')
@@ -101,7 +111,7 @@ export default function LineChart({accountData}) {
       .duration(1000)
       .attr('d', lineNet)
       .attr('stroke', '#333333')
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 1)
       .attr('stroke-opacity', 0.4)
       .style('fill', 'none')
 

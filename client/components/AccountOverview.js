@@ -55,30 +55,38 @@ export default function AccountOverview() {
   }
 
   return (
-    <div id="profile">
-      <div className="header">
-        <span className="lightFont">{account.name}</span>
-        <span className="regularFont alignRight">
-          <button
-            type="button"
-            onClick={() => setTransactionModal(true)}
-            className="linkDark textButton"
-            to="/home"
-          >
-            Transaction
-          </button>
-          <span> | </span>
-          <button type="button" onClick={null} className="linkDark textButton">
-            <Link to="/accounts" className="linkDark">
-              Back
-            </Link>
-          </button>
-        </span>
+    <div id="mainContent">
+      <div id="topBar">
+        <div className="header">
+          <span className="largeFont">{account.name}</span>
+          <span className="lightFont alignRight">
+            <button
+              type="button"
+              onClick={() => setTransactionModal(true)}
+              className="linkDark textButton"
+              to="/home"
+            >
+              Transaction
+            </button>
+            <span> | </span>
+            <button
+              type="button"
+              onClick={null}
+              className="linkDark textButton"
+            >
+              <Link to="/accounts" className="linkDark">
+                Back
+              </Link>
+            </button>
+          </span>
+        </div>
+
+        <div className="subHeader">
+          <span className="regularFont">{`${account.type} ACCOUNT`}</span>
+          <SummaryBar accounts={account} />
+        </div>
       </div>
-      <div className="subHeader">
-        <span className="regularFont">{`${account.type} ACCOUNT`}</span>
-        <SummaryBar accounts={account} />
-      </div>
+
       <div>
         {accountData && (
           <div>

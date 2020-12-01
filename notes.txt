@@ -121,6 +121,8 @@ transactions compoonent
   1. display date range next to dropdown
   2. include market adjustments checkbox (off by default)
 
+footer
+  1.display footer at bottom of screen in maincontent
 
 
 BUGS >------------------------------------------------------------>

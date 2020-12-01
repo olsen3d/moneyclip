@@ -9,25 +9,32 @@ export default function Home() {
   const accounts = useSelector(state => state.accounts)
 
   return (
-    <div id="profile">
-      <div className="header">
-        <span className="lightFont">Home ({user.email})</span>
-        <span className="regularFont alignRight">
-          <button
-            type="button"
-            onClick={() => console.log('click')}
-            className="linkDark textButton"
-            to="/home"
-          >
-            Transaction
-          </button>
-        </span>
+    <div id="mainContent">
+      <div id="topBar">
+        <div className="header">
+          <span className="largerFont regularFont">Home ({user.email})</span>
+          <span className="lightFont alignRight">
+            <button
+              type="button"
+              onClick={() => console.log('click')}
+              className="linkDark textButton"
+              to="/home"
+            >
+              Transaction
+            </button>
+          </span>
+        </div>
+        <div className="subHeader">
+          <span className="regularFont">Overview of your financials</span>
+          <SummaryBar accounts={accounts} />
+        </div>
       </div>
-      <div className="subHeader">
-        <span className="regularFont">Overview of your financials</span>
-        <SummaryBar accounts={accounts} />
+
+      <div id="cardHolder">
+        <div className="cardDouble">
+          <ChartTest />
+        </div>
       </div>
-      <ChartTest />
     </div>
   )
 }

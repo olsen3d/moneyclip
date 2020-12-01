@@ -100,19 +100,21 @@ label {
 
 #appContainer {
   display: flex;
-  width: 100vw;
+  margin: 0;
 }
 
 .main {
   display: flex;
   flex-direction: row;
+  background-color: #eeeeee;
+  width: 100vw;
 }
 
 #sidebar {
   background-color: #193b42;
   display: flex;
   flex-direction: column;
-  padding: 0.8rem 0.8rem 0 0.8rem;
+  padding: 1.2rem 0.8rem 0 0.8rem;
   height: 100vh;
   max-width: 250px;
   width: 20vw;
@@ -160,6 +162,10 @@ label {
   font-size: 1.5rem;
 }
 
+.largerFont {
+  font-size: 1.75rem;
+}
+
 .white {
   color: white;
 }
@@ -174,17 +180,42 @@ form div {
   display: inline-block;
 }
 
-#profile {
-  width: 100vw;
-  background-color: #eeeeee;
-  /* background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(231, 231, 231, 1) 0%,
-    rgba(255, 255, 255, 1) 60%,
-    rgba(255, 255, 255, 1) 100%
-  ); */
-  padding: 1rem 1rem 0 1rem;
+#mainContent {
+  width: 100%;
+  background-color: #f3f3f3;
+  padding-bottom: 300px;
+}
+
+#footer {
+  color: #333333;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 10%;
+}
+
+#content {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f3f3f3;
+}
+
+#topBar {
+  background-color: white;
+  padding: 1.5rem 10%;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+#cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .accountOverviewContainer {
@@ -288,19 +319,56 @@ form div {
   text-align: right;
 }
 
+#cardHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 10%;
+}
+
+.cardOne {
+  background-color: white;
+  padding: 1rem;
+  width: 100%;
+}
+
+.cardDouble {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardHalf {
+  background-color: white;
+  padding: 1rem;
+  width: 48%;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+.cardTwoThirds {
+  background-color: white;
+  padding: 1rem;
+  width: 65%;
+  border-bottom: 5px solid #3c6c70;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+.cardOneThirds {
+  background-color: white;
+  padding: 1rem;
+  width: 32%;
+  border-bottom: 5px solid #3c6c70;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
-  max-width: 775px;
   font-size: 1.5rem;
   color: #333333;
   padding-bottom: 0.25rem;
   border-bottom: 1px solid #cccccc;
   margin: 0 0 0.5rem 0;
-}
-
-.mainContent {
-  background-color: #eeeeee;
 }
 
 polyline {
@@ -332,10 +400,10 @@ polyline {
 }
 
 .summaryBar {
+  margin-top: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-width: 775px;
 }
 
 .summaryCard {
@@ -355,14 +423,11 @@ polyline {
 .homeChartContainer {
   display: flex;
   flex-direction: row;
-  margin-top: 1rem;
-}
-
-.homeChart {
+  justify-content: space-between;
 }
 
 .accountDataDisplay {
-  padding: 1rem;
+  padding: 0;
 }
 
 .spacer {

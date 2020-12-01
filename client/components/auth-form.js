@@ -11,7 +11,7 @@ const AuthForm = props => {
 
   return (
     <div id="landingPage">
-      <img width="50%" src="/img/moneyclipLogo.png" />
+      <img width="60%" src="/img/moneyclipLogo.png" />
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
