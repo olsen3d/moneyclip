@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
-import LineChart from './LineChart'
-import LineChart2 from './LineChart2'
 import SummaryBar from './SummaryBar'
 import {removeAccount, createTransaction} from '../store/thunks'
 import history from '../history'
@@ -102,11 +100,11 @@ export default function AccountOverview() {
             <InvestingChart accountData={accountData} />
           )}
 
-        {/* {account.transactions && (
+        {account.transactions && (
           <div className="cardDouble">
             <Transactions transactions={account.transactions} page={1} />
           </div>
-        )} */}
+        )}
       </div>
       {/* <div className="header">
         <span className="lightFont">Settings</span>
