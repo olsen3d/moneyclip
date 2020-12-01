@@ -8,6 +8,7 @@ import {removeAccount, createTransaction} from '../store/thunks'
 import history from '../history'
 import Transactions from './Transactions'
 import NewTransactionModal from './NewTransactionModal'
+import InvestingChart from './InvestingChart'
 
 export default function AccountOverview() {
   const [accountData, setAccountData] = useState(null)
@@ -98,20 +99,14 @@ export default function AccountOverview() {
       <div id="cardHolder">
         {accountData &&
           account.type !== 'CHECKING' && (
-            <div>
-              <LineChart accountData={accountData} />
-              <LineChart2 accountData={accountData} />
-              <button type="button" onClick={lastYear} className="linkDark">
-                filter
-              </button>
-            </div>
+            <InvestingChart accountData={accountData} />
           )}
 
-        {account.transactions && (
+        {/* {account.transactions && (
           <div className="cardDouble">
             <Transactions transactions={account.transactions} page={1} />
           </div>
-        )}
+        )} */}
       </div>
       {/* <div className="header">
         <span className="lightFont">Settings</span>

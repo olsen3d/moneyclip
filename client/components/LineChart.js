@@ -5,6 +5,8 @@ import * as d3 from 'd3'
 export default function LineChart({accountData}) {
   const d3Container = useRef(null)
 
+  console.log(d3Container)
+
   useEffect(
     () => {
       d3

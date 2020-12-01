@@ -8,8 +8,8 @@ export default function TransactionPreview({transaction}) {
     <div className="transactionOverviewContainer">
       <div className="accountLogo">
         <img
-          width="42px"
-          height="42px"
+          width="40px"
+          height="40px"
           src={`/img/${amount > 0 ? 'marketUp' : 'marketDown'}.png`}
         />
         <div className="accountName">
