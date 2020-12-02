@@ -385,7 +385,7 @@ form div {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin: 0.7rem 0;
 }
 
 .cardHalf {
@@ -501,4 +501,58 @@ polyline {
 .navNotSelected {
   padding-left: 0.5rem;
   border-left: 3px solid #193b42;
+}
+
+.settingsButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settingsButtons > * {
+  margin: 0.25rem 0;
+}
+
+.greenButton {
+  display: inline-block;
+  border-radius: 0.33rem;
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: #3c6c70;
+  box-shadow: 2px 2px 2px #dddddd;
+  padding: 0.33rem 1rem;
+  margin: 0;
+  text-decoration: none;
+  background: #3c6c70;
+  color: #ffffff;
+  font-family: regularFont;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.whiteButton {
+  display: inline-block;
+  border-radius: 0.33rem;
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: #eeeeee;
+  box-shadow: 2px 2px 2px #dddddd;
+  padding: 0.33rem 1rem;
+  margin: 0;
+  text-decoration: none;
+  background: #eeeeee;
+  color: #333333;
+  font-family: regularFont;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.horSpacer {
+  margin: 0 0.5rem;
 }

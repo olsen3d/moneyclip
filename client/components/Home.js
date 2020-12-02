@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 import ChartTest from './ChartTest'
 import SummaryBar from './SummaryBar'
-import AccountDataDisplay from './accountDataDisplay'
 
 export default function Home() {
   const user = useSelector(state => state.user)
@@ -12,25 +11,15 @@ export default function Home() {
     <div id="mainContent">
       <div id="topBar">
         <div className="header">
-          <span className="largerFont regularFont">
-            <img
-              className="shiftDown"
-              width="32px"
-              height="32px"
-              src="/img/homeLight.png"
-            />
-            Home ({user.email})
-          </span>
-          <span className="lightFont alignRight">
-            <button
-              type="button"
-              onClick={() => console.log('click')}
-              className="linkDark textButton"
-              to="/home"
-            >
-              Transaction
-            </button>
-          </span>
+          <span className="largerFont regularFont">Home ({user.email})</span>
+          <button
+            className="greenButton lightFont"
+            type="button"
+            onClick={() => setTransactionModal(true)}
+            to="/home"
+          >
+            Transaction
+          </button>
         </div>
         <div className="subHeader">
           <span className="regularFont">Overview of your financials</span>

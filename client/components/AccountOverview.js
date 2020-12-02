@@ -2,14 +2,13 @@ import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
 import SummaryBar from './SummaryBar'
-import {removeAccount, createTransaction} from '../store/thunks'
-import history from '../history'
+import {createTransaction} from '../store/thunks'
 import Transactions from './Transactions'
 import NewTransactionModal from './NewTransactionModal'
 import InvestingChart from './InvestingChart'
+import Settings from './Settings'
 
 export default function AccountOverview() {
-  const [accountData, setAccountData] = useState(null)
   const [transactionModal, setTransactionModal] = useState(false)
   const dispatch = useDispatch()
 
@@ -24,23 +23,6 @@ export default function AccountOverview() {
   const account = useSelector(state =>
     state.accounts.find(acc => acc.id === match.params.accountId)
   )
-
-  useEffect(
-    () => {
-      account && setAccountData(account.transactions)
-    },
-    [account]
-  )
-
-  const lastYear = () => {
-    const newData = accountData.filter((val, i) => i < 365)
-    setAccountData(newData)
-  }
-
-  const deleteAccount = () => {
-    history.push('/accounts')
-    dispatch(removeAccount(account.id))
-  }
 
   if (!account) return <h1>Loading</h1>
 
@@ -57,33 +39,27 @@ export default function AccountOverview() {
     <div id="mainContent">
       <div id="topBar">
         <div className="header">
-          <span className="largerFont regularFont">
-            <img
-              className="shiftDown"
-              width="32px"
-              height="32px"
-              src="/img/investingLight.png"
-            />
-            {account.name}
-          </span>
-          <span className="lightFont alignRight">
+          <span className="largerFont regularFont">{account.name}</span>
+          <span>
+            <span className="lightFont alignRight">
+              <button
+                type="button"
+                onClick={null}
+                className="linkDark textButton"
+              >
+                <Link to="/accounts" className="linkDark">
+                  Back
+                </Link>
+              </button>
+            </span>
+            <span className="horSpacer" />
             <button
+              className="greenButton"
               type="button"
               onClick={() => setTransactionModal(true)}
-              className="linkDark textButton"
               to="/home"
             >
               Transaction
-            </button>
-            <span> | </span>
-            <button
-              type="button"
-              onClick={null}
-              className="linkDark textButton"
-            >
-              <Link to="/accounts" className="linkDark">
-                Back
-              </Link>
             </button>
           </span>
         </div>
@@ -95,9 +71,9 @@ export default function AccountOverview() {
       </div>
 
       <div id="cardHolder">
-        {accountData &&
+        {account.transactions &&
           account.type !== 'CHECKING' && (
-            <InvestingChart accountData={accountData} />
+            <InvestingChart accountData={account.transactions} />
           )}
 
         {account.transactions && (
@@ -105,17 +81,8 @@ export default function AccountOverview() {
             <Transactions transactions={account.transactions} page={1} />
           </div>
         )}
+        <Settings account={account} />
       </div>
-      {/* <div className="header">
-        <span className="lightFont">Settings</span>
-      </div>
-      <button
-        type="button"
-        onClick={deleteAccount}
-        className="linkDark textButton"
-      >
-        Delete Account
-      </button> */}
     </div>
   )
 }

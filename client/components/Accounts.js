@@ -49,19 +49,19 @@ export default function Accounts() {
           <span className="largerFont regularFont">
             All Accounts ({accounts.length})
           </span>
-          <span className="lightFont alignRight">
+          <span className="alignRight">
             <button
+              className="whiteButton lightFont"
               type="button"
               onClick={() => setAccountModal(true)}
-              className="linkDark textButton"
             >
               Add New
             </button>
-            <span> | </span>
+            <span className="horSpacer" />
             <button
+              className="greenButton lightFont"
               type="button"
               onClick={() => setTransactionModal(true)}
-              className="linkDark textButton"
               to="/home"
             >
               Transaction

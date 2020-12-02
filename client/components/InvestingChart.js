@@ -21,7 +21,7 @@ export default function InvestingChart({accountData}) {
   let mainChart
 
   let mainHeight = 300
-  let mainWidth = 450
+  let mainWidth = 530
 
   let mainX = d3.scaleTime().range([0, mainWidth])
 
@@ -32,6 +32,8 @@ export default function InvestingChart({accountData}) {
     .curve(d3.curveLinear)
     .x(d => mainX(d.date))
     .y(d => mainY(+d.balance * 0.01))
+
+  let areaLine = d3.area().curve(d3.curveLinear)
 
   const filterDomain = async (days = filteredData.length) => {
     console.log('filtering')
@@ -54,6 +56,11 @@ export default function InvestingChart({accountData}) {
     mainX.domain(d3.extent(filter, d => d.date))
     mainY.domain([minValue, maxValue])
 
+    areaLine
+      .x(d => mainX(d.date))
+      .y0(mainY(minValue))
+      .y1(d => mainY(+d.balance * 0.01))
+
     const svg = d3.select('body').transition()
 
     svg
@@ -69,12 +76,17 @@ export default function InvestingChart({accountData}) {
     svg
       .select('.yAxis')
       .duration(750)
-      .call(d3.axisLeft(mainY))
+      .call(d3.axisRight(mainY))
 
     await svg
       .select('.line')
       .duration(150)
       .attr('stroke-opacity', 0)
+
+    await svg
+      .select('.areaLine')
+      .duration(150)
+      .attr('opacity', 0)
       .end()
 
     await svg
@@ -85,10 +97,21 @@ export default function InvestingChart({accountData}) {
       .end()
 
     await svg
+      .select('.areaLine')
+      .duration(50)
+      .attr('d', areaLine)
+      .attr('opacity', 0)
+      .end()
+
+    await svg
       .select('.line')
       .duration(750)
-      .attr('stroke-opacity', 0.7)
-      .end()
+      .attr('stroke-opacity', 0.9)
+
+    await svg
+      .select('.areaLine')
+      .duration(750)
+      .attr('opacity', 1)
   }
 
   function showData(transactions) {
@@ -112,10 +135,23 @@ export default function InvestingChart({accountData}) {
 
     mainY.domain([minValue, maxValue])
 
+    areaLine
+      .x(d => mainX(d.date))
+      .y0(mainY(minValue))
+      .y1(d => mainY(+d.balance * 0.01))
+
+    mainChart
+      .append('path')
+      .attr('class', 'areaLine')
+      .datum(transactions)
+      .attr('d', areaLine)
+      .style('fill', 'url(#mygrad)')
+
     mainChart
       .append('g')
       .attr('class', 'yAxis')
-      .call(d3.axisLeft(mainY))
+      .attr('transform', `translate(${mainWidth}, 0)`)
+      .call(d3.axisRight(mainY))
 
     mainChart
       .append('g')
@@ -137,26 +173,62 @@ export default function InvestingChart({accountData}) {
       .attr('d', mainLine)
       .attr('stroke', '#086e6c')
       .attr('stroke-width', 2)
-      .attr('stroke-opacity', 0.7)
+      .attr('stroke-opacity', 0.9)
       .style('fill', 'none')
+
+    const gradient = mainChart
+      .append('defs')
+      .append('linearGradient')
+      .attr('id', 'mygrad')
+      .attr('x1', '0%')
+      .attr('x2', '0%')
+      .attr('y1', '0%')
+      .attr('y2', '100%')
+
+    gradient
+      .append('stop')
+      .attr('offset', '0%')
+      .style('stop-color', '#cce5df')
+      .style('stop-opacity', 1)
+
+    gradient
+      .append('stop')
+      .attr('offset', '25%')
+      .style('stop-color', '#cce5df')
+      .style('stop-opacity', 1)
+
+    gradient
+      .append('stop')
+      .attr('offset', '100%')
+      .style('stop-color', 'white')
+      .style('stop-opacity', 0)
   }
 
   return (
     <React.Fragment>
       <div className="cardDouble">
         <div className="cardTwoThirds">
-          <svg id="container" height="400" width="500">
-            <g ref={d3MainContainer} transform="translate(50,20)" />
+          <svg id="container" height="350" width="600">
+            <g ref={d3MainContainer} transform="translate(30,5)" />
           </svg>
         </div>
         <div className="cardOneThirds">
-          <button type="button" onClick={() => filterDomain(90)}>
+          <div>
+            <span className="regularFont font16 header">Balance</span>
+          </div>
+          <div className="spacer" />
+          <span className="lightFont">filter here</span>
+          <div className="spacer" />
+          <button type="button" onClick={() => filterDomain(66)}>
             3 months
           </button>
-          <button type="button" onClick={() => filterDomain(365)}>
+          <button type="button" onClick={() => filterDomain(160)}>
+            6 months
+          </button>
+          <button type="button" onClick={() => filterDomain(261)}>
             1 year
           </button>
-          <button type="button" onClick={() => filterDomain(365 * 2)}>
+          <button type="button" onClick={() => filterDomain(261 * 2)}>
             2 years
           </button>
           <button type="button" onClick={() => filterDomain()}>
