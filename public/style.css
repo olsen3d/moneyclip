@@ -507,6 +507,7 @@ polyline {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 1rem;
 }
 
 .settingsButtons > * {
@@ -520,8 +521,8 @@ polyline {
   border-style: solid;
   border-color: #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
-  padding: 0.33rem 1rem;
-  margin: 0;
+  padding: 0.25rem 1rem;
+  margin: -1rem 0 0 0;
   text-decoration: none;
   background: #3c6c70;
   color: #ffffff;

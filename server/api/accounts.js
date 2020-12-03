@@ -28,6 +28,19 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  console.log(req.body)
+  try {
+    const account = await Account.findByPk(req.params.id)
+    await account.update({
+      ...req.body
+    })
+    res.send(account)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.delete('/:id', async (req, res, next) => {
   try {
     const destroyed = await Account.findByPk(req.params.id)

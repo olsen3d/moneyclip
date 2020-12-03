@@ -20,9 +20,7 @@ export default function SummaryBar({accounts}) {
       }, 0) * 0.01
     : accounts.earnings * 0.01
 
-  const max = null
-
-  const roi = (gain / net * 100).toFixed(2)
+  const roi = gain !== 0 ? (gain / net * 100).toFixed(2) : 0
 
   return (
     <div className="summaryBar">
@@ -45,7 +43,7 @@ export default function SummaryBar({accounts}) {
       <div className="summaryCard">
         <div className="thinFont alignRight">Return </div>
         <div
-          className={`regularFont largeFont ${
+          className={`regularFont largeFont alignRight ${
             roi >= 0 ? 'positive' : 'negative'
           }`}
         >

@@ -21,6 +21,11 @@ const accountsReducer = (state = [], action) => {
       return [...state, action.account]
     case REMOVE_ACCOUNT:
       return state.filter(account => account.id !== action.id)
+    case UPDATE_ACCOUNT:
+      console.log(action)
+      return state.map(
+        account => (account.id === action.account.id ? action.account : account)
+      )
     case CREATE_TRANSACTION:
       return state.map(acc => {
         if (acc.id === action.transaction.id) return action.transaction

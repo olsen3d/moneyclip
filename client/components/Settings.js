@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {removeAccount} from '../store/thunks'
+import {removeAccount, updateAccount} from '../store/thunks'
 import history from '../history'
 
 export default function Settings({account}) {
+  const [name, setName] = useState('')
+  const [nameCheck, setNameCheck] = useState(false)
   const [deleteCheck, setDeleteCheck] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(
     () => {
       setDeleteCheck(false)
+      setNameCheck(false)
+      setName('')
     },
     [account]
   )
@@ -19,8 +23,11 @@ export default function Settings({account}) {
     dispatch(removeAccount(account.id))
   }
 
-  const updateAccount = () => {
-    console.log('update acount')
+  const _updateAccount = () => {
+    const newAccount = {...account}
+    newAccount.name = name
+    dispatch(updateAccount(newAccount))
+    setNameCheck(false)
   }
 
   const exportCSV = () => {
@@ -37,13 +44,45 @@ export default function Settings({account}) {
       <div className="spacer" />
       <div className="spacer" />
       <div className="settingsButtons">
-        <button
-          type="button"
-          onClick={updateAccount}
-          className="linkDark textButton"
-        >
-          Update Name
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={() => setNameCheck(true)}
+            className="linkDark textButton"
+          >
+            Update Name
+          </button>
+          {nameCheck && (
+            <React.Fragment>
+              <span style={{margin: '0 1rem'}}>
+                <input
+                  name="name"
+                  type="text"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                />
+              </span>
+              <span style={{margin: '0 0.5rem'}}>
+                <button
+                  type="button"
+                  onClick={_updateAccount}
+                  className="linkDark textButton"
+                >
+                  UPDATE
+                </button>
+              </span>
+              <span style={{margin: '0 0.5rem'}}>
+                <button
+                  type="button"
+                  onClick={() => setNameCheck(false)}
+                  className="linkDark textButton"
+                >
+                  CANCEL
+                </button>
+              </span>
+            </React.Fragment>
+          )}
+        </div>
         <div>
           <button
             type="button"
