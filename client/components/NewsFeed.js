@@ -16,13 +16,15 @@ export default function NewsFeed() {
       <div id="topBar">
         <div className="header">
           <span className="largerFont regularFont">News Feed</span>
-          <button
-            type="button"
-            onClick={() => dispatch(loadNews())}
-            className="greenButton"
-          >
-            Refresh
-          </button>
+          <span className="alignRight">
+            <button
+              type="button"
+              onClick={() => dispatch(loadNews())}
+              className="greenButton"
+            >
+              Refresh
+            </button>
+          </span>
         </div>
         <div className="subHeader">
           <span className="regularFont">

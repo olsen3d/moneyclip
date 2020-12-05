@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useSelector} from 'react-redux'
 import ChartTest from './ChartTest'
 import SummaryBar from './SummaryBar'
@@ -12,14 +12,16 @@ export default function Home() {
       <div id="topBar">
         <div className="header">
           <span className="largerFont regularFont">Home ({user.email})</span>
-          <button
-            className="greenButton lightFont"
-            type="button"
-            onClick={() => setTransactionModal(true)}
-            to="/home"
-          >
-            Transaction
-          </button>
+          <span className="alignRight">
+            <button
+              className="greenButton lightFont"
+              type="button"
+              onClick={() => setTransactionModal(true)}
+              to="/home"
+            >
+              Transaction
+            </button>
+          </span>
         </div>
         <div className="subHeader">
           <span className="regularFont">Overview of your financials</span>

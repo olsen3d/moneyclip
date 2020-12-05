@@ -40,18 +40,10 @@ export default function AccountOverview() {
       <div id="topBar">
         <div className="header">
           <span className="largerFont regularFont">{account.name}</span>
-          <span>
-            <span className="lightFont alignRight">
-              <button
-                type="button"
-                onClick={null}
-                className="linkDark textButton"
-              >
-                <Link to="/accounts" className="linkDark">
-                  Back
-                </Link>
-              </button>
-            </span>
+          <span className="alignBottom">
+            <Link to="/accounts" className="lightFont linkDark">
+              Back
+            </Link>
             <span className="horSpacer" />
             <button
               className="greenButton"

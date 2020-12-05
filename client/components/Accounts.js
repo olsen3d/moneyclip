@@ -76,7 +76,7 @@ export default function Accounts() {
 
       <div id="cardHolder">
         {accounts.map(account => (
-          <AccountPreview key={account.id} account={account} />
+          <AccountPreview key={account.id} account={account} linkable={true} />
         ))}
       </div>
     </div>

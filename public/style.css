@@ -54,7 +54,6 @@ body {
   background: none;
   color: inherit;
   border: none;
-  padding: 0;
   font: inherit;
   cursor: pointer;
   outline: inherit;
@@ -420,6 +419,7 @@ form div {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   font-size: 1.5rem;
   color: #333333;
   padding-bottom: 0.25rem;
@@ -522,7 +522,7 @@ polyline {
   border-color: #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
   padding: 0.25rem 1rem;
-  margin: -1rem 0 0 0;
+  margin: 0;
   text-decoration: none;
   background: #3c6c70;
   color: #ffffff;
@@ -541,7 +541,7 @@ polyline {
   border-style: solid;
   border-color: #eeeeee;
   box-shadow: 2px 2px 2px #dddddd;
-  padding: 0.33rem 1rem;
+  padding: 0.25rem 1rem;
   margin: 0;
   text-decoration: none;
   background: #eeeeee;
@@ -556,4 +556,21 @@ polyline {
 
 .horSpacer {
   margin: 0 0.5rem;
+}
+
+.alignBottom {
+  display: flex;
+}
+
+.alignBottom > * {
+  align-self: flex-end;
+}
+
+.transactionForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.transactionForm > * {
+  margin: 0.3rem 0;
 }

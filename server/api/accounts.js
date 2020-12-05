@@ -29,7 +29,6 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-  console.log(req.body)
   try {
     const account = await Account.findByPk(req.params.id)
     await account.update({
