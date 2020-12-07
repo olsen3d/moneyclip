@@ -55,7 +55,7 @@ export default function Accounts() {
               type="button"
               onClick={() => setAccountModal(true)}
             >
-              Add New
+              + Add New
             </button>
             <span className="horSpacer" />
             <button

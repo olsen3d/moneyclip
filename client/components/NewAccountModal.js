@@ -2,11 +2,11 @@ import React, {useState} from 'react'
 import StrategyChart from './StrategyChart'
 
 const descriptions = {
-  CHECKING: 'this is a checking account. You can deposit and withdrawl funds',
+  CHECKING: 'This is a checking account. You can deposit and withdrawl funds',
   SAVING:
-    'this is a savings account. You can deposit and withdrawl funds. Your funds will accumulate interest at the current APY of 0.40%',
+    'This is a savings account. You can deposit and withdrawl funds. Your funds will accumulate interest at the current APY of 0.40%',
   INVESTING:
-    'this is an investing account. You can deposit and withdrawl funds. Your funds will be invested according to one of the 3 different investment strategies below:'
+    'This is an investing account. You can deposit and withdrawl funds. Your funds will be invested according to one of the 3 different investment strategies below:'
 }
 
 export default function NewAccount({onSubmit, onCancel}) {
@@ -25,46 +25,69 @@ export default function NewAccount({onSubmit, onCancel}) {
   }
 
   return (
-    <div id="profile">
-      <div className="header">
-        <span className="lightFont">Add a new Account</span>
-        <span className="regularFont alignRight textButton">
-          <button type="button" onClick={cancel} className="linkDark">
-            Back
-          </button>
-        </span>
+    <div id="mainContent">
+      <div id="topBar">
+        <div className="header">
+          <span className="largerFont regularFont">Add a new Account</span>
+          <span className="alignRight">
+            <button
+              type="button"
+              onClick={cancel}
+              className="lightFont linkDark textButton"
+            >
+              Cancel
+            </button>
+          </span>
+        </div>
       </div>
-      <div className="subHeader">
-        <form onSubmit={submit}>
-          <select
-            value={type}
-            onChange={e => {
-              setType(e.target.value)
-              setDesc(descriptions[e.target.value])
-            }}
-          >
-            <option value="CHECKING">Checking</option>
-            <option value="SAVING">Saving</option>
-            <option value="INVESTING">Investing</option>
-          </select>
-
-          <input
-            type="text"
-            placeholder="account name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-          />
-          <button type="submit" name="submit">
-            Create
-          </button>
-        </form>
-        <div>{desc}</div>
-        {type === 'INVESTING' ? (
-          <div>
-            <StrategyChart />
+      <div id="cardHolder">
+        <div className="cardDouble">
+          <div className="cardHalf">
+            <form onSubmit={submit} className="transactionForm">
+              <div>
+                <span className="regularFont font16 header">Account</span>
+              </div>
+              <div className="spacer" />
+              <div>
+                <div style={{width: '75px'}}>Type: </div>
+                <select
+                  value={type}
+                  onChange={e => {
+                    setType(e.target.value)
+                    setDesc(descriptions[e.target.value])
+                  }}
+                >
+                  <option value="CHECKING">Checking</option>
+                  <option value="SAVING">Saving</option>
+                  <option value="INVESTING">Investing</option>
+                </select>
+              </div>
+              <div>
+                <div style={{width: '75px'}}>Name: </div>
+                <input
+                  type="text"
+                  placeholder="account name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <div style={{width: '75px'}} />
+                <button className="greenButton" type="submit" name="submit">
+                  Create
+                </button>
+              </div>
+            </form>
           </div>
-        ) : null}
+          <div className="cardHalf">
+            <div>
+              <span className="regularFont font16 header">Description</span>
+            </div>
+            <div className="spacer" />
+            <div>{desc}</div>
+          </div>
+        </div>
       </div>
     </div>
   )

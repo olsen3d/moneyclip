@@ -391,6 +391,8 @@ form div {
   background-color: white;
   padding: 1rem;
   width: 48%;
+  border-radius: 0.5rem 0.5rem 0 0;
+  border-bottom: 5px solid #3c6c70;
   box-shadow: 2px 2px 2px #dddddd;
 }
 
@@ -572,5 +574,5 @@ polyline {
 }
 
 .transactionForm > * {
-  margin: 0.3rem 0;
+  margin: 0.2rem 0;
 }

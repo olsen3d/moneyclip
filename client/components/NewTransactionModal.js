@@ -122,6 +122,7 @@ export default function NewTransaction({onSubmit, onCancel}) {
               />
             </div>
             <div>
+              <div style={{width: '75px'}} />
               <button className="greenButton" type="submit" name="submit">
                 {type}
               </button>
