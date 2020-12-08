@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import StrategyChart from './StrategyChart'
 
 const descriptions = {
-  CHECKING: 'This is a checking account. You can deposit and withdrawl funds',
+  CHECKING:
+    'This is a basic checking account. You can deposit and withdrawl funds',
   SAVING:
     'This is a savings account. You can deposit and withdrawl funds. Your funds will accumulate interest at the current APY of 0.40%',
   INVESTING:
@@ -13,6 +14,7 @@ export default function NewAccount({onSubmit, onCancel}) {
   const [type, setType] = useState('CHECKING')
   const [name, setName] = useState('')
   const [desc, setDesc] = useState(descriptions.CHECKING)
+  const [strategy, setStrategy] = useState('CONSERVATIVE')
 
   const submit = e => {
     e.preventDefault()
@@ -72,6 +74,21 @@ export default function NewAccount({onSubmit, onCancel}) {
                   required
                 />
               </div>
+              {type === 'INVESTING' && (
+                <div>
+                  <div style={{width: '75px'}}>Strategy: </div>
+                  <select
+                    value={strategy}
+                    onChange={e => {
+                      setStrategy(e.target.value)
+                    }}
+                  >
+                    <option value="CONSERVATIVE">Conservative</option>
+                    <option value="BALANCED">Balanced</option>
+                    <option value="AGGRESSIVE">Aggressive</option>
+                  </select>
+                </div>
+              )}
               <div>
                 <div style={{width: '75px'}} />
                 <button className="greenButton" type="submit" name="submit">
@@ -88,6 +105,7 @@ export default function NewAccount({onSubmit, onCancel}) {
             <div>{desc}</div>
           </div>
         </div>
+        {type === 'INVESTING' && <StrategyChart strategy={strategy} />}
       </div>
     </div>
   )

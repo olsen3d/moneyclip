@@ -77,6 +77,10 @@ export default function NewTransaction({onSubmit, onCancel}) {
           />
         )}
         <div className="cardFull">
+          <div>
+            <span className="regularFont font16 header">Transaction</span>
+          </div>
+          <div className="spacer" />
           <form onSubmit={submit} className="transactionForm">
             {!match && (
               <div>
