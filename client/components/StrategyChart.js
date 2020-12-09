@@ -3,27 +3,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import * as d3 from 'd3'
 import StrategyDataDisplay from './StrategyDataDisplay'
-
-const strategies = {
-  CONSERVATIVE: [
-    {name: 'AGG', value: 25},
-    {name: 'VTI', value: 30},
-    {name: 'VEA', value: 40},
-    {name: 'VWO', value: 5}
-  ],
-  BALANCED: [
-    {name: 'AGG', value: 10},
-    {name: 'VTI', value: 40},
-    {name: 'VEA', value: 30},
-    {name: 'VWO', value: 20}
-  ],
-  AGGRESSIVE: [
-    {name: 'AGG', value: 5},
-    {name: 'VTI', value: 20},
-    {name: 'VEA', value: 30},
-    {name: 'VWO', value: 45}
-  ]
-}
+import {strategies} from '../../script/utils'
 
 const TTime = 300
 

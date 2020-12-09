@@ -34,9 +34,9 @@ export default function InvestingChart({accountData}) {
     .y(d => mainY(+d.balance * 0.01))
 
   let areaLine = d3.area().curve(d3.curveLinear)
+  let netLine = d3.area().curve(d3.curveStepAfter)
 
   const filterDomain = async (days = filteredData.length) => {
-    console.log('filtering')
     const filter = filteredData
       .map(trans => {
         return {
@@ -56,16 +56,13 @@ export default function InvestingChart({accountData}) {
     mainX.domain(d3.extent(filter, d => d.date))
     mainY.domain([minValue, maxValue])
 
-    areaLine
-      .x(d => mainX(d.date))
-      .y0(mainY(minValue))
-      .y1(d => mainY(+d.balance * 0.01))
-
-    const svg = d3.select('body').transition()
+    const svg = d3.select('body')
 
     svg
       .select('.xAxis')
-      .duration(750)
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCubicOut)
       .call(d3.axisBottom(mainX).tickFormat(d3.timeFormat('%b %d %y')))
       .selectAll('text')
       .style('text-anchor', 'end')
@@ -75,43 +72,45 @@ export default function InvestingChart({accountData}) {
 
     svg
       .select('.yAxis')
-      .duration(750)
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCubicOut)
       .call(d3.axisRight(mainY))
 
     await svg
       .select('.line')
-      .duration(150)
+      .transition()
+      .duration(50)
       .attr('stroke-opacity', 0)
-
-    await svg
-      .select('.areaLine')
-      .duration(150)
-      .attr('opacity', 0)
       .end()
+
+    svg
+      .select('.areaLine')
+      .transition()
+      .duration(750)
+      .ease(d3.easeCubicOut)
+      .attr('d', areaLine)
+
+    svg
+      .select('.netLine')
+      .transition()
+      .duration(750)
+      .ease(d3.easeCubicOut)
+      .attr('d', netLine)
 
     await svg
       .select('.line')
-      .duration(50)
+      .transition()
+      .duration(500)
       .attr('d', mainLine(filter))
       .attr('stroke-opacity', 0)
       .end()
 
-    await svg
-      .select('.areaLine')
-      .duration(50)
-      .attr('d', areaLine)
-      .attr('opacity', 0)
-      .end()
-
-    await svg
+    svg
       .select('.line')
-      .duration(750)
+      .transition()
+      .duration(250)
       .attr('stroke-opacity', 0.9)
-
-    await svg
-      .select('.areaLine')
-      .duration(750)
-      .attr('opacity', 1)
   }
 
   function showData(transactions) {
@@ -140,12 +139,33 @@ export default function InvestingChart({accountData}) {
       .y0(mainY(minValue))
       .y1(d => mainY(+d.balance * 0.01))
 
+    netLine
+      .x(d => mainX(d.date))
+      .y0(mainY(minValue))
+      .y1(d => mainY(+d.net * 0.01))
+
     mainChart
       .append('path')
       .attr('class', 'areaLine')
       .datum(transactions)
       .attr('d', areaLine)
-      .style('fill', 'url(#mygrad)')
+      .style('fill', '#4C9F66')
+      .attr('opacity', 0.4)
+
+    mainChart
+      .append('path')
+      .attr('class', 'netLine')
+      .datum(transactions)
+      .attr('d', netLine)
+      .style('fill', '#000000')
+      .attr('opacity', 0.15)
+
+    mainChart
+      .append('rect')
+      .attr('height', mainHeight + 50)
+      .attr('width', 30)
+      .attr('transform', 'translate(-30, 0)')
+      .style('fill', 'white')
 
     mainChart
       .append('g')
