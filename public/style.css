@@ -374,7 +374,7 @@ form div {
 }
 
 .cardFullLink:hover {
-  border-bottom: 5px solid #193b42;
+  border-bottom: 5px solid #dd983e;
   margin-left: 2rem;
   margin-right: -2rem;
   box-shadow: 5px 5px 2px #bbbbbb;
@@ -575,4 +575,14 @@ polyline {
 
 .transactionForm > * {
   margin: 0;
+}
+
+.buttonHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.buttonHolder > * {
+  margin: 0 0.5rem 0.5rem 0;
 }

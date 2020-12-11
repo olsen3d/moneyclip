@@ -4,11 +4,10 @@ import * as d3 from 'd3'
 
 export default function InvestingChart({accountData}) {
   const d3MainContainer = useRef(null)
-  const [filteredData, setFilteredData] = useState(accountData)
+  const [filteredData, setFilteredData] = useState()
 
   useEffect(
     () => {
-      setFilteredData(accountData)
       d3
         .select(d3MainContainer.current)
         .selectAll('*')
@@ -36,17 +35,7 @@ export default function InvestingChart({accountData}) {
   let areaLine = d3.area().curve(d3.curveLinear)
   let netLine = d3.area().curve(d3.curveStepAfter)
 
-  const filterDomain = async (days = filteredData.length) => {
-    const filter = filteredData
-      .map(trans => {
-        return {
-          date: new Date(trans.date),
-          balance: trans.balance * 1,
-          net: trans.net * 1
-        }
-      })
-      .filter((val, i) => i < days)
-
+  const filterDomain = filter => {
     let minValue = Math.min(
       d3.min(filter, d => +d.balance * 0.01),
       d3.min(filter, d => +d.net * 0.01)
@@ -57,12 +46,13 @@ export default function InvestingChart({accountData}) {
     mainY.domain([minValue, maxValue])
 
     const svg = d3.select('body')
+    const easeMethod = d3.easeExp
 
     svg
       .select('.xAxis')
       .transition()
       .duration(1000)
-      .ease(d3.easeCubicOut)
+      .ease(easeMethod)
       .call(d3.axisBottom(mainX).tickFormat(d3.timeFormat('%b %d %y')))
       .selectAll('text')
       .style('text-anchor', 'end')
@@ -74,42 +64,36 @@ export default function InvestingChart({accountData}) {
       .select('.yAxis')
       .transition()
       .duration(1000)
-      .ease(d3.easeCubicOut)
+      .ease(easeMethod)
       .call(d3.axisRight(mainY))
-
-    await svg
-      .select('.line')
-      .transition()
-      .duration(50)
-      .attr('stroke-opacity', 0)
-      .end()
 
     svg
       .select('.areaLine')
       .transition()
       .duration(750)
-      .ease(d3.easeCubicOut)
+      .ease(easeMethod)
       .attr('d', areaLine)
 
     svg
       .select('.netLine')
       .transition()
       .duration(750)
-      .ease(d3.easeCubicOut)
+      .ease(easeMethod)
       .attr('d', netLine)
 
-    await svg
-      .select('.line')
+    svg
+      .select('.netLineBehind')
       .transition()
-      .duration(500)
-      .attr('d', mainLine(filter))
-      .attr('stroke-opacity', 0)
-      .end()
+      .duration(750)
+      .ease(easeMethod)
+      .attr('d', netLine)
 
     svg
       .select('.line')
       .transition()
-      .duration(250)
+      .duration(750)
+      .ease(easeMethod)
+      .attr('d', mainLine)
       .attr('stroke-opacity', 0.9)
   }
 
@@ -146,19 +130,40 @@ export default function InvestingChart({accountData}) {
 
     mainChart
       .append('path')
+      .attr('class', 'netLineBehind')
+      .datum(transactions)
+      .attr('d', netLine)
+      .style('fill', '#fff9e4')
+      .attr('opacity', 1)
+
+    mainChart
+      .append('path')
       .attr('class', 'areaLine')
       .datum(transactions)
       .attr('d', areaLine)
-      .style('fill', '#4C9F66')
-      .attr('opacity', 0.4)
+      .style('fill', '#D8EBE1')
+      .attr('opacity', 1)
 
     mainChart
       .append('path')
       .attr('class', 'netLine')
       .datum(transactions)
       .attr('d', netLine)
-      .style('fill', '#000000')
-      .attr('opacity', 0.15)
+      .style('fill', '#161d2b')
+      .attr('opacity', 0.33)
+      .style('mix-blend-mode', 'color-burn')
+
+    mainChart
+      .append('path')
+      .attr('class', 'line')
+      .datum(transactions)
+      .transition()
+      .duration(750)
+      .attr('d', mainLine)
+      .attr('stroke', '#086e6c')
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.9)
+      .style('fill', 'none')
 
     mainChart
       .append('rect')
@@ -166,6 +171,56 @@ export default function InvestingChart({accountData}) {
       .attr('width', 30)
       .attr('transform', 'translate(-30, 0)')
       .style('fill', 'white')
+
+    mainChart
+      .append('rect')
+      .attr('height', 50)
+      .attr('width', mainWidth)
+      .attr('transform', `translate(-30, ${mainHeight})`)
+      .style('fill', 'white')
+
+    mainChart
+      .append('line')
+      .attr('x1', 10)
+      .attr('y1', 0)
+      .attr('x2', 0)
+      .attr('y2', 10)
+      .attr('stroke', '#086e6c')
+      .attr('stroke-width', 3)
+      .attr('stroke-opacity', 0.9)
+      .style('fill', 'none')
+
+    mainChart
+      .append('text')
+      .attr('x', 20)
+      .attr('y', 10)
+      .text('Balance')
+
+    mainChart
+      .append('circle')
+      .attr('r', 5)
+      .attr('cx', 2)
+      .attr('cy', 30)
+      .style('fill', '#d9ebe1')
+
+    mainChart
+      .append('text')
+      .attr('x', 20)
+      .attr('y', 35)
+      .text('Gains')
+
+    mainChart
+      .append('circle')
+      .attr('r', 5)
+      .attr('cx', 2)
+      .attr('cy', 50)
+      .style('fill', '#ffeab8')
+
+    mainChart
+      .append('text')
+      .attr('x', 20)
+      .attr('y', 55)
+      .text('Losses')
 
     mainChart
       .append('g')
@@ -183,45 +238,19 @@ export default function InvestingChart({accountData}) {
       .attr('dx', '-.8em')
       .attr('dy', '.15em')
       .attr('transform', 'rotate(-45)')
+  }
 
-    mainChart
-      .append('path')
-      .attr('class', 'line')
-      .datum(transactions)
-      .transition()
-      .duration(750)
-      .attr('d', mainLine)
-      .attr('stroke', '#086e6c')
-      .attr('stroke-width', 2)
-      .attr('stroke-opacity', 0.9)
-      .style('fill', 'none')
-
-    const gradient = mainChart
-      .append('defs')
-      .append('linearGradient')
-      .attr('id', 'mygrad')
-      .attr('x1', '0%')
-      .attr('x2', '0%')
-      .attr('y1', '0%')
-      .attr('y2', '100%')
-
-    gradient
-      .append('stop')
-      .attr('offset', '0%')
-      .style('stop-color', '#cce5df')
-      .style('stop-opacity', 1)
-
-    gradient
-      .append('stop')
-      .attr('offset', '25%')
-      .style('stop-color', '#cce5df')
-      .style('stop-opacity', 1)
-
-    gradient
-      .append('stop')
-      .attr('offset', '100%')
-      .style('stop-color', 'white')
-      .style('stop-opacity', 0)
+  const applyFilter = (days = accountData.length) => {
+    const filter = accountData
+      .map(trans => {
+        return {
+          date: new Date(trans.date),
+          balance: trans.balance * 1,
+          net: trans.net * 1
+        }
+      })
+      .filter((val, i) => i < days)
+    filterDomain(filter)
   }
 
   return (
@@ -237,23 +266,45 @@ export default function InvestingChart({accountData}) {
             <span className="regularFont font16 header">Balance</span>
           </div>
           <div className="spacer" />
-          <span className="lightFont">filter here</span>
+          <span className="lightFont">Select a date range:</span>
           <div className="spacer" />
-          <button type="button" onClick={() => filterDomain(66)}>
-            3 months
-          </button>
-          <button type="button" onClick={() => filterDomain(160)}>
-            6 months
-          </button>
-          <button type="button" onClick={() => filterDomain(261)}>
-            1 year
-          </button>
-          <button type="button" onClick={() => filterDomain(261 * 2)}>
-            2 years
-          </button>
-          <button type="button" onClick={() => filterDomain()}>
-            All
-          </button>
+          <div className="buttonHolder">
+            <button
+              type="button"
+              className="whiteButton lightFont"
+              onClick={() => applyFilter(66)}
+            >
+              3 months
+            </button>
+            <button
+              type="button"
+              className="whiteButton lightFont"
+              onClick={() => applyFilter(160)}
+            >
+              6 months
+            </button>
+            <button
+              type="button"
+              className="whiteButton lightFont"
+              onClick={() => applyFilter(261)}
+            >
+              1 year
+            </button>
+            <button
+              type="button"
+              className="whiteButton lightFont"
+              onClick={() => applyFilter(261 * 2)}
+            >
+              2 years
+            </button>
+            <button
+              type="button"
+              className="whiteButton lightFont"
+              onClick={() => applyFilter()}
+            >
+              All
+            </button>
+          </div>
         </div>
       </div>
     </React.Fragment>
