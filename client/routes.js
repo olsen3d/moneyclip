@@ -8,7 +8,8 @@ import {
   Home,
   Accounts,
   AccountOverview,
-  NewsFeed
+  NewsFeed,
+  WatchList
 } from './components'
 import {me} from './store'
 import {loadAccounts} from './store/thunks'
@@ -42,6 +43,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={Home} />
             <Route path="/news" component={NewsFeed} />
+            <Route path="/watchlist" component={WatchList} />
             <Route exact path="/accounts" component={Accounts} />
             <Route path="/accounts/:id" component={AccountOverview} />
           </Switch>

@@ -36,7 +36,7 @@ export default function SummaryBar({accounts}) {
             gain >= 0 ? 'positive' : 'negative'
           }`}
         >
-          {`$${gain.toFixed(2)}`}
+          {`${formatter.format(gain.toFixed(2))}`}
         </div>
       </div>
 

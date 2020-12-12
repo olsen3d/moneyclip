@@ -61,33 +61,49 @@ export default function Transactions({transactions}) {
         </div>
         <div className="spacer" />
         <span className="lightFont">{`${new Date(
-          currentTrans[0].date
-        ).toLocaleDateString('en-us')} - ${new Date(
           currentTrans[currentTrans.length - 1].date
+        ).toLocaleDateString('en-us')} - ${new Date(
+          currentTrans[0].date
         ).toLocaleDateString('en-us')}`}</span>
         <div className="spacer" />
-        Include market adj:
-        <input
-          type="checkbox"
-          onChange={() => setIncludeMarket(!includeMarket)}
-          value={includeMarket}
-        />
-        Page:
-        <select
-          onChange={e => {
-            setTransPage(e.target.value)
-          }}
-          name="page"
-          value={transPage}
-        >
-          {pageNums.map(page => {
-            return (
-              <option key={page} value={page}>
-                {page}
-              </option>
-            )
-          })}
-        </select>
+        <div>
+          Include market adj:
+          <input
+            type="checkbox"
+            onChange={() => setIncludeMarket(!includeMarket)}
+            value={includeMarket}
+          />
+        </div>
+        <div>
+          Page:
+          <select
+            onChange={e => {
+              setTransPage(e.target.value)
+            }}
+            name="page"
+            value={transPage}
+          >
+            {pageNums.map(page => {
+              return (
+                <option key={page} value={page}>
+                  {page}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+        <div>
+          {`Deposits: ${
+            transactions.filter(
+              trans => trans.type === 'SEED_DEPOSIT' || trans.type === 'DEPOSIT'
+            ).length
+          }`}
+        </div>
+        <div>
+          {`Withdrawals: ${
+            transactions.filter(trans => trans.type === 'WITHDRAWAL').length
+          }`}
+        </div>
       </div>
 
       <div className="cardTwoThirdsBlank">

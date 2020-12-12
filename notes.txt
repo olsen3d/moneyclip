@@ -83,14 +83,8 @@ news
 UI >------------------------------------------------------------>
 
 icon improvements
-  1. account icons - checking, saving, investing
-  2. deposit and withdrawal icons
   3. loading icon with "card shuffle" animation in AE
 
-cards & flexbox
-  1. flexbox 2x2 for cards -  400 x 2 max width: 800?
-  2. centered on maincontent area
-  3. white bg for header, subheader, and summary bar and then each card
 
 stretch goals
   1. mobile version with burger menu
@@ -114,9 +108,7 @@ watch list
 charts
   2. history line chart for watchlish stocks
 
-transactions compoonent
-  1. display date range next to dropdown
-  2. include market adjustments checkbox (off by default)
+
 
 
 

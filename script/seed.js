@@ -87,51 +87,28 @@ async function seed() {
     })
   }
 
-  for (let month = 0; month < 10; month++) {
-    for (let day = 1; day <= 28; day++) {
-      const hours = Math.floor(Math.random() * 12)
-      const minutes = Math.floor(Math.random() * 59)
-      const seconds = Math.floor(Math.random() * 59)
-      const dateInterest = new Date(2020, month, day)
-      const dateTransaction = new Date(
-        2020,
-        month,
-        day,
-        hours,
-        minutes,
-        seconds
-      )
-      if (day === 1) await calcInterest(dateInterest, savingAcc)
-      await createTransaction(dateTransaction, checkingAcc)
-      await createTransaction(dateTransaction, savingAcc)
-    }
-  }
-
-  //simulate market
-  //create account
-  //fetch history
-  //create a loop
-  //on each iteration 1/10 to withdrawal, 2/10 to deposit a random amount
-
-  //if deposit: create a deposit transaction
-  //get price of stock and buy amount
-  //put amount in portfolio
-
-  //if withdrawal: create a withdrawal amount
-  //get price of stock divide by amount
-  //subtract amount in portfolio
-
-  //on each iteration calc market >>>
-  //get price
-  //mult price by portfolio amount to get total end value
-  //subtract balance
-  //create market transaction for adjustment
-
-  //investingAcc
-  //portfolio
+  // for (let month = 0; month < 10; month++) {
+  //   for (let day = 1; day <= 28; day++) {
+  //     const hours = Math.floor(Math.random() * 12)
+  //     const minutes = Math.floor(Math.random() * 59)
+  //     const seconds = Math.floor(Math.random() * 59)
+  //     const dateInterest = new Date(2020, month, day)
+  //     const dateTransaction = new Date(
+  //       2020,
+  //       month,
+  //       day,
+  //       hours,
+  //       minutes,
+  //       seconds
+  //     )
+  //     if (day === 1) await calcInterest(dateInterest, savingAcc)
+  //     await createTransaction(dateTransaction, checkingAcc)
+  //     await createTransaction(dateTransaction, savingAcc)
+  //   }
+  // }
 
   const simulateMarketDeposit = async (date, price) => {
-    const randomAmount = Math.floor(Math.random() * 150000)
+    const randomAmount = Math.floor(Math.random() * 100000)
     await Transaction.create({
       amount: randomAmount,
       type: 'SEED_DEPOSIT',
@@ -150,8 +127,6 @@ async function seed() {
   const simulateMarketAdjustment = async (date, price) => {
     const BV = investingAcc.net / 100
     const EV = portfolio.VTI * price
-
-    console.log(EV - BV)
 
     await Transaction.create({
       amount: Math.floor(EV - BV),

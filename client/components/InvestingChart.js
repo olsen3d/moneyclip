@@ -4,6 +4,7 @@ import * as d3 from 'd3'
 
 function InvestingChart({accountData}) {
   const d3MainContainer = useRef(null)
+  const d3DateContainer = useRef(null)
   const [filteredData, setFilteredData] = useState()
 
   useEffect(
@@ -25,6 +26,7 @@ function InvestingChart({accountData}) {
   )
 
   let mainChart
+  let dateRange
 
   let mainHeight = 300
   let mainWidth = 530
@@ -51,6 +53,12 @@ function InvestingChart({accountData}) {
 
     mainX.domain(d3.extent(filter, d => d.date))
     mainY.domain([minValue, maxValue])
+
+    dateRange.text(
+      `${new Date(filter[filter.length - 1].date).toLocaleDateString(
+        'en-us'
+      )} - ${new Date(filter[0].date).toLocaleDateString('en-us')}`
+    )
 
     const svg = d3.select('body')
     const easeMethod = d3.easeExp
@@ -114,6 +122,15 @@ function InvestingChart({accountData}) {
     })
 
     mainChart = d3.select(d3MainContainer.current)
+    dateRange = d3.select(d3DateContainer.current)
+
+    dateRange.text(
+      `${new Date(
+        transactions[transactions.length - 1].date
+      ).toLocaleDateString('en-us')} - ${new Date(
+        transactions[0].date
+      ).toLocaleDateString('en-us')}`
+    )
 
     let minValue = Math.min(
       d3.min(transactions, d => +d.balance * 0.01),
@@ -164,8 +181,6 @@ function InvestingChart({accountData}) {
       .append('path')
       .attr('class', 'line')
       .datum(transactions)
-      .transition()
-      .duration(750)
       .attr('d', mainLine)
       .attr('stroke', '#086e6c')
       .attr('stroke-width', 2)
@@ -257,7 +272,6 @@ function InvestingChart({accountData}) {
         }
       })
       .filter((val, i) => i < days)
-    //setFilteredData(filter)
     filterDomain(filter)
   }
 
@@ -274,7 +288,9 @@ function InvestingChart({accountData}) {
             <span className="regularFont font16 header">Balance</span>
           </div>
           <div className="spacer" />
-          <span className="lightFont">Select a date range:</span>
+          <span ref={d3DateContainer} className="lightFont">
+            Select a date range:
+          </span>
           <div className="spacer" />
           <div className="buttonHolder">
             <button

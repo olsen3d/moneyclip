@@ -78,6 +78,10 @@ Transaction.addHook('afterCreate', async transaction => {
       })
       break
     case 'SEED_DEPOSIT':
+      // await account.update({
+      //   net: account.net + transaction.amount,
+      //   balance: account.balance + transaction.amount
+      // })
       break
     default:
       break
