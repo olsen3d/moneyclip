@@ -2,7 +2,7 @@
 import React, {useRef, useState, useEffect} from 'react'
 import * as d3 from 'd3'
 
-export default function InvestingChart({accountData}) {
+function InvestingChart({accountData}) {
   const d3MainContainer = useRef(null)
   const [filteredData, setFilteredData] = useState()
 
@@ -15,6 +15,13 @@ export default function InvestingChart({accountData}) {
       showData(accountData)
     },
     [accountData]
+  )
+
+  useEffect(
+    () => {
+      console.log('render')
+    },
+    [filteredData]
   )
 
   let mainChart
@@ -250,6 +257,7 @@ export default function InvestingChart({accountData}) {
         }
       })
       .filter((val, i) => i < days)
+    //setFilteredData(filter)
     filterDomain(filter)
   }
 
@@ -310,3 +318,5 @@ export default function InvestingChart({accountData}) {
     </React.Fragment>
   )
 }
+
+export default InvestingChart

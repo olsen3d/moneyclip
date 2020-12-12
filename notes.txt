@@ -98,8 +98,6 @@ stretch goals
 
 FEATURES >------------------------------------------------------------>
 
-redux store
-  1. account update - name
 
 Header buttons 
   1. make sure all header buttons work - transaction modals and back buttons
@@ -114,15 +112,12 @@ watch list
   3. maximum of 5 due to api limitations
 
 charts
-  1. strategy chart D3.js on investing account create
   2. history line chart for watchlish stocks
 
 transactions compoonent
   1. display date range next to dropdown
   2. include market adjustments checkbox (off by default)
 
-footer
-  1.display footer at bottom of screen in maincontent
 
 
 BUGS >------------------------------------------------------------>
