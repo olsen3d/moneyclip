@@ -3,7 +3,7 @@
 const db = require('../server/db')
 const colors = require('colors')
 const {User} = require('../server/db/models')
-const {Account, Transaction, Portfolio} = require('../server/db/models')
+const {Account, Transaction, Portfolio, Watch} = require('../server/db/models')
 const {fetchMarketHistory} = require('../server/api/finnhub')
 
 async function seed() {
@@ -44,6 +44,11 @@ async function seed() {
     VEA: 0,
     VWO: 0,
     accountId: investingAcc.id
+  })
+
+  const stock = await Watch.create({
+    name: 'AAPL',
+    userId: mike.id
   })
 
   const createTransaction = async (date, acc) => {

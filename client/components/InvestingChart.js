@@ -1,11 +1,10 @@
 /* eslint-disable complexity */
-import React, {useRef, useState, useEffect} from 'react'
+import React, {useRef, useEffect} from 'react'
 import * as d3 from 'd3'
+import {formatter} from '../../script/utils'
 
 function InvestingChart({accountData}) {
   const d3MainContainer = useRef(null)
-  const d3DateContainer = useRef(null)
-  const [filteredData, setFilteredData] = useState()
 
   useEffect(
     () => {
@@ -18,15 +17,7 @@ function InvestingChart({accountData}) {
     [accountData]
   )
 
-  useEffect(
-    () => {
-      console.log('render')
-    },
-    [filteredData]
-  )
-
   let mainChart
-  let dateRange
 
   let mainHeight = 300
   let mainWidth = 530
@@ -54,11 +45,7 @@ function InvestingChart({accountData}) {
     mainX.domain(d3.extent(filter, d => d.date))
     mainY.domain([minValue, maxValue])
 
-    dateRange.text(
-      `${new Date(filter[filter.length - 1].date).toLocaleDateString(
-        'en-us'
-      )} - ${new Date(filter[0].date).toLocaleDateString('en-us')}`
-    )
+    updateRangeData(filter)
 
     const svg = d3.select('body')
     const easeMethod = d3.easeExp
@@ -117,20 +104,15 @@ function InvestingChart({accountData}) {
       return {
         date: new Date(trans.date),
         balance: trans.balance * 1,
-        net: trans.net * 1
+        net: trans.net * 1,
+        type: trans.type,
+        amount: trans.amount
       }
     })
 
     mainChart = d3.select(d3MainContainer.current)
-    dateRange = d3.select(d3DateContainer.current)
 
-    dateRange.text(
-      `${new Date(
-        transactions[transactions.length - 1].date
-      ).toLocaleDateString('en-us')} - ${new Date(
-        transactions[0].date
-      ).toLocaleDateString('en-us')}`
-    )
+    updateRangeData(transactions)
 
     let minValue = Math.min(
       d3.min(transactions, d => +d.balance * 0.01),
@@ -262,13 +244,62 @@ function InvestingChart({accountData}) {
       .attr('transform', 'rotate(-45)')
   }
 
+  function updateRangeData(transactions) {
+    d3
+      .select('#dateContainer')
+      .text(
+        `${new Date(
+          transactions[transactions.length - 1].date
+        ).toLocaleDateString('en-us')} - ${new Date(
+          transactions[0].date
+        ).toLocaleDateString('en-us')}`
+      )
+
+    d3.select('#deposits').text(
+      `${formatter.format(
+        transactions
+          .filter(
+            trans => trans.type === 'DEPOSIT' || trans.type === 'SEED_DEPOSIT'
+          )
+          .reduce((total, deposit) => {
+            total += deposit.amount
+            return total
+          }, 0) * 0.01
+      )}`
+    )
+
+    d3.select('#withdrawals').text(
+      `${formatter.format(
+        transactions
+          .filter(trans => trans.type === 'WITHDRAWAL')
+          .reduce((total, withdrawal) => {
+            total += withdrawal.amount
+            return total
+          }, 0) * 0.01
+      )}`
+    )
+
+    d3.select('#earnings').text(
+      `${formatter.format(
+        transactions
+          .filter(trans => trans.type === 'MARKET')
+          .reduce((total, market) => {
+            total += market.amount
+            return total
+          }, 0) * 0.01
+      )}`
+    )
+  }
+
   const applyFilter = (days = accountData.length) => {
     const filter = accountData
       .map(trans => {
         return {
           date: new Date(trans.date),
           balance: trans.balance * 1,
-          net: trans.net * 1
+          net: trans.net * 1,
+          type: trans.type,
+          amount: trans.amount
         }
       })
       .filter((val, i) => i < days)
@@ -288,7 +319,7 @@ function InvestingChart({accountData}) {
             <span className="regularFont font16 header">Balance</span>
           </div>
           <div className="spacer" />
-          <span ref={d3DateContainer} className="lightFont">
+          <span id="dateContainer" className="lightFont">
             Select a date range:
           </span>
           <div className="spacer" />
@@ -328,6 +359,23 @@ function InvestingChart({accountData}) {
             >
               All
             </button>
+          </div>
+          <div className="spacer" />
+          <div>
+            <span className="regularFont">Deposits: </span>
+            <span id="deposits" className="lightFont" />
+          </div>
+          <div>
+            <span className="regularFont">Withdrawals: </span>
+            <span id="withdrawals" className="lightFont" />
+          </div>
+          <div>
+            <span className="regularFont">Net Deposit: </span>
+            <span id="netDeposit" className="lightFont" />
+          </div>
+          <div>
+            <span className="regularFont">Earnings: </span>
+            <span id="earnings" className="lightFont" />
           </div>
         </div>
       </div>
