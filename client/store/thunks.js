@@ -5,7 +5,8 @@ import {
   removeAccountAction,
   updateAccountAction,
   createTransactionAction,
-  loadNewsAction
+  loadNewsAction,
+  loadWatchesAction
 } from './actions'
 
 const loadAccounts = accountId => async dispatch => {
@@ -19,7 +20,6 @@ const createAccount = account => async dispatch => {
 }
 
 const updateAccount = account => async dispatch => {
-  console.log(account)
   const updatedAccount = (await axios.put(
     `/api/accounts/${account.id}`,
     account
@@ -44,11 +44,17 @@ const loadNews = _ => async dispatch => {
   return dispatch(loadNewsAction(news))
 }
 
+const loadWatches = userId => async dispatch => {
+  let watchList = (await axios.get(`/api/watches/${userId}`)).data
+  return dispatch(loadWatchesAction(watchList))
+}
+
 export {
   loadAccounts,
   createAccount,
   removeAccount,
   updateAccount,
   createTransaction,
-  loadNews
+  loadNews,
+  loadWatches
 }

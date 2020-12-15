@@ -5,7 +5,8 @@ import {
   REMOVE_ACCOUNT,
   LOAD_TRANSACTIONS,
   CREATE_TRANSACTION,
-  LOAD_NEWS
+  LOAD_NEWS,
+  LOAD_WATCHES
 } from './conststants'
 
 const loadAccountsAction = accounts => ({type: LOAD_ACCOUNTS, accounts})
@@ -20,11 +21,14 @@ const createTransactionAction = transaction => ({
 
 const loadNewsAction = news => ({type: LOAD_NEWS, news})
 
+const loadWatchesAction = watchList => ({type: LOAD_WATCHES, watchList})
+
 export {
   loadAccountsAction,
   createAccountAction,
   removeAccountAction,
   updateAccountAction,
   createTransactionAction,
-  loadNewsAction
+  loadNewsAction,
+  loadWatchesAction
 }

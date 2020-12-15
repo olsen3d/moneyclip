@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import {loadWatches} from '../store/thunks'
 
 export default function WatchList() {
   const dispatch = useDispatch()
-  //const watchList = useSelector(state => state.watchList)
+  const user = useSelector(state => state.user)
+  const watchList = useSelector(state => state.watches)
+
+  console.log(watchList)
 
   useEffect(() => {
-    //watchList.length || dispatch(loadWatchList())
+    watchList.length || dispatch(loadWatches(user.id))
   }, [])
 
   return (
@@ -36,7 +40,10 @@ export default function WatchList() {
           <span className="regularFont">Stocks you are watching</span>
         </div>
       </div>
-      <div id="cardHolder" />
+      <div id="cardHolder">
+        {watchList &&
+          watchList.map(stock => <div className="cardFull">{stock.name}</div>)}
+      </div>
     </div>
   )
 }

@@ -10,7 +10,8 @@ import {
   REMOVE_ACCOUNT,
   LOAD_TRANSACTIONS,
   CREATE_TRANSACTION,
-  LOAD_NEWS
+  LOAD_NEWS,
+  LOAD_WATCHES
 } from './conststants'
 
 const accountsReducer = (state = [], action) => {
@@ -45,10 +46,20 @@ const newsReducer = (state = [], action) => {
   }
 }
 
+const watchListReducer = (state = [], action) => {
+  switch (action.type) {
+    case LOAD_WATCHES:
+      return action.watchList
+    default:
+      return state
+  }
+}
+
 const reducer = combineReducers({
   user,
   accounts: accountsReducer,
-  news: newsReducer
+  news: newsReducer,
+  watches: watchListReducer
 })
 
 const middleware = composeWithDevTools(

@@ -7,6 +7,8 @@ export default function NewsFeed() {
   const dispatch = useDispatch()
   const news = useSelector(state => state.news)
 
+  console.log(news)
+
   useEffect(() => {
     news.length || dispatch(loadNews())
   }, [])
