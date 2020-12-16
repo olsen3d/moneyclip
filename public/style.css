@@ -586,3 +586,13 @@ polyline {
 .buttonHolder > * {
   margin: 0 0.5rem 0.5rem 0;
 }
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.stockHeader {
+  border-right: 1px solid #aaaaaa;
+  padding-right: 1rem;
+}

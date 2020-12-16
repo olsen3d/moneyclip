@@ -1,11 +1,8 @@
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {loadWatches} from '../store/thunks'
 import StockChart from './StockChart'
 
 export default function WatchList() {
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
   const watchList = useSelector(state => state.watches)
 
   return (

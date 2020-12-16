@@ -46,8 +46,13 @@ async function seed() {
     accountId: investingAcc.id
   })
 
-  const stock = await Watch.create({
+  const stock1 = await Watch.create({
     name: 'AAPL',
+    userId: mike.id
+  })
+
+  const stock2 = await Watch.create({
+    name: 'MSFT',
     userId: mike.id
   })
 
