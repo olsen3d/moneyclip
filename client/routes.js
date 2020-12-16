@@ -12,7 +12,7 @@ import {
   WatchList
 } from './components'
 import {me} from './store'
-import {loadAccounts} from './store/thunks'
+import {loadAccounts, loadWatches} from './store/thunks'
 
 /**
  * COMPONENT
@@ -26,6 +26,7 @@ class Routes extends Component {
     if (prevProps.user !== this.props.user) {
       if (this.props.user.id) {
         this.props.loadMyAccounts(this.props.user.id)
+        this.props.loadMyWatchList(this.props.user.id)
       }
     }
   }
@@ -74,6 +75,9 @@ const mapDispatch = dispatch => {
     },
     loadMyAccounts(userId) {
       dispatch(loadAccounts(userId))
+    },
+    loadMyWatchList(userId) {
+      dispatch(loadWatches(userId))
     }
   }
 }

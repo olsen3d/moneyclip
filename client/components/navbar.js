@@ -7,6 +7,7 @@ import AccountSmallPreview from './AccountSmallPreview'
 export default function Navbar() {
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
+  const watches = useSelector(state => state.watches)
   const dispatch = useDispatch()
   const match = useRouteMatch('/:component')
   const currentPage = match.params.component
@@ -36,12 +37,15 @@ export default function Navbar() {
       </Link>
       <Link
         className={`boldFont link ${
-          currentPage === 'watching' ? 'navSelected' : 'navNotSelected'
+          currentPage === 'watchList' ? 'navSelected' : 'navNotSelected'
         }`}
         to="/watchList"
       >
         Watch List
       </Link>
+      <ul className="listBar">
+        {watches && watches.map(stock => <li key={stock.id}>{stock.name}</li>)}
+      </ul>
       <Link
         className={`boldFont link ${
           currentPage === 'accounts' ? 'navSelected' : 'navNotSelected'
