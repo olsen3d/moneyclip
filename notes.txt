@@ -92,21 +92,13 @@ stretch goals
 
 FEATURES >------------------------------------------------------------>
 
-
-Header buttons 
-  1. make sure all header buttons work - transaction modals and back buttons
-
 db models
   1. transactions withdrawal from an investing account
   2. watch item belongs to an account has watch.name for stock
 
 watch list
   1. local state to pick a stock
-  2. make a trans type card to display stock and history
-  3. maximum of 5 due to api limitations
-
-charts
-  2. history line chart for watchlish stocks
+  3. maximum of 3 due to api limitations
 
 
 

@@ -3,7 +3,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import StockChart from './StockChart'
 
 export default function WatchList() {
-  const watchList = useSelector(state => state.watches)
+  let watchList = useSelector(state => state.watches)
+
+  const refresh = () => {}
 
   return (
     <div id="mainContent">
@@ -21,7 +23,7 @@ export default function WatchList() {
             <span className="horSpacer" />
             <button
               type="button"
-              onClick={() => console.log('load')}
+              onClick={() => refresh()}
               className="greenButton"
             >
               Refresh

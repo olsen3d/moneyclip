@@ -1,11 +1,29 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
+import React, {useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import ChartTest from './ChartTest'
 import SummaryBar from './SummaryBar'
+import NewTransactionModal from './NewTransactionModal'
+import {createTransaction} from '../store/thunks'
 
 export default function Home() {
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
+  const [transactionModal, setTransactionModal] = useState(false)
+  const dispatch = useDispatch()
+
+  const onSubmitTransaction = transaction => {
+    dispatch(createTransaction(transaction))
+    setTransactionModal(false)
+  }
+
+  if (transactionModal) {
+    return (
+      <NewTransactionModal
+        onSubmit={onSubmitTransaction}
+        onCancel={() => setTransactionModal(false)}
+      />
+    )
+  }
 
   return (
     <div id="mainContent">

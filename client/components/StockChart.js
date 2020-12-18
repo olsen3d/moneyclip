@@ -129,7 +129,7 @@ function StockChart({stock}) {
             <div id={`closing${stock.name}`} className="lightFont" />
           </div>
           <svg id="container" height="200" width="870">
-            <g ref={d3MainContainer} transform="translate(50,0)" />
+            <g ref={d3MainContainer} transform="translate(0,0)" />
           </svg>
         </div>
       </div>
