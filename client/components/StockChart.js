@@ -1,25 +1,26 @@
 import React, {useRef, useState, useEffect} from 'react'
 import * as d3 from 'd3'
-import axios from 'axios'
 
 function StockChart({stock}) {
   const d3MainContainer = useRef(null)
 
-  const fetchData = async stock => {
-    const data = (await axios.get(`/api/finnhub/stock/${stock.name}`)).data
-    const processedData = []
-    data.t.forEach((t, i) => {
-      processedData.push({
-        date: new Date(t * 1000),
-        amount: data.c[i]
+  useEffect(
+    () => {
+      d3
+        .select(d3MainContainer.current)
+        .selectAll('*')
+        .remove()
+      const processedData = []
+      stock.history.t.forEach((t, i) => {
+        processedData.push({
+          date: new Date(t * 1000),
+          amount: stock.history.c[i]
+        })
       })
-    })
-    showData(processedData)
-  }
-
-  useEffect(() => {
-    fetchData(stock)
-  }, [])
+      showData(processedData)
+    },
+    [stock]
+  )
 
   function showData(processedData) {
     let mainChart

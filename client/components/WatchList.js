@@ -1,11 +1,30 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import StockChart from './StockChart'
+import {loadWatches} from '../store/thunks'
+import NewWatchModal from './NewWatchModal'
 
 export default function WatchList() {
-  let watchList = useSelector(state => state.watches)
+  const [watchModal, setWatchModal] = useState(false)
+  const watchList = useSelector(state => state.watches)
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
-  const refresh = () => {}
+  const onSubmitAccount = newWatch => {
+    console.log(newWatch)
+    //newAccount.userId = user.id
+    //dispatch(createAccount(newAccount))
+    setWatchModal(false)
+  }
+
+  if (watchModal) {
+    return (
+      <NewWatchModal
+        onSubmit={onSubmitAccount}
+        onCancel={() => setWatchModal(false)}
+      />
+    )
+  }
 
   return (
     <div id="mainContent">
@@ -16,14 +35,14 @@ export default function WatchList() {
             <button
               className="whiteButton lightFont"
               type="button"
-              onClick={() => setAccountModal(true)}
+              onClick={() => setWatchModal(true)}
             >
               + Add New
             </button>
             <span className="horSpacer" />
             <button
               type="button"
-              onClick={() => refresh()}
+              onClick={() => dispatch(loadWatches(user.id))}
               className="greenButton"
             >
               Refresh

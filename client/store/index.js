@@ -49,7 +49,7 @@ const newsReducer = (state = [], action) => {
 const watchListReducer = (state = [], action) => {
   switch (action.type) {
     case LOAD_WATCHES:
-      return action.watchList
+      return [...action.watchList]
     default:
       return state
   }
