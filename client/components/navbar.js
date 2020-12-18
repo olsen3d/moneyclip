@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
@@ -10,7 +11,7 @@ export default function Navbar() {
   const watches = useSelector(state => state.watches)
   const dispatch = useDispatch()
   const match = useRouteMatch('/:component')
-  const currentPage = match.params.component
+  const currentPage = match ? match.params.component : null
 
   if (!user.id) return null
 

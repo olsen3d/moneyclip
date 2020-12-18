@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Login,
@@ -41,7 +41,10 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
+            <Route exact path="/">
+              {' '}
+              <Redirect to="/home" />{' '}
+            </Route>
             <Route path="/home" component={Home} />
             <Route path="/news" component={NewsFeed} />
             <Route path="/watchlist" component={WatchList} />
