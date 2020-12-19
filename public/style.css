@@ -600,3 +600,25 @@ polyline {
   border-right: 1px solid #aaaaaa;
   padding-right: 1rem;
 }
+
+#barContainer {
+  width: 350px;
+  height: 35px;
+  background-color: #193b42;
+  border: white 2px solid;
+  border-radius: 0.5rem;
+}
+
+#bar {
+  background-color: #dd983e;
+  height: 100%;
+  width: 0%;
+  border: #dd983e 1px solid;
+  border-radius: 0.3rem 0 0 0.3rem;
+}
+
+.progressMessages {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

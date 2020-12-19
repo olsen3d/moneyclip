@@ -1,18 +1,53 @@
-import React from 'react'
+import React, {useState, useRef} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-
+import socket from '../socket'
 /**
  * COMPONENT
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+  const [seeding, setSeeding] = useState(false)
+  const [progressMessage, setProgressMessage] = useState(
+    'Seeding data please wait...'
+  )
+  const [progressPercent, setProgressPercent] = useState(0)
+  const barRef = useRef()
+
+  socket.on('progressMessage', message => {
+    setProgressMessage(message)
+  })
+
+  socket.on('progressPercent', percent => {
+    setProgressPercent(percent)
+    barRef.current.style.width = `${progressPercent}%`
+  })
+
+  if (seeding)
+    return (
+      <div id="landingPage">
+        <img width="60%" src="/img/moneyclipLogo.png" />
+        <div id="barContainer">
+          <div id="bar" ref={barRef} />
+        </div>
+        <div className="progressMessages">
+          <span className="white lightFont">{`${progressMessage}  `}</span>
+          <span className="white regularFont">{`${progressPercent}%`}</span>
+        </div>
+      </div>
+    )
 
   return (
     <div id="landingPage">
       <img width="60%" src="/img/moneyclipLogo.png" />
-      <form onSubmit={handleSubmit} name={name}>
+      <form
+        onSubmit={e => {
+          if (name === 'signup') setSeeding(true)
+          handleSubmit(e)
+        }}
+        name={name}
+      >
         <div>
           <label htmlFor="email">
             <small className="white lightFont">Email</small>
@@ -71,7 +106,7 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatchLogin = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
@@ -83,8 +118,20 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+const mapDispatchSignup = dispatch => {
+  return {
+    handleSubmit(evt) {
+      evt.preventDefault()
+      const formName = evt.target.name
+      const email = evt.target.email.value
+      const password = evt.target.password.value
+      dispatch(auth(email, password, formName))
+    }
+  }
+}
+
+export const Login = connect(mapLogin, mapDispatchLogin)(AuthForm)
+export const Signup = connect(mapSignup, mapDispatchSignup)(AuthForm)
 
 /**
  * PROP TYPES

@@ -6,11 +6,18 @@ const {
   Watch
 } = require('../server/db/models')
 const {fetchMarketHistory} = require('../server/api/finnhub')
+const socket = require('../server/socket')
+
+const sendMessage = (type, message) => {
+  if (socket.getIO()) {
+    socket.getIO().emit(type, message)
+  }
+}
 
 const createNewUser = async user => {
   console.log(user.id, user.email)
 
-  console.log('creating accounts')
+  sendMessage('progressMessage', 'creating accounts')
   const [checkingAcc, savingAcc, investingAcc] = await Promise.all([
     Account.create({
       name: 'Daily Checking',
@@ -33,7 +40,7 @@ const createNewUser = async user => {
     })
   ])
 
-  console.log('creating portfolios')
+  sendMessage('progressMessage', 'creating portfolios')
   const portfolio = await Portfolio.create({
     AGG: 0,
     VTI: 0,
@@ -42,7 +49,7 @@ const createNewUser = async user => {
     accountId: investingAcc.id
   })
 
-  console.log('creating watchlist')
+  sendMessage('progressMessage', 'creating watchlist')
   const stock1 = await Watch.create({
     name: 'AAPL',
     userId: user.id
@@ -89,7 +96,8 @@ const createNewUser = async user => {
       accountId: acc.id
     })
   }
-  console.log('creating saving/checking data')
+
+  sendMessage('progressMessage', 'creating saving/checking data')
   for (let month = 0; month < 10; month++) {
     for (let day = 1; day <= 28; day++) {
       const hours = Math.floor(Math.random() * 12)
@@ -141,6 +149,7 @@ const createNewUser = async user => {
 
   const simulateMarket = async () => {
     const stock = await fetchMarketHistory('VWO')
+    let prevPercent = -1
     for (let i = 0; i < stock.t.length; i++) {
       const date = stock.t[i]
       const price = stock.c[i]
@@ -149,14 +158,22 @@ const createNewUser = async user => {
       if (randomTransaction < 0.02) {
         await simulateMarketDeposit(date, price)
       }
-      console.log(`percent: ${i / stock.t.length * 100}%`.blue)
+      const percent = Math.floor(i / stock.t.length * 100)
+      if (percent !== prevPercent) {
+        prevPercent = percent
+        sendMessage('progressPercent', `${percent}`)
+        sendMessage(
+          'progressMessage',
+          `simulating market data from ${new Date(
+            date * 1000
+          ).toLocaleDateString('en-us')}`
+        )
+      }
       await simulateMarketAdjustment(date, price)
     }
   }
-  console.log('simulating market data')
+  sendMessage('progressMessage', 'simulating market data')
   await simulateMarket()
-
-  console.log('done')
 }
 
 module.exports = {createNewUser}

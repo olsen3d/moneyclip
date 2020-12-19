@@ -107,7 +107,7 @@ const startListening = () => {
     pingInterval: 10000,
     pingTimeout: 60000
   })
-  require('./socket')(io)
+  require('./socket').setup(io)
 }
 
 const syncDb = () => db.sync()
