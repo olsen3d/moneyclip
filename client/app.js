@@ -13,7 +13,7 @@ const App = () => {
         {user.id && <div id="sidebarPlaceholder" />}
         <div id="content">
           <Routes />
-          <Footer />
+          {user.id && <Footer />}
         </div>
       </div>
     </div>

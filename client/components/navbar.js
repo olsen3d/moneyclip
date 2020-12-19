@@ -4,11 +4,12 @@ import {useSelector, useDispatch} from 'react-redux'
 import {Link, useRouteMatch} from 'react-router-dom'
 import {logout} from '../store'
 import AccountSmallPreview from './AccountSmallPreview'
+import WatchSmallPreview from './WatchSmallPreview'
 
 export default function Navbar() {
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
-  const watches = useSelector(state => state.watches)
+  const watchlist = useSelector(state => state.watches)
   const dispatch = useDispatch()
   const match = useRouteMatch('/:component')
   const currentPage = match ? match.params.component : null
@@ -45,7 +46,10 @@ export default function Navbar() {
         Watch List
       </Link>
       <ul className="listBar">
-        {watches && watches.map(stock => <li key={stock.id}>{stock.name}</li>)}
+        {watchlist &&
+          watchlist.map(stock => (
+            <WatchSmallPreview key={stock.name} stock={stock} />
+          ))}
       </ul>
       <Link
         className={`boldFont link ${

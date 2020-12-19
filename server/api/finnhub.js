@@ -1,15 +1,16 @@
 const router = require('express').Router()
 const axios = require('axios')
 const {finnhubKey} = require('../../secrets')
+const apiKey = process.env.FINNHUB_API_KEY || finnhubKey
 
 const baseURL = 'https://finnhub.io/api/v1/'
 
 const fetchQuotes = async () => {
   const [AGG, VTI, VEA, VWO] = await Promise.all([
-    (await axios.get(`${baseURL}quote?symbol=AGG&token=${finnhubKey}`)).data.c,
-    (await axios.get(`${baseURL}quote?symbol=VTI&token=${finnhubKey}`)).data.c,
-    (await axios.get(`${baseURL}quote?symbol=VEA&token=${finnhubKey}`)).data.c,
-    (await axios.get(`${baseURL}quote?symbol=VWO&token=${finnhubKey}`)).data.c
+    (await axios.get(`${baseURL}quote?symbol=AGG&token=${apiKey}`)).data.c,
+    (await axios.get(`${baseURL}quote?symbol=VTI&token=${apiKey}`)).data.c,
+    (await axios.get(`${baseURL}quote?symbol=VEA&token=${apiKey}`)).data.c,
+    (await axios.get(`${baseURL}quote?symbol=VWO&token=${apiKey}`)).data.c
   ]).catch(error => console.log(error))
 
   return {AGG, VTI, VEA, VWO}
@@ -20,14 +21,14 @@ const fetchMarketHistory = async stock => {
   const year = 31536000
   const history = (await axios.get(
     `${baseURL}stock/candle?symbol=${stock}&resolution=D&from=${current -
-      year * 4}&to=${current}&token=${finnhubKey}`
+      year * 4}&to=${current}&token=${apiKey}`
   )).data
   return history
 }
 
 const fetchNews = async () => {
   const news = (await axios.get(
-    `${baseURL}news?category=general&token=${finnhubKey}`
+    `${baseURL}news?category=general&token=${apiKey}`
   )).data
   return news
 }
