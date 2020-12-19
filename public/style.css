@@ -178,6 +178,10 @@ label {
   color: white;
 }
 
+.orange {
+  color: #dd983e;
+}
+
 nav a {
   display: inline-block;
   margin: 1rem;
