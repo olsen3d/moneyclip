@@ -174,6 +174,9 @@ const createNewUser = async user => {
   }
   sendMessage('progressMessage', 'simulating market data')
   await simulateMarket()
+  sendMessage('progressMessage', 'Finished!')
+  console.log('loginOK')
+  sendMessage('loginOK', 'ok')
 }
 
 module.exports = {createNewUser}
