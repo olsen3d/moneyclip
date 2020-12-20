@@ -15,7 +15,7 @@ const sendMessage = (type, message) => {
 }
 
 const createNewUser = async user => {
-  console.log(user.id, user.email)
+  sendMessage('startSeeding')
 
   sendMessage('progressMessage', 'creating accounts')
   const [checkingAcc, savingAcc, investingAcc] = await Promise.all([
@@ -175,7 +175,6 @@ const createNewUser = async user => {
   sendMessage('progressMessage', 'simulating market data')
   await simulateMarket()
   sendMessage('progressMessage', 'Finished!')
-  console.log('loginOK')
   sendMessage('loginOK', 'ok')
 }
 

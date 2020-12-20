@@ -21,12 +21,20 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
+const sendMessage = (type, message) => {
+  if (socket.getIO()) {
+    socket.getIO().emit(type, message)
+  }
+}
+
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await User.create(req.body)
 
-    createNewUser(user)
-    res.status(204)
+    //createNewUser(user)
+    sendMessage('startSeeding')
+    sendMessage('loginOK', 'ok')
+    //res.status(204)
 
     //req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
