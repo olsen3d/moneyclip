@@ -15,8 +15,6 @@ export default function Signup() {
   const barRef = useRef(null)
   const dispatch = useDispatch()
 
-  let email2
-
   const loginAfterSeed = () => {
     console.log('login after seed', email, password)
     dispatch(auth(email, password, 'login'))
@@ -38,10 +36,6 @@ export default function Signup() {
     socket.on('loginOK', message => {
       setReady(true)
     })
-
-    return () => {
-      console.log('UNMOUNTED')
-    }
   }, [])
 
   useEffect(
@@ -74,25 +68,8 @@ export default function Signup() {
 
   return (
     <div id="landingPage">
-      <button
-        type="button"
-        onClick={() => {
-          loginAfterSeed()
-        }}
-        className="loginButton green4 white lightFont"
-      >
-        test
-      </button>
-
       <img width="60%" src="/img/moneyclipLogo.png" />
-      <form
-      // onSubmit={evt => {
-      //   evt.preventDefault()
-      //   dispatch(auth(email, password, 'signup'))
-      //   loginAfterSeed()
-      // }}
-      // name={name}
-      >
+      <form>
         <div>
           <label htmlFor="email">
             <small className="white lightFont">Email</small>
@@ -117,8 +94,8 @@ export default function Signup() {
           <button
             type="button"
             onClick={() => {
-              axios.post('/api/users/seed', {email, password})
-              //loginAfterSeed()
+              const socketId = socket.id
+              axios.post('/api/users/seed', {email, password, socketId})
             }}
             className="loginButton green4 white lightFont"
           >

@@ -8,16 +8,19 @@ const {
 const {fetchMarketHistory} = require('../server/api/finnhub')
 const socket = require('../server/socket')
 
-const sendMessage = (type, message) => {
+const sendMessage = (socketId, type, message) => {
   if (socket.getIO()) {
-    socket.getIO().emit(type, message)
+    socket
+      .getIO()
+      .to(socketId)
+      .emit(type, message)
   }
 }
 
-const createNewUser = async user => {
-  sendMessage('startSeeding')
+const createNewUser = async (user, socketId) => {
+  sendMessage(socketId, 'startSeeding')
 
-  sendMessage('progressMessage', 'creating accounts')
+  sendMessage(socketId, 'progressMessage', 'creating accounts')
   const [checkingAcc, savingAcc, investingAcc] = await Promise.all([
     Account.create({
       name: 'Daily Checking',
@@ -40,7 +43,7 @@ const createNewUser = async user => {
     })
   ])
 
-  sendMessage('progressMessage', 'creating portfolios')
+  sendMessage(socketId, 'progressMessage', 'creating portfolios')
   const portfolio = await Portfolio.create({
     AGG: 0,
     VTI: 0,
@@ -49,7 +52,7 @@ const createNewUser = async user => {
     accountId: investingAcc.id
   })
 
-  sendMessage('progressMessage', 'creating watchlist')
+  sendMessage(socketId, 'progressMessage', 'creating watchlist')
   const stock1 = await Watch.create({
     name: 'AAPL',
     userId: user.id
@@ -97,7 +100,7 @@ const createNewUser = async user => {
     })
   }
 
-  sendMessage('progressMessage', 'creating saving/checking data')
+  sendMessage(socketId, 'progressMessage', 'creating saving/checking data')
   for (let month = 0; month < 10; month++) {
     for (let day = 1; day <= 28; day++) {
       const hours = Math.floor(Math.random() * 12)
@@ -161,8 +164,9 @@ const createNewUser = async user => {
       const percent = Math.floor(i / stock.t.length * 100)
       if (percent !== prevPercent) {
         prevPercent = percent
-        sendMessage('progressPercent', `${percent}`)
+        sendMessage(socketId, 'progressPercent', `${percent}`)
         sendMessage(
+          socketId,
           'progressMessage',
           `simulating market data from ${new Date(
             date * 1000
@@ -172,10 +176,10 @@ const createNewUser = async user => {
       await simulateMarketAdjustment(date, price)
     }
   }
-  sendMessage('progressMessage', 'simulating market data')
+  sendMessage(socketId, 'progressMessage', 'simulating market data')
   await simulateMarket()
-  sendMessage('progressMessage', 'Finished!')
-  sendMessage('loginOK', 'ok')
+  sendMessage(socketId, 'progressMessage', 'Finished!')
+  sendMessage(socketId, 'loginOK', 'ok')
 }
 
 module.exports = {createNewUser}
