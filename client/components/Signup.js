@@ -5,7 +5,8 @@ import {auth} from '../store'
 import axios from 'axios'
 
 export default function Signup() {
-  const error = useSelector(state => state.user.error)
+  // const error = useSelector(state => state.user.error)
+  const [error, setError] = useState()
   const [progressMessage, setProgressMessage] = useState('Seeding data..')
   const [progressPercent, setProgressPercent] = useState(0)
   const [seeding, setSeeding] = useState(false)
@@ -14,6 +15,16 @@ export default function Signup() {
   const [email, setEmail] = useState()
   const dispatch = useDispatch()
   const barRef = useRef(null)
+
+  const createUser = async () => {
+    const socketId = socket.id
+    try {
+      await axios.post('/api/users/seed', {email, password, socketId})
+    } catch (authError) {
+      //return dispatch(getUser({error: authError}))
+      setError(authError)
+    }
+  }
 
   const loginAfterSeed = () => {
     console.log('login after seed', email, password)
@@ -91,8 +102,7 @@ export default function Signup() {
           <button
             type="button"
             onClick={() => {
-              const socketId = socket.id
-              axios.post('/api/users/seed', {email, password, socketId})
+              createUser()
             }}
             className="loginButton green4 white lightFont"
           >
