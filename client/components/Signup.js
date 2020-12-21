@@ -1,11 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import socket from '../socket'
 import {auth} from '../store'
 import axios from 'axios'
 
 export default function Signup() {
-  // const error = useSelector(state => state.user.error)
   const [error, setError] = useState()
   const [progressMessage, setProgressMessage] = useState('Seeding data..')
   const [progressPercent, setProgressPercent] = useState(0)
@@ -16,12 +15,13 @@ export default function Signup() {
   const dispatch = useDispatch()
   const barRef = useRef(null)
 
+  console.log('render')
+
   const createUser = async () => {
     const socketId = socket.id
     try {
       await axios.post('/api/users/seed', {email, password, socketId})
     } catch (authError) {
-      //return dispatch(getUser({error: authError}))
       setError(authError)
     }
   }
