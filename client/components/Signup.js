@@ -1,19 +1,19 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {auth} from '../store'
 import socket from '../socket'
+import {auth} from '../store'
 import axios from 'axios'
 
 export default function Signup() {
   const error = useSelector(state => state.user.error)
+  const [progressMessage, setProgressMessage] = useState('Seeding data..')
+  const [progressPercent, setProgressPercent] = useState(0)
   const [seeding, setSeeding] = useState(false)
   const [ready, setReady] = useState(false)
-  const [progressMessage, setProgressMessage] = useState('Seeding data..')
-  const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const [progressPercent, setProgressPercent] = useState(0)
-  const barRef = useRef(null)
+  const [email, setEmail] = useState()
   const dispatch = useDispatch()
+  const barRef = useRef(null)
 
   const loginAfterSeed = () => {
     console.log('login after seed', email, password)
@@ -24,16 +24,13 @@ export default function Signup() {
     socket.on('progressMessage', message => {
       setProgressMessage(message)
     })
-
     socket.on('progressPercent', percent => {
       setProgressPercent(percent)
     })
-
     socket.on('startSeeding', _ => {
       setSeeding(true)
     })
-
-    socket.on('loginOK', message => {
+    socket.on('loginOK', _ => {
       setReady(true)
     })
   }, [])
