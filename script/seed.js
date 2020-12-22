@@ -4,7 +4,7 @@ const db = require('../server/db')
 const colors = require('colors')
 const {User} = require('../server/db/models')
 const {Account, Transaction, Portfolio, Watch} = require('../server/db/models')
-const {fetchMarketHistory} = require('../server/api/finnhub')
+const {fetchMarketHistory, fetchQuotes} = require('../server/api/finnhub')
 
 async function seed() {
   await db.sync({force: true})
@@ -38,13 +38,7 @@ async function seed() {
     })
   ])
 
-  const portfolio = await Portfolio.create({
-    AGG: 0,
-    VTI: 0,
-    VEA: 0,
-    VWO: 0,
-    accountId: investingAcc.id
-  })
+  const portfolio = await investingAcc.getPortfolio()
 
   const stock1 = await Watch.create({
     name: 'AAPL',
@@ -160,6 +154,39 @@ async function seed() {
   }
 
   await simulateMarket()
+
+  const strategies = {
+    CONSERVATIVE: {
+      AGG: 0.25,
+      VTI: 0.3,
+      VEA: 0.4,
+      VWO: 0.05
+    },
+    BALANCED: {
+      AGG: 0.1,
+      VTI: 0.4,
+      VEA: 0.3,
+      VWO: 0.2
+    },
+    AGGRESSIVE: {
+      AGG: 0.05,
+      VTI: 0.2,
+      VEA: 0.3,
+      VWO: 0.45
+    }
+  }
+
+  const quotes = await fetchQuotes()
+  const net = await investingAcc.net
+  const buys = Object.entries(quotes).map(([stock, price]) => {
+    return net * strategies[investingAcc.strategy][stock] / price / 100
+  })
+  await portfolio.update({
+    AGG: buys[0],
+    VTI: buys[1],
+    VEA: buys[2],
+    VWO: buys[3]
+  })
 
   console.log(`seeded successfully`)
 }

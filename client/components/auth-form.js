@@ -1,67 +1,18 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import socket from '../socket'
 /**
  * COMPONENT
  */
 const AuthForm = props => {
-  const {name, displayName, handleSubmit, loginAfterSeed, error} = props
-  const [seeding, setSeeding] = useState(false)
-  const [progressMessage, setProgressMessage] = useState(
-    'Seeding data please wait...'
-  )
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-
-  const [progressPercent, setProgressPercent] = useState(0)
-  const barRef = useRef(null)
-  useEffect(() => {
-    socket.on('progressMessage', message => {
-      setProgressMessage(message)
-    })
-
-    socket.on('progressPercent', percent => {
-      console.log(email, password)
-      setProgressPercent(percent)
-    })
-
-    socket.on('loginOK', message => {
-      console.log(email, password)
-      //loginAfterSeed(email, password)
-    })
-  }, [])
-
-  useEffect(
-    () => {
-      if (barRef.current) barRef.current.style.width = `${progressPercent}%`
-    },
-    [progressPercent]
-  )
-
-  // if (seeding)
-  //   return (
-  //     <div id="landingPage">
-  //       <img width="60%" src="/img/moneyclipLogo.png" />
-  //       <div id="barContainer">
-  //         <div id="bar" ref={barRef} />
-  //       </div>
-  //       <div className="progressMessages">
-  //         <div className="white lightFont">{`${progressMessage}  `}</div>
-  //         <div className="white regularFont">{`${progressPercent}%`}</div>
-  //       </div>
-  //     </div>
-  //   )
+  const {name, displayName, handleSubmit, error} = props
 
   return (
     <div id="landingPage">
       <img width="60%" src="/img/moneyclipLogo.png" />
       <form
         onSubmit={e => {
-          setEmail(e.target.email.value)
-          setPassword(e.target.password.value)
-          if (name === 'signup') setSeeding(true)
           handleSubmit(e)
         }}
         name={name}
@@ -96,17 +47,6 @@ const AuthForm = props => {
         <a href="/login" className="white lightFont">
           Login with an existing account
         </a>
-      )}
-      {seeding && (
-        <div>
-          <div id="barContainer">
-            <div id="bar" ref={barRef} />
-          </div>
-          <div className="progressMessages">
-            <div className="white lightFont">{`${progressMessage}  `}</div>
-            <div className="white regularFont">{`${progressPercent}%`}</div>
-          </div>
-        </div>
       )}
     </div>
   )

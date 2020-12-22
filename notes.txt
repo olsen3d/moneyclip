@@ -84,9 +84,6 @@ UI >------------------------------------------------------------>
 
 icon improvements
   3. loading icon with "card shuffle" animation in AE
-
-
-stretch goals
   1. mobile version with burger menu
 
 
@@ -94,11 +91,9 @@ FEATURES >------------------------------------------------------------>
 
 db models
   1. transactions withdrawal from an investing account
-  2. watch item belongs to an account has watch.name for stock
 
 watch list
   1. local state to pick a stock
-  3. maximum of 3 due to api limitations
 
 
 
@@ -106,3 +101,4 @@ watch list
 
 BUGS >------------------------------------------------------------>
 
+donut chart flash on hover

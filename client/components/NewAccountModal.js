@@ -18,7 +18,7 @@ export default function NewAccount({onSubmit, onCancel}) {
 
   const submit = e => {
     e.preventDefault()
-    onSubmit({name, type})
+    onSubmit({name, type, strategy})
   }
 
   const cancel = e => {

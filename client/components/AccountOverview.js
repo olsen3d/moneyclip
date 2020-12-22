@@ -10,6 +10,12 @@ import Settings from './Settings'
 
 export default function AccountOverview() {
   const [transactionModal, setTransactionModal] = useState(false)
+  let match = useRouteMatch({
+    path: '/accounts/:accountId/'
+  })
+  const account = useSelector(state =>
+    state.accounts.find(acc => acc.id === match.params.accountId)
+  )
   const dispatch = useDispatch()
 
   const onSubmitTransaction = transaction => {
@@ -17,14 +23,7 @@ export default function AccountOverview() {
     setTransactionModal(false)
   }
 
-  let match = useRouteMatch({
-    path: '/accounts/:accountId/'
-  })
-  const account = useSelector(state =>
-    state.accounts.find(acc => acc.id === match.params.accountId)
-  )
-
-  if (!account) return <h1>Loading</h1>
+  if (!account) return <h1>No account data</h1>
 
   if (transactionModal) {
     return (
@@ -57,7 +56,10 @@ export default function AccountOverview() {
         </div>
 
         <div className="subHeader">
-          <span className="regularFont">{`${account.type} ACCOUNT`}</span>
+          <span className="regularFont">
+            {`${account.type} ACCOUNT`}
+            {account.type === 'INVESTING' ? ` (${account.strategy})` : null}
+          </span>
           <SummaryBar accounts={account} />
         </div>
       </div>
