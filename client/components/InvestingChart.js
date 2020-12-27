@@ -26,6 +26,8 @@ function InvestingChart({accountData}) {
 
   let mainY = d3.scaleLinear().range([mainHeight, 0])
 
+  const easeMethod = d3.easeExp
+
   let mainLine = d3
     .line()
     .curve(d3.curveLinear)
@@ -48,7 +50,6 @@ function InvestingChart({accountData}) {
     updateRangeData(filter)
 
     const svg = d3.select('body')
-    const easeMethod = d3.easeExp
 
     svg
       .select('.xAxis')
@@ -124,6 +125,19 @@ function InvestingChart({accountData}) {
 
     mainY.domain([minValue, maxValue])
 
+    let flatLine = d3
+      .line()
+      .curve(d3.curveLinear)
+      .x(d => mainX(d.date))
+      .y(mainHeight)
+
+    let areaFlatLine = d3
+      .area()
+      .curve(d3.curveLinear)
+      .x(d => mainX(d.date))
+      .y0(mainHeight)
+      .y1(mainHeight)
+
     areaLine
       .x(d => mainX(d.date))
       .y0(mainY(minValue))
@@ -137,37 +151,53 @@ function InvestingChart({accountData}) {
     mainChart
       .append('path')
       .attr('class', 'netLineBehind')
-      .datum(transactions)
-      .attr('d', netLine)
       .style('fill', '#fff9e4')
       .attr('opacity', 1)
+      .datum(transactions)
+      .attr('d', areaFlatLine)
+      .transition()
+      .duration(750)
+      .ease(easeMethod)
+      .attr('d', netLine)
 
     mainChart
       .append('path')
       .attr('class', 'areaLine')
-      .datum(transactions)
-      .attr('d', areaLine)
       .style('fill', '#D8EBE1')
       .attr('opacity', 1)
+      .datum(transactions)
+      .attr('d', areaFlatLine)
+      .transition()
+      .duration(750)
+      .ease(easeMethod)
+      .attr('d', areaLine)
 
     mainChart
       .append('path')
       .attr('class', 'netLine')
-      .datum(transactions)
-      .attr('d', netLine)
       .style('fill', '#161d2b')
       .attr('opacity', 0.33)
       .style('mix-blend-mode', 'color-burn')
+      .datum(transactions)
+      .attr('d', areaFlatLine)
+      .transition()
+      .duration(750)
+      .ease(easeMethod)
+      .attr('d', netLine)
 
     mainChart
       .append('path')
       .attr('class', 'line')
-      .datum(transactions)
-      .attr('d', mainLine)
       .attr('stroke', '#086e6c')
       .attr('stroke-width', 2)
       .attr('stroke-opacity', 0.9)
       .style('fill', 'none')
+      .datum(transactions)
+      .attr('d', flatLine)
+      .transition()
+      .duration(750)
+      .ease(easeMethod)
+      .attr('d', mainLine)
 
     mainChart
       .append('rect')
@@ -229,6 +259,7 @@ function InvestingChart({accountData}) {
     mainChart
       .append('g')
       .attr('class', 'yAxis')
+      .attr('transform', `translate(-50, 0)`)
       .attr('transform', `translate(${mainWidth}, 0)`)
       .call(d3.axisRight(mainY))
 
@@ -241,6 +272,9 @@ function InvestingChart({accountData}) {
       .style('text-anchor', 'end')
       .attr('dx', '-.8em')
       .attr('dy', '.15em')
+      .transition()
+      .duration(750)
+      .ease(easeMethod)
       .attr('transform', 'rotate(-45)')
   }
 

@@ -102,3 +102,4 @@ watch list
 BUGS >------------------------------------------------------------>
 
 donut chart flash on hover
+home chart doesnt update from transactions

@@ -97,9 +97,6 @@ function StockChart({stock}) {
       .append('g')
       .attr('class', 'yAxis')
       .attr('transform', `translate(-50, 0)`)
-      .transition()
-      .duration(750)
-      .ease(easeMethod)
       .attr('transform', `translate(${mainWidth}, 0)`)
       .call(d3.axisRight(mainY))
 
