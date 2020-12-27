@@ -53,6 +53,7 @@ const calcMarket = async () => {
   })
 }
 
+//testing
 //calcMarket()
 
 module.exports = calcMarket
