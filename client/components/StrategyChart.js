@@ -11,13 +11,27 @@ export default function StrategyChart({strategy}) {
   const d3Container = useRef(null)
   const [selectedStock, setSelectedStock] = useState(null)
 
+  const getWidth = () => d3Container.current.offsetWidth
+
+  const reDraw = () => {
+    d3
+      .select(d3Container.current)
+      .selectAll('*')
+      .remove()
+    showData(strategies[strategy])
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', reDraw)
+
+    return () => window.removeEventListener('resize', reDraw)
+  }, [])
+
   useEffect(
     () => {
-      d3
-        .select(d3Container.current)
-        .selectAll('*')
-        .remove()
-      showData(strategies[strategy])
+      window.removeEventListener('resize', reDraw)
+      window.addEventListener('resize', reDraw)
+      reDraw(strategy)
     },
     [strategy]
   )
@@ -27,11 +41,14 @@ export default function StrategyChart({strategy}) {
   }
 
   function showData(data) {
+    const height = 240
+    const width = getWidth()
+
     const chart = d3
       .select(d3Container.current)
       .append('svg')
       .attr('id', 'chart')
-      .attr('width', 500)
+      .attr('width', width)
       .attr('height', 280)
       .append('g')
 
@@ -39,9 +56,7 @@ export default function StrategyChart({strategy}) {
     chart.append('g').attr('class', 'labels')
     chart.append('g').attr('class', 'lines')
 
-    const width = 380
-    const height = 240
-    const radius = Math.min(width, height) / 2
+    const radius = Math.min(width - 150, height) / 2
     const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
 
     const pie = d3
@@ -76,7 +91,7 @@ export default function StrategyChart({strategy}) {
 
     chart.attr(
       'transform',
-      'translate(' + (width / 2 + 100) + ',' + (height / 2 + 25) + ')'
+      'translate(' + width / 2 + ',' + (height / 2 + 25) + ')'
     )
 
     chart

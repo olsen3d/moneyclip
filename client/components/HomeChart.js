@@ -1,17 +1,33 @@
 /* eslint-disable complexity */
 import React, {useRef, useState, useEffect} from 'react'
-import {useSelector} from 'react-redux'
 import * as d3 from 'd3'
 import AccountDataDisplay from './accountDataDisplay'
 
 const TTime = 300
 
-export default function ChartTest() {
-  const accounts = useSelector(state =>
-    state.accounts.filter(acc => acc.balance)
-  )
+export default function HomeChart({accounts}) {
   const [currentAccount, setCurrentAccount] = useState(accounts)
   const d3Container = useRef(null)
+
+  const getWidth = () => {
+    return d3Container.current.offsetWidth
+  }
+
+  useEffect(() => {
+    const resizer = () => {
+      d3
+        .select(d3Container.current)
+        .selectAll('*')
+        .remove()
+      showData(accounts)
+    }
+
+    window.addEventListener('resize', resizer)
+
+    return () => {
+      window.removeEventListener('resize', resizer)
+    }
+  }, [])
 
   useEffect(
     () => {
@@ -26,11 +42,14 @@ export default function ChartTest() {
   const showTooltip = data => setCurrentAccount(data)
 
   function showData(data) {
+    const height = 240
+    const width = getWidth()
+
     const chart = d3
       .select(d3Container.current)
       .append('svg')
       .attr('id', 'chart')
-      .attr('width', 500)
+      .attr('width', width)
       .attr('height', 280)
       .append('g')
 
@@ -39,9 +58,7 @@ export default function ChartTest() {
     chart.append('g').attr('class', 'labels')
     chart.append('g').attr('class', 'lines')
 
-    const width = 380
-    const height = 240
-    const radius = Math.min(width, height) / 2
+    const radius = Math.min(width - 250, height) / 2
     const color = d3.scaleOrdinal(['#193b42', '#086E6C', '#4C9F66', '#B8EEA1'])
     const pie = d3
       .pie()
@@ -73,7 +90,7 @@ export default function ChartTest() {
 
     chart.attr(
       'transform',
-      'translate(' + (width / 2 + 50) + ',' + (height / 2 + 20) + ')'
+      'translate(' + width / 2 + ',' + (height / 2 + 20) + ')'
     )
 
     chart

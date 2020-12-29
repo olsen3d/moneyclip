@@ -12,18 +12,19 @@ function InvestingChart({accountData}) {
   }
 
   useEffect(() => {
-    let resizer
-    window.addEventListener('resize', () => {
-      clearTimeout(resizer)
-      resizer = setTimeout(() => {
-        d3
-          .select(d3Parent.current)
-          .selectAll('*')
-          .remove()
+    const resizer = () => {
+      d3
+        .select(d3Parent.current)
+        .selectAll('*')
+        .remove()
+      showData(accountData)
+    }
 
-        showData(accountData)
-      }, 250)
-    })
+    window.addEventListener('resize', resizer)
+
+    return () => {
+      window.removeEventListener('resize', resizer)
+    }
   }, [])
 
   useEffect(

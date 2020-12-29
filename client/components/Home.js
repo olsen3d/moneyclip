@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import ChartTest from './ChartTest'
+import HomeChart from './HomeChart'
 import SummaryBar from './SummaryBar'
 import NewTransactionModal from './NewTransactionModal'
 import {createTransaction} from '../store/thunks'
@@ -49,7 +49,9 @@ export default function Home() {
 
       <div id="cardHolder">
         <div className="cardDouble">
-          <ChartTest />
+          {accounts.length && (
+            <HomeChart accounts={accounts.filter(acc => acc.balance)} />
+          )}
         </div>
       </div>
     </div>
