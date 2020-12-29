@@ -5,7 +5,6 @@ import * as d3 from 'd3'
 import {formatter} from '../../script/utils'
 
 function InvestingChart({accountData}) {
-  const d3MainContainer = useRef(null)
   const d3Parent = useRef(null)
 
   const getWidth = () => {
@@ -39,12 +38,8 @@ function InvestingChart({accountData}) {
     [accountData]
   )
 
-  //let mainChart
-
   let mainHeight = 300
-
   let mainX = d3.scaleTime().range([0, 0])
-
   let mainY = d3.scaleLinear().range([mainHeight, 0])
 
   const easeMethod = d3.easeExp
@@ -122,6 +117,7 @@ function InvestingChart({accountData}) {
   }
 
   function showData(transactions) {
+    //construct the parent elements
     const width = getWidth()
     const parent = d3.select(d3Parent.current)
     const SVGParent = parent
@@ -136,9 +132,9 @@ function InvestingChart({accountData}) {
     )
 
     let mainWidth = width - 100
-
     mainX = d3.scaleTime().range([0, mainWidth])
 
+    //manipulate transaction data
     transactions = transactions.map(trans => {
       return {
         date: new Date(trans.date),
@@ -149,10 +145,9 @@ function InvestingChart({accountData}) {
       }
     })
 
-    //mainChart = d3.select(d3MainContainer.current)
-
     updateRangeData(transactions)
 
+    //set ranges and data domains
     let minValue = Math.min(
       d3.min(transactions, d => +d.balance * 0.01),
       d3.min(transactions, d => +d.net * 0.01)
@@ -163,6 +158,7 @@ function InvestingChart({accountData}) {
 
     mainY.domain([minValue, maxValue])
 
+    //draw chart elements
     let flatLine = d3
       .line()
       .curve(d3.curveLinear)
