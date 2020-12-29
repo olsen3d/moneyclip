@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable complexity */
 import React, {useRef, useEffect} from 'react'
 import * as d3 from 'd3'
@@ -5,24 +6,44 @@ import {formatter} from '../../script/utils'
 
 function InvestingChart({accountData}) {
   const d3MainContainer = useRef(null)
+  const d3Parent = useRef(null)
+
+  const getWidth = () => {
+    return d3Parent.current.offsetWidth
+  }
+
+  useEffect(() => {
+    let resizer
+    window.addEventListener('resize', () => {
+      clearTimeout(resizer)
+      resizer = setTimeout(() => {
+        d3
+          .select(d3Parent.current)
+          .selectAll('*')
+          .remove()
+
+        showData(accountData)
+      }, 250)
+    })
+  }, [])
 
   useEffect(
     () => {
       d3
-        .select(d3MainContainer.current)
+        .select(d3Parent.current)
         .selectAll('*')
         .remove()
+
       showData(accountData)
     },
     [accountData]
   )
 
-  let mainChart
+  //let mainChart
 
   let mainHeight = 300
-  let mainWidth = 530
 
-  let mainX = d3.scaleTime().range([0, mainWidth])
+  let mainX = d3.scaleTime().range([0, 0])
 
   let mainY = d3.scaleLinear().range([mainHeight, 0])
 
@@ -101,6 +122,23 @@ function InvestingChart({accountData}) {
   }
 
   function showData(transactions) {
+    const width = getWidth()
+    const parent = d3.select(d3Parent.current)
+    const SVGParent = parent
+      .append('svg')
+      .attr('height', 350)
+      .attr('width', width - 30)
+      .attr('id', 'container')
+
+    const mainChart = SVGParent.append('g').attr(
+      'transform',
+      'translate(30, 5)'
+    )
+
+    let mainWidth = width - 100
+
+    mainX = d3.scaleTime().range([0, mainWidth])
+
     transactions = transactions.map(trans => {
       return {
         date: new Date(trans.date),
@@ -111,7 +149,7 @@ function InvestingChart({accountData}) {
       }
     })
 
-    mainChart = d3.select(d3MainContainer.current)
+    //mainChart = d3.select(d3MainContainer.current)
 
     updateRangeData(transactions)
 
@@ -343,11 +381,7 @@ function InvestingChart({accountData}) {
   return (
     <React.Fragment>
       <div className="cardDouble">
-        <div className="cardTwoThirds">
-          <svg id="container" height="350" width="600">
-            <g ref={d3MainContainer} transform="translate(30,5)" />
-          </svg>
-        </div>
+        <div ref={d3Parent} className="cardTwoThirds" />
         <div className="cardOneThirds">
           <div>
             <span className="regularFont font16 header">Balance</span>
