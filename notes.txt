@@ -94,6 +94,12 @@ db models
 
 watch list
   1. local state to pick a stock
+  make a new stock watch
+  post to the api
+  update the store
+  limit of 3 per account
+  be able to delete watches
+  
 
 
 

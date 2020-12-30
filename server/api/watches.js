@@ -21,3 +21,16 @@ router.get('/:id', async (req, res, next) => {
     next(error)
   }
 })
+
+router.post('/:name', async (req, res, next) => {
+  try {
+    console.log(req.user)
+    console.log(req.params.name)
+    // const newStock = await Watch.create({
+    //   name: req.params.name,
+    //   userId: req.user.id
+    // })
+  } catch (error) {
+    next(error)
+  }
+})
