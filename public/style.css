@@ -596,6 +596,11 @@ polyline {
   flex-direction: row;
 }
 
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
 .stockHeader {
   border-right: 1px solid #aaaaaa;
   padding-right: 1rem;

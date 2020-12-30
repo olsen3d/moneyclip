@@ -4,6 +4,8 @@ import * as d3 from 'd3'
 export default function NewWatch({onSubmit, onCancel}) {
   const [name, setName] = useState('')
   const [stockList, setStockList] = useState('')
+  const [display, setDisplay] = useState('invalid symbol please try again')
+  const [isValid, setIsValid] = useState(false)
 
   useEffect(() => {
     d3.csv('/api/watches/stocks/list').then(data => setStockList(data))
@@ -11,10 +13,16 @@ export default function NewWatch({onSubmit, onCancel}) {
 
   const updateName = e => {
     setName(e.target.value.toUpperCase())
-    const display = stockList.find(
+    const match = stockList.find(
       stock => stock.symbol === e.target.value.toUpperCase()
     )
-    if (display) console.log(display.securityName)
+    if (match) {
+      setDisplay(match.securityName)
+      setIsValid(true)
+    } else {
+      setDisplay('invalid symbol please try again')
+      setIsValid(false)
+    }
   }
 
   const submit = e => {
@@ -51,7 +59,7 @@ export default function NewWatch({onSubmit, onCancel}) {
             <span className="regularFont font16 header">Stock</span>
           </div>
           <div className="spacer" />
-          <form onSubmit={submit} className="watchForm">
+          <form onSubmit={submit} className="transactionForm">
             <div className="spacer" />
             <div>
               <div style={{width: '75px'}}>Symbol: </div>
@@ -62,6 +70,12 @@ export default function NewWatch({onSubmit, onCancel}) {
                 onChange={e => updateName(e)}
                 required
               />
+              <span
+                className={`regularFont ${isValid ? 'positive' : 'negative'}`}
+              >
+                {'  '}
+                {display}
+              </span>
             </div>
             <div>
               <div style={{width: '75px'}} />
