@@ -1,4 +1,4 @@
-Symbol,Security Name,Market Category,Test Issue,Financial Status,Round Lot Size,ETF,NextShares
+symbol,securityName,Market Category,Test Issue,Financial Status,Round Lot Size,ETF,NextShares
 AACG,ATA Creativity Global - American Depositary Shares, each representing two common shares,G,N,N,100,N,N
 AACQ,Artius Acquisition Inc. - Class A Common Stock,S,N,N,100,N,N
 AACQU,Artius Acquisition Inc. - Unit consisting of one ordinary share and one third redeemable warrant,S,N,N,100,N,N

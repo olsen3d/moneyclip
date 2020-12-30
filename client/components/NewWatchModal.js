@@ -1,8 +1,21 @@
-import React, {useState} from 'react'
-import StrategyChart from './StrategyChart'
+import React, {useEffect, useState} from 'react'
+import * as d3 from 'd3'
 
 export default function NewWatch({onSubmit, onCancel}) {
   const [name, setName] = useState('')
+  const [stockList, setStockList] = useState('')
+
+  useEffect(() => {
+    d3.csv('/api/watches/stocks/list').then(data => setStockList(data))
+  }, [])
+
+  const updateName = e => {
+    setName(e.target.value.toUpperCase())
+    const display = stockList.find(
+      stock => stock.symbol === e.target.value.toUpperCase()
+    )
+    if (display) console.log(display.securityName)
+  }
 
   const submit = e => {
     e.preventDefault()
@@ -46,7 +59,7 @@ export default function NewWatch({onSubmit, onCancel}) {
                 type="text"
                 placeholder="symbol"
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onChange={e => updateName(e)}
                 required
               />
             </div>

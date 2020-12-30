@@ -1,8 +1,13 @@
 const router = require('express').Router()
 const {Watch} = require('../db/models')
 const {fetchMarketHistory} = require('./finnhub')
+const path = require('path')
 
 module.exports = {router}
+
+router.get('/stocks/list', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'resource/stocks.csv'))
+})
 
 router.get('/:id', async (req, res, next) => {
   try {
