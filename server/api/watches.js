@@ -22,14 +22,18 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/:name', async (req, res, next) => {
+router.post('/new/:name', async (req, res, next) => {
   try {
-    console.log(req.user)
-    console.log(req.params.name)
-    // const newStock = await Watch.create({
-    //   name: req.params.name,
-    //   userId: req.user.id
-    // })
+    const newStock = await Watch.create({
+      name: req.params.name,
+      userId: req.user.id
+    })
+    const processed = await Watch.findOne({
+      where: {userId: req.user.id, name: req.params.name},
+      raw: true
+    })
+    processed.history = await fetchMarketHistory(newStock.name)
+    res.send(processed)
   } catch (error) {
     next(error)
   }

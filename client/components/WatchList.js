@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import StockChart from './StockChart'
-import {loadWatches} from '../store/thunks'
+import {loadWatches, createWatch} from '../store/thunks'
 import NewWatchModal from './NewWatchModal'
 
 export default function WatchList() {
@@ -10,17 +10,24 @@ export default function WatchList() {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
-  const onSubmitAccount = newWatch => {
-    console.log(newWatch)
-    //newAccount.userId = user.id
-    //dispatch(createAccount(newAccount))
+  const onSubmitNew = newWatch => {
+    console.log(newWatch.name)
+    dispatch(createWatch(newWatch.name))
     setWatchModal(false)
   }
+
+  useEffect(
+    prevProps => {
+      console.log(prevProps)
+      //dispatch(loadWatches(user.id))
+    },
+    [watchList]
+  )
 
   if (watchModal) {
     return (
       <NewWatchModal
-        onSubmit={onSubmitAccount}
+        onSubmit={onSubmitNew}
         onCancel={() => setWatchModal(false)}
       />
     )
@@ -55,7 +62,10 @@ export default function WatchList() {
       </div>
       <div id="cardHolder">
         {watchList &&
-          watchList.map(stock => <StockChart key={stock.id} stock={stock} />)}
+          watchList.map(stock => {
+            if (stock.history)
+              return <StockChart key={stock.id} stock={stock} />
+          })}
       </div>
     </div>
   )

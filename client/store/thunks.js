@@ -6,7 +6,9 @@ import {
   updateAccountAction,
   createTransactionAction,
   loadNewsAction,
-  loadWatchesAction
+  loadWatchesAction,
+  createWatchAction,
+  removeWatchAction
 } from './actions'
 
 const loadAccounts = accountId => async dispatch => {
@@ -49,6 +51,11 @@ const loadWatches = userId => async dispatch => {
   return dispatch(loadWatchesAction(watchList))
 }
 
+const createWatch = watch => async dispatch => {
+  const newWatch = (await axios.post(`/api/watches/new/${watch}`)).data
+  return dispatch(createWatchAction(newWatch))
+}
+
 export {
   loadAccounts,
   createAccount,
@@ -56,5 +63,6 @@ export {
   updateAccount,
   createTransaction,
   loadNews,
-  loadWatches
+  loadWatches,
+  createWatch
 }

@@ -2,6 +2,7 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
+import {loadWatch} from './thunks'
 import user from './user'
 import {
   LOAD_ACCOUNTS,
@@ -10,7 +11,9 @@ import {
   REMOVE_ACCOUNT,
   CREATE_TRANSACTION,
   LOAD_NEWS,
-  LOAD_WATCHES
+  LOAD_WATCHES,
+  CREATE_WATCH,
+  REMOVE_WATCH
 } from './conststants'
 
 const accountsReducer = (state = [], action) => {
@@ -49,6 +52,8 @@ const watchListReducer = (state = [], action) => {
   switch (action.type) {
     case LOAD_WATCHES:
       return [...action.watchList]
+    case CREATE_WATCH:
+      return [action.watch, ...state]
     default:
       return state
   }
