@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import * as d3 from 'd3'
 
-export default function NewWatch({onSubmit, onCancel}) {
+export default function NewWatch({onSubmit, onCancel, watchList}) {
   const [name, setName] = useState('')
   const [stockList, setStockList] = useState('')
-  const [display, setDisplay] = useState('invalid symbol please try again')
+  const [display, setDisplay] = useState('')
   const [isValid, setIsValid] = useState(false)
 
   useEffect(() => {
     d3.csv('/api/watches/stocks/list').then(data => setStockList(data))
+
+    if (watchList.length >= 3)
+      setDisplay('max of 3 symbols please delete one below')
   }, [])
 
   const updateName = e => {
@@ -16,7 +19,11 @@ export default function NewWatch({onSubmit, onCancel}) {
     const match = stockList.find(
       stock => stock.symbol === e.target.value.toUpperCase()
     )
-    if (match) {
+
+    if (watchList.length >= 3) {
+      setDisplay('max of 3 symbols please delete one below')
+      setIsValid(false)
+    } else if (match) {
       setDisplay(match.securityName)
       setIsValid(true)
     } else {
@@ -27,12 +34,16 @@ export default function NewWatch({onSubmit, onCancel}) {
 
   const submit = e => {
     e.preventDefault()
-    onSubmit({name})
+    if (isValid) onSubmit({name})
   }
 
   const cancel = e => {
     e.preventDefault()
     onCancel()
+  }
+
+  const removeWatch = id => {
+    //delete watch id
   }
 
   return (
@@ -56,7 +67,7 @@ export default function NewWatch({onSubmit, onCancel}) {
       <div id="cardHolder">
         <div className="cardFull">
           <div>
-            <span className="regularFont font16 header">Stock</span>
+            <span className="regularFont font16 header">New Stock</span>
           </div>
           <div className="spacer" />
           <form onSubmit={submit} className="transactionForm">
@@ -85,6 +96,28 @@ export default function NewWatch({onSubmit, onCancel}) {
             </div>
           </form>
         </div>
+        {watchList.length ? (
+          <div className="cardFull">
+            <div>
+              <span className="regularFont font16 header">WatchList</span>
+            </div>
+            <div className="spacer" />
+            <span className="lightFont">Click to delete:</span>
+            <div className="spacer" />
+            <ul className="flexColumnLeft">
+              {watchList.map(stock => (
+                <button
+                  key={stock.id}
+                  type="button"
+                  onClick={removeWatch(stock.id)}
+                  className="regularFont linkDark textButton"
+                >
+                  {stock.name}
+                </button>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
     </div>
   )

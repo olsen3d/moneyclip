@@ -601,6 +601,12 @@ polyline {
   flex-direction: column;
 }
 
+.flexColumnLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .stockHeader {
   border-right: 1px solid #aaaaaa;
   padding-right: 1rem;

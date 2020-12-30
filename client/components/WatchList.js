@@ -11,24 +11,16 @@ export default function WatchList() {
   const dispatch = useDispatch()
 
   const onSubmitNew = newWatch => {
-    console.log(newWatch.name)
     dispatch(createWatch(newWatch.name))
     setWatchModal(false)
   }
-
-  useEffect(
-    prevProps => {
-      console.log(prevProps)
-      //dispatch(loadWatches(user.id))
-    },
-    [watchList]
-  )
 
   if (watchModal) {
     return (
       <NewWatchModal
         onSubmit={onSubmitNew}
         onCancel={() => setWatchModal(false)}
+        watchList={watchList}
       />
     )
   }
