@@ -46,7 +46,6 @@ export default function Home() {
           <SummaryBar accounts={accounts} />
         </div>
       </div>
-
       <div id="cardHolder">
         <div className="cardDouble">
           {accounts.length && (

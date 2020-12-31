@@ -31,7 +31,12 @@ export default function HomeChart({accounts}) {
 
   useEffect(
     () => {
-      if (accounts.length && d3.select('#chart').empty()) {
+      console.log('accounts changed')
+      if (accounts.length) {
+        d3
+          .select(d3Container.current)
+          .selectAll('*')
+          .remove()
         setCurrentAccount(accounts)
         showData(accounts)
       }

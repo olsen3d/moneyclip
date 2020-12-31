@@ -73,7 +73,6 @@ export default function Accounts() {
           <SummaryBar accounts={accounts} />
         </div>
       </div>
-
       <div id="cardHolder">
         {accounts.map(account => (
           <AccountPreview key={account.id} account={account} linkable={true} />

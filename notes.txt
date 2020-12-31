@@ -86,26 +86,12 @@ icon improvements
   3. loading icon with "card shuffle" animation in AE
   1. mobile version with burger menu
 
-
 FEATURES >------------------------------------------------------------>
 
 db models
   1. transactions withdrawal from an investing account
 
-watch list
-  1. local state to pick a stock
-  make a new stock watch
-  post to the api
-  update the store
-  limit of 3 per account
-  be able to delete watches
-  
-
-
-
-
-
 BUGS >------------------------------------------------------------>
 
 donut chart flash on hover
-home chart doesnt update from transactions
+changing account name loses transactions
