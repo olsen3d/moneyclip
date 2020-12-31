@@ -43,3 +43,13 @@ router.post('/new/:name', async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const destroyed = await Watch.findByPk(req.params.id)
+    destroyed.destroy()
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+})

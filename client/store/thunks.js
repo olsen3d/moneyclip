@@ -56,6 +56,11 @@ const createWatch = watch => async dispatch => {
   return dispatch(createWatchAction(newWatch))
 }
 
+const removeWatch = id => async dispatch => {
+  await axios.delete(`/api/watches/${id}`)
+  return dispatch(removeWatchAction(id))
+}
+
 export {
   loadAccounts,
   createAccount,
@@ -64,5 +69,6 @@ export {
   createTransaction,
   loadNews,
   loadWatches,
-  createWatch
+  createWatch,
+  removeWatch
 }

@@ -2,7 +2,6 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import {loadWatch} from './thunks'
 import user from './user'
 import {
   LOAD_ACCOUNTS,
@@ -54,6 +53,8 @@ const watchListReducer = (state = [], action) => {
       return [...action.watchList]
     case CREATE_WATCH:
       return [action.watch, ...state]
+    case REMOVE_WATCH:
+      return state.filter(watch => watch.id !== action.id)
     default:
       return state
   }

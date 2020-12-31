@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react'
+import {useDispatch} from 'react-redux'
 import * as d3 from 'd3'
+import {removeWatch} from '../store/thunks'
 
 export default function NewWatch({onSubmit, onCancel, watchList}) {
   const [name, setName] = useState('')
   const [stockList, setStockList] = useState('')
   const [display, setDisplay] = useState('')
   const [isValid, setIsValid] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     d3.csv('/api/watches/stocks/list').then(data => setStockList(data))
@@ -42,8 +45,8 @@ export default function NewWatch({onSubmit, onCancel, watchList}) {
     onCancel()
   }
 
-  const removeWatch = id => {
-    //delete watch id
+  const removeWatchFn = id => {
+    dispatch(removeWatch(id))
   }
 
   return (
@@ -109,7 +112,7 @@ export default function NewWatch({onSubmit, onCancel, watchList}) {
                 <button
                   key={stock.id}
                   type="button"
-                  onClick={removeWatch(stock.id)}
+                  onClick={() => removeWatchFn(stock.id)}
                   className="regularFont linkDark textButton"
                 >
                   {stock.name}

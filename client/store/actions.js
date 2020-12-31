@@ -25,7 +25,7 @@ const loadNewsAction = news => ({type: LOAD_NEWS, news})
 
 const loadWatchesAction = watchList => ({type: LOAD_WATCHES, watchList})
 const createWatchAction = watch => ({type: CREATE_WATCH, watch})
-const removeWatchAction = watch => ({type: REMOVE_WATCH, watch})
+const removeWatchAction = id => ({type: REMOVE_WATCH, id})
 
 export {
   loadAccountsAction,
