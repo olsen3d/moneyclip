@@ -53,22 +53,18 @@ async function seed() {
   const createTransaction = async (date, acc) => {
     const randomTransaction = Math.random()
     const randomAmount = Math.floor(Math.random() * 150000)
-    console.log('------------------------------')
-    console.log(date)
-    if (randomTransaction < 0.005) {
-      console.log(`withdrawing ${randomAmount}`.yellow)
+    if (randomTransaction < 0.3) {
       await Transaction.create({
-        amount: Math.floor(randomAmount / 2 * -1),
+        amount: Math.floor(randomAmount / 4 * -1),
         type: 'WITHDRAWAL',
-        date: date,
+        date: new Date(date * 1000),
         accountId: acc.id
       })
-    } else if (randomTransaction < 0.04) {
-      console.log(`depositing ${randomAmount}`.blue)
+    } else {
       await Transaction.create({
         amount: randomAmount,
         type: 'DEPOSIT',
-        date: date,
+        date: new Date(date * 1000),
         accountId: acc.id
       })
     }
@@ -77,79 +73,88 @@ async function seed() {
   const calcInterest = async (date, acc) => {
     const account = await Account.findByPk(acc.id)
     const balance = account.balance
-    const interest = 0.00333 //4% over 12 months a year
+    const interest = 0.0001095 //0.00333 //4% over 12 months a year
     let earnings = Math.floor(balance * interest)
     if (earnings < 0) earnings = 0
-    console.log('------------------------------')
-    console.log(date)
-    console.log(`interest earned ${earnings}`.green)
     await Transaction.create({
       amount: earnings,
       type: 'INTEREST',
-      date: date,
+      date: new Date(date * 1000),
       accountId: acc.id
     })
   }
 
-  for (let month = 0; month < 10; month++) {
-    for (let day = 1; day <= 28; day++) {
-      const hours = Math.floor(Math.random() * 12)
-      const minutes = Math.floor(Math.random() * 59)
-      const seconds = Math.floor(Math.random() * 59)
-      const dateInterest = new Date(2020, month, day)
-      const dateTransaction = new Date(
-        2020,
-        month,
-        day,
-        hours,
-        minutes,
-        seconds
-      )
-      if (day === 1) await calcInterest(dateInterest, savingAcc)
-      await createTransaction(dateTransaction, checkingAcc)
-      await createTransaction(dateTransaction, savingAcc)
-    }
-  }
-
   const simulateMarketDeposit = async (date, price) => {
-    const randomAmount = Math.floor(Math.random() * 100000)
-    await Transaction.create({
+    const randomAmount = Math.floor(Math.random() * 100000) //100000
+    console.log(`depositing $${randomAmount / 100}`)
+
+    const newTrans = await Transaction.create({
       amount: randomAmount,
       type: 'SEED_DEPOSIT',
       date: new Date(date * 1000),
       accountId: investingAcc.id
     })
+
     await portfolio.update({
       VTI: portfolio.VTI + randomAmount / price / 100
     })
+
     await investingAcc.update({
       net: investingAcc.net + randomAmount,
+      earnings: investingAcc.earnings,
       balance: investingAcc.balance + randomAmount
+    })
+
+    await newTrans.update({
+      net: investingAcc.net,
+      earnings: investingAcc.earnings,
+      balance: investingAcc.balance
     })
   }
 
   const simulateMarketAdjustment = async (date, price) => {
-    const BV = investingAcc.net / 100
-    const EV = portfolio.VTI * price
+    const BV = (await investingAcc.net) / 100
+    const EV = (await portfolio.VTI) * price
 
-    await Transaction.create({
+    //console.log(`${BV}, ${EV} adjustment ${Math.floor(EV - BV)}`)
+
+    const newTrans = await Transaction.create({
       amount: Math.floor(EV - BV),
-      type: 'MARKET',
+      type: 'SEED_MARKET',
       date: new Date(date * 1000),
       accountId: investingAcc.id
+    })
+
+    await investingAcc.update({
+      earnings: investingAcc.earnings + Math.floor(EV - BV),
+      balance: investingAcc.balance + Math.floor(EV - BV)
+    })
+
+    await newTrans.update({
+      net: investingAcc.net,
+      earnings: investingAcc.earnings,
+      balance: investingAcc.balance
     })
   }
 
   const simulateMarket = async () => {
-    const stock = await fetchMarketHistory('VWO')
+    const stock = await fetchMarketHistory('VEA')
+    //stock.t.length = 100
 
     for (let i = 0; i < stock.t.length; i++) {
       const date = stock.t[i]
       const price = stock.c[i]
+      //console.log(`${date} ${price}`)
       if (i === 0) await simulateMarketDeposit(date, price)
-      const randomTransaction = Math.random()
-      if (randomTransaction < 0.02) await simulateMarketDeposit(date, price)
-      await simulateMarketAdjustment(date, price)
+      const randomTransactions = [Math.random(), Math.random(), Math.random()]
+      if (randomTransactions[0] < 0.01) await simulateMarketDeposit(date, price)
+      if (randomTransactions[1] < 0.02)
+        await createTransaction(date, checkingAcc)
+      if (randomTransactions[2] < 0.005)
+        await createTransaction(date, savingAcc)
+
+      await simulateMarketAdjustment(date + 100, price)
+      await calcInterest(date, savingAcc)
     }
   }
 

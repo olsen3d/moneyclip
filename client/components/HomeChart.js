@@ -31,7 +31,6 @@ export default function HomeChart({accounts}) {
 
   useEffect(
     () => {
-      console.log('accounts changed')
       if (accounts.length) {
         d3
           .select(d3Container.current)

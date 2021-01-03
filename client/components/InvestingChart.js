@@ -348,10 +348,28 @@ function InvestingChart({accountData}) {
       )}`
     )
 
+    d3.select('#netDeposit').text(
+      `${formatter.format(
+        transactions
+          .filter(
+            trans =>
+              trans.type === 'DEPOSIT' ||
+              trans.type === 'SEED_DEPOSIT' ||
+              trans.type === 'WITHDRAWAL'
+          )
+          .reduce((total, withdrawal) => {
+            total += withdrawal.amount
+            return total
+          }, 0) * 0.01
+      )}`
+    )
+
     d3.select('#earnings').text(
       `${formatter.format(
         transactions
-          .filter(trans => trans.type === 'MARKET')
+          .filter(
+            trans => trans.type === 'MARKET' || trans.type === 'SEED_MARKET'
+          )
           .reduce((total, market) => {
             total += market.amount
             return total
@@ -425,7 +443,7 @@ function InvestingChart({accountData}) {
               All
             </button>
           </div>
-          <div className="spacer" />
+          <div className="spacerBig" />
           <div>
             <span className="regularFont">Deposits: </span>
             <span id="deposits" className="lightFont" />

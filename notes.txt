@@ -82,9 +82,6 @@ news
 
 UI >------------------------------------------------------------>
 
-icon improvements
-  3. loading icon with "card shuffle" animation in AE
-  1. mobile version with burger menu
 
 FEATURES >------------------------------------------------------------>
 

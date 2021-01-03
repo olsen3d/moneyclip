@@ -12,8 +12,12 @@ export default function Transactions({transactions}) {
     Math.floor(
       (includeMarket
         ? transactions.length
-        : transactions.filter(trans => trans.type !== 'MARKET').length) /
-        perPage
+        : transactions.filter(
+            trans =>
+              trans.type === 'DEPOSIT' ||
+              trans.type === 'SEED_DEPOSIT' ||
+              trans.type === 'WITHDRAWAL'
+          ).length) / perPage
     );
     i++
   ) {
@@ -24,7 +28,12 @@ export default function Transactions({transactions}) {
   const [currentTrans, setCurrentTrans] = useState(
     (includeMarket
       ? transactions
-      : transactions.filter(trans => trans.type !== 'MARKET')
+      : transactions.filter(
+          trans =>
+            trans.type === 'DEPOSIT' ||
+            trans.type === 'SEED_DEPOSIT' ||
+            trans.type === 'WITHDRAWAL'
+        )
     ).slice(indOfFirst, indOfLast)
   )
 
@@ -34,7 +43,12 @@ export default function Transactions({transactions}) {
       setCurrentTrans(
         (includeMarket
           ? transactions
-          : transactions.filter(trans => trans.type !== 'MARKET')
+          : transactions.filter(
+              trans =>
+                trans.type === 'DEPOSIT' ||
+                trans.type === 'SEED_DEPOSIT' ||
+                trans.type === 'WITHDRAWAL'
+            )
         ).slice(0, 5)
       )
     },
@@ -46,7 +60,12 @@ export default function Transactions({transactions}) {
       setCurrentTrans(
         (includeMarket
           ? transactions
-          : transactions.filter(trans => trans.type !== 'MARKET')
+          : transactions.filter(
+              trans =>
+                trans.type === 'DEPOSIT' ||
+                trans.type === 'SEED_DEPOSIT' ||
+                trans.type === 'WITHDRAWAL'
+            )
         ).slice(indOfFirst, indOfLast)
       )
     },
@@ -67,42 +86,54 @@ export default function Transactions({transactions}) {
         ).toLocaleDateString('en-us')}`}</span>
         <div className="spacer" />
         <div>
-          Include market adj:
-          <input
-            type="checkbox"
-            onChange={() => setIncludeMarket(!includeMarket)}
-            value={includeMarket}
-          />
+          <span className="regularFont">Include market adj: </span>
+          <span className="lightFont">
+            <input
+              type="checkbox"
+              onChange={() => setIncludeMarket(!includeMarket)}
+              value={includeMarket}
+            />
+          </span>
         </div>
         <div>
-          Page:
-          <select
-            onChange={e => {
-              setTransPage(e.target.value)
-            }}
-            name="page"
-            value={transPage}
-          >
-            {pageNums.map(page => {
-              return (
-                <option key={page} value={page}>
-                  {page}
-                </option>
-              )
-            })}
-          </select>
+          <span className="regularFont">Page: </span>
+          <span className="lightFont">
+            <select
+              onChange={e => {
+                setTransPage(e.target.value)
+              }}
+              name="page"
+              value={transPage}
+            >
+              {pageNums.map(page => {
+                return (
+                  <option key={page} value={page}>
+                    {page}
+                  </option>
+                )
+              })}
+            </select>
+          </span>
+        </div>
+        <div className="spacerBig" />
+        <div>
+          <span className="regularFont">Deposits: </span>
+          <span className="lightFont">
+            {`${
+              transactions.filter(
+                trans =>
+                  trans.type === 'SEED_DEPOSIT' || trans.type === 'DEPOSIT'
+              ).length
+            }`}
+          </span>
         </div>
         <div>
-          {`Deposits: ${
-            transactions.filter(
-              trans => trans.type === 'SEED_DEPOSIT' || trans.type === 'DEPOSIT'
-            ).length
-          }`}
-        </div>
-        <div>
-          {`Withdrawals: ${
-            transactions.filter(trans => trans.type === 'WITHDRAWAL').length
-          }`}
+          <span className="regularFont">Withdrawals: </span>
+          <span className="lightFont">
+            {`${
+              transactions.filter(trans => trans.type === 'WITHDRAWAL').length
+            }`}
+          </span>
         </div>
       </div>
 
