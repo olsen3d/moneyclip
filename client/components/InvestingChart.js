@@ -249,6 +249,13 @@ function InvestingChart({accountData}) {
       .style('fill', 'white')
 
     mainChart
+      .append('rect')
+      .attr('height', 70)
+      .attr('width', 110)
+      .attr('transform', 'translate(-35, -7)')
+      .style('fill', 'white')
+
+    mainChart
       .append('line')
       .attr('x1', 10)
       .attr('y1', 0)

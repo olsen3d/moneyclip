@@ -5,8 +5,29 @@ const {
   Portfolio,
   Watch
 } = require('../server/db/models')
-const {fetchMarketHistory} = require('../server/api/finnhub')
+const {fetchQuotes, fetchMarketHistory} = require('../server/api/finnhub')
 const socket = require('../server/socket')
+
+const strategies = {
+  CONSERVATIVE: {
+    AGG: 0.25,
+    VTI: 0.3,
+    VEA: 0.4,
+    VWO: 0.05
+  },
+  BALANCED: {
+    AGG: 0.1,
+    VTI: 0.4,
+    VEA: 0.3,
+    VWO: 0.2
+  },
+  AGGRESSIVE: {
+    AGG: 0.05,
+    VTI: 0.2,
+    VEA: 0.3,
+    VWO: 0.45
+  }
+}
 
 const sendMessage = (socketId, type, message) => {
   if (socket.getIO()) {
@@ -66,20 +87,18 @@ const createNewUser = async (user, socketId) => {
   const createTransaction = async (date, acc) => {
     const randomTransaction = Math.random()
     const randomAmount = Math.floor(Math.random() * 150000)
-    if (randomTransaction < 0.005) {
-      console.log(`withdrawing ${randomAmount}`.yellow)
+    if (randomTransaction < 0.3) {
       await Transaction.create({
-        amount: Math.floor(randomAmount / 2 * -1),
+        amount: Math.floor(randomAmount / 4 * -1),
         type: 'WITHDRAWAL',
-        date: date,
+        date: new Date(date * 1000),
         accountId: acc.id
       })
-    } else if (randomTransaction < 0.04) {
-      console.log(`depositing ${randomAmount}`.blue)
+    } else {
       await Transaction.create({
         amount: randomAmount,
         type: 'DEPOSIT',
-        date: date,
+        date: new Date(date * 1000),
         accountId: acc.id
       })
     }
@@ -88,79 +107,83 @@ const createNewUser = async (user, socketId) => {
   const calcInterest = async (date, acc) => {
     const account = await Account.findByPk(acc.id)
     const balance = account.balance
-    const interest = 0.00333 //4% over 12 months a year
+    const interest = 0.0001095 //0.00333 //4% over 12 months a year
     let earnings = Math.floor(balance * interest)
     if (earnings < 0) earnings = 0
-    console.log(`interest earned ${earnings}`.green)
     await Transaction.create({
       amount: earnings,
       type: 'INTEREST',
-      date: date,
+      date: new Date(date * 1000),
       accountId: acc.id
     })
   }
 
   sendMessage(socketId, 'progressMessage', 'creating saving/checking data')
-  for (let month = 0; month < 10; month++) {
-    for (let day = 1; day <= 28; day++) {
-      const hours = Math.floor(Math.random() * 12)
-      const minutes = Math.floor(Math.random() * 59)
-      const seconds = Math.floor(Math.random() * 59)
-      const dateInterest = new Date(2020, month, day)
-      const dateTransaction = new Date(
-        2020,
-        month,
-        day,
-        hours,
-        minutes,
-        seconds
-      )
-      if (day === 1) await calcInterest(dateInterest, savingAcc)
-      await createTransaction(dateTransaction, checkingAcc)
-      await createTransaction(dateTransaction, savingAcc)
-    }
-  }
 
   const simulateMarketDeposit = async (date, price) => {
-    const randomAmount = Math.floor(Math.random() * 100000)
-    await Transaction.create({
+    const randomAmount = Math.floor(Math.random() * 100000) //100000
+    console.log(`depositing $${randomAmount / 100}`)
+
+    const newTrans = await Transaction.create({
       amount: randomAmount,
       type: 'SEED_DEPOSIT',
       date: new Date(date * 1000),
       accountId: investingAcc.id
     })
+
     await portfolio.update({
       VTI: portfolio.VTI + randomAmount / price / 100
     })
+
     await investingAcc.update({
       net: investingAcc.net + randomAmount,
+      earnings: investingAcc.earnings,
       balance: investingAcc.balance + randomAmount
+    })
+
+    await newTrans.update({
+      net: investingAcc.net,
+      earnings: investingAcc.earnings,
+      balance: investingAcc.balance
     })
   }
 
   const simulateMarketAdjustment = async (date, price) => {
-    const BV = investingAcc.net / 100
-    const EV = portfolio.VTI * price
+    const BV = (await investingAcc.net) / 100
+    const EV = (await portfolio.VTI) * price
 
-    await Transaction.create({
+    //console.log(`${BV}, ${EV} adjustment ${Math.floor(EV - BV)}`)
+
+    const newTrans = await Transaction.create({
       amount: Math.floor(EV - BV),
-      type: 'MARKET',
+      type: 'SEED_MARKET',
       date: new Date(date * 1000),
       accountId: investingAcc.id
+    })
+
+    await investingAcc.update({
+      earnings: investingAcc.earnings + Math.floor(EV - BV),
+      balance: investingAcc.balance + Math.floor(EV - BV)
+    })
+
+    await newTrans.update({
+      net: investingAcc.net,
+      earnings: investingAcc.earnings,
+      balance: investingAcc.balance
     })
   }
 
   const simulateMarket = async () => {
-    const stock = await fetchMarketHistory('VWO')
     let prevPercent = -1
+    const stock = await fetchMarketHistory('VEA')
+    //stock.t.length = 100
+
     for (let i = 0; i < stock.t.length; i++) {
       const date = stock.t[i]
       const price = stock.c[i]
+      //console.log(`${date} ${price}`)
       if (i === 0) await simulateMarketDeposit(date, price)
-      const randomTransaction = Math.random()
-      if (randomTransaction < 0.02) {
-        await simulateMarketDeposit(date, price)
-      }
+
       const percent = Math.floor(i / stock.t.length * 100)
       if (percent !== prevPercent) {
         prevPercent = percent
@@ -173,11 +196,34 @@ const createNewUser = async (user, socketId) => {
           ).toLocaleDateString('en-us')}`
         )
       }
-      await simulateMarketAdjustment(date, price)
+
+      const randomTransactions = [Math.random(), Math.random(), Math.random()]
+      if (randomTransactions[0] < 0.01) await simulateMarketDeposit(date, price)
+      if (randomTransactions[1] < 0.02)
+        await createTransaction(date, checkingAcc)
+      if (randomTransactions[2] < 0.005)
+        await createTransaction(date, savingAcc)
+
+      await simulateMarketAdjustment(date + 100, price)
+      await calcInterest(date, savingAcc)
     }
   }
+
   sendMessage(socketId, 'progressMessage', 'simulating market data')
   await simulateMarket()
+
+  const quotes = await fetchQuotes()
+  const net = await investingAcc.net
+  const buys = Object.entries(quotes).map(([stock, price]) => {
+    return net * strategies[investingAcc.strategy][stock] / price / 100
+  })
+  await portfolio.update({
+    AGG: buys[0],
+    VTI: buys[1],
+    VEA: buys[2],
+    VWO: buys[3]
+  })
+
   sendMessage(socketId, 'progressMessage', 'Finished!')
   sendMessage(socketId, 'loginOK', 'ok')
 }
