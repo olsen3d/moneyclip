@@ -7,16 +7,22 @@ export default function Footer() {
         <span className="regularFont largeFont header">MoneyClip.dev</span>
         <span className="regularFont mediumLargeFont">Mike Olsen</span>
         <div className="spacer" />
-        <span className="lightFont mediumLargeFont smallSpacer">Website</span>
-        <span className="lightFont mediumLargeFont smallSpacer">Github</span>
-        <span className="lightFont mediumLargeFont smallSpacer">Linkedin</span>
+        <span className="lightFont mediumLargeFont smallSpacer">
+          <a href="https://www.olsen.dev">Website</a>
+        </span>
+        <span className="lightFont mediumLargeFont smallSpacer">
+          <a href="https://github.com/olsen3d">Github</a>
+        </span>
+        <span className="lightFont mediumLargeFont smallSpacer">
+          <a href="https://www.linkedin.com/in/olsen3d/">LinkedIn</a>
+        </span>
       </div>
       <div className="column lightFont footerText">
         Moneyclip.dev is a money management portfolio site created by Mike
         Olsen. The main purpose is to display fullstack skills including a
-        frontend with react, redux, d3.js. And a backend with Node.js, Express,
-        sequelize, PostgreSQL. I also used finnhub.io api for all stock market
-        calls.
+        frontend with react, redux, and d3.js. And a backend with Node.js,
+        Express, sequelize, PostgreSQL. I also used finnhub.io api for stock
+        market calls.
       </div>
       <div id="bottomImgContainer">
         <img id="bottomImg" height="175px" src="/img/bottomLogo.png" />
