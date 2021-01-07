@@ -21,7 +21,7 @@ const fetchMarketHistory = async stock => {
   const year = 31536000
   const history = (await axios.get(
     `${baseURL}stock/candle?symbol=${stock}&resolution=D&from=${current -
-      year * 2.75}&to=${current}&token=${apiKey}`
+      year * 1.33}&to=${current}&token=${apiKey}`
   )).data
   return history
 }

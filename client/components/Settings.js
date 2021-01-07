@@ -45,13 +45,13 @@ export default function Settings({account}) {
       <div className="spacer" />
       <div className="settingsButtons">
         <div>
-          <button
+          {/* <button
             type="button"
             onClick={() => setNameCheck(true)}
             className="linkDark textButton"
           >
             Update Name
-          </button>
+          </button> */}
           {nameCheck && (
             <React.Fragment>
               <span style={{margin: '0 1rem'}}>
@@ -117,13 +117,13 @@ export default function Settings({account}) {
             </React.Fragment>
           )}
         </div>
-        <button
+        {/* <button
           type="button"
           onClick={exportCSV}
           className="linkDark textButton"
         >
           Export account data to CSV
-        </button>
+        </button> */}
       </div>
     </div>
   )

@@ -89,7 +89,7 @@ const createNewUser = async (user, socketId) => {
     const randomAmount = Math.floor(Math.random() * 150000)
     if (randomTransaction < 0.3) {
       await Transaction.create({
-        amount: Math.floor(randomAmount / 4 * -1),
+        amount: Math.floor(randomAmount / 5 * -1),
         type: 'WITHDRAWAL',
         date: new Date(date * 1000),
         accountId: acc.id
@@ -122,7 +122,11 @@ const createNewUser = async (user, socketId) => {
 
   const simulateMarketDeposit = async (date, price) => {
     const randomAmount = Math.floor(Math.random() * 100000) //100000
-    console.log(`depositing $${randomAmount / 100}`)
+    sendMessage(
+      socketId,
+      'progressMessage',
+      `depositing $${randomAmount / 100}`
+    )
 
     const newTrans = await Transaction.create({
       amount: randomAmount,
@@ -181,7 +185,6 @@ const createNewUser = async (user, socketId) => {
     for (let i = 0; i < stock.t.length; i++) {
       const date = stock.t[i]
       const price = stock.c[i]
-      //console.log(`${date} ${price}`)
       if (i === 0) await simulateMarketDeposit(date, price)
 
       const percent = Math.floor(i / stock.t.length * 100)
@@ -198,11 +201,10 @@ const createNewUser = async (user, socketId) => {
       }
 
       const randomTransactions = [Math.random(), Math.random(), Math.random()]
-      if (randomTransactions[0] < 0.01) await simulateMarketDeposit(date, price)
-      if (randomTransactions[1] < 0.02)
+      if (randomTransactions[0] < 0.02) await simulateMarketDeposit(date, price)
+      if (randomTransactions[1] < 0.03)
         await createTransaction(date, checkingAcc)
-      if (randomTransactions[2] < 0.005)
-        await createTransaction(date, savingAcc)
+      if (randomTransactions[2] < 0.01) await createTransaction(date, savingAcc)
 
       await simulateMarketAdjustment(date + 100, price)
       await calcInterest(date, savingAcc)

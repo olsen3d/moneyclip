@@ -417,6 +417,13 @@ function InvestingChart({accountData}) {
             <button
               type="button"
               className="whiteButton lightFont"
+              onClick={() => applyFilter(22)}
+            >
+              1 month
+            </button>
+            <button
+              type="button"
+              className="whiteButton lightFont"
               onClick={() => applyFilter(66)}
             >
               3 months
@@ -434,13 +441,6 @@ function InvestingChart({accountData}) {
               onClick={() => applyFilter(261)}
             >
               1 year
-            </button>
-            <button
-              type="button"
-              className="whiteButton lightFont"
-              onClick={() => applyFilter(261 * 2)}
-            >
-              2 years
             </button>
             <button
               type="button"
