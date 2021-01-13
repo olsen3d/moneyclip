@@ -1,3 +1,1 @@
-Moneyclip WIP
-
-temporarily deployed here: https://moneyclipdev.herokuapp.com/
+Moneyclip https://Moneyclip.dev
