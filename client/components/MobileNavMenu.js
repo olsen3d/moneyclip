@@ -6,7 +6,7 @@ import {logout} from '../store'
 import AccountSmallPreview from './AccountSmallPreview'
 import WatchSmallPreview from './WatchSmallPreview'
 
-export default function Navbar() {
+export default function MobileNavMenu({menuOpen, closeMenu}) {
   const user = useSelector(state => state.user)
   const accounts = useSelector(state => state.accounts)
   const watchlist = useSelector(state => state.watches)
@@ -17,12 +17,10 @@ export default function Navbar() {
   if (!user.id) return null
 
   return (
-    <div className="sidebar">
-      <div className="logoContainer">
-        <img width="90%" src="/img/moneyclipLogo.png" />
-      </div>
+    <div className={`mobileNavMenu ${menuOpen ? 'mobileNavMenuOpen' : ''}`}>
       <Link
-        className={`boldFont link ${
+        onClick={closeMenu}
+        className={`boldFont linkLight ${
           currentPage === 'home' ? 'navSelected' : 'navNotSelected'
         }`}
         to="/home"
@@ -30,7 +28,8 @@ export default function Navbar() {
         Home
       </Link>
       <Link
-        className={`boldFont link ${
+        onClick={closeMenu}
+        className={`boldFont linkLight ${
           currentPage === 'news' ? 'navSelected' : 'navNotSelected'
         }`}
         to="/news"
@@ -38,7 +37,8 @@ export default function Navbar() {
         News Feed
       </Link>
       <Link
-        className={`boldFont link ${
+        onClick={closeMenu}
+        className={`boldFont linkLight ${
           currentPage === 'watchList' ? 'navSelected' : 'navNotSelected'
         }`}
         to="/watchList"
@@ -52,7 +52,8 @@ export default function Navbar() {
           ))}
       </ul>
       <Link
-        className={`boldFont link ${
+        onClick={closeMenu}
+        className={`boldFont linkLight ${
           currentPage === 'accounts' ? 'navSelected' : 'navNotSelected'
         }`}
         to="/accounts"
@@ -62,14 +63,19 @@ export default function Navbar() {
       <ul className="listBar">
         {accounts ? (
           accounts.map(account => (
-            <AccountSmallPreview key={account.id} account={account} />
+            <AccountSmallPreview
+              key={account.id}
+              account={account}
+              closeMenu={closeMenu}
+            />
           ))
         ) : (
           <li>no accounts</li>
         )}
       </ul>
       <a
-        className="boldFont link navNotSelected"
+        onClick={closeMenu}
+        className="boldFont linkLight navNotSelected"
         href="#"
         onClick={() => dispatch(logout())}
       >

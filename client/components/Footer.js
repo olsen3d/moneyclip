@@ -25,7 +25,7 @@ export default function Footer() {
         market calls.
       </div>
       <div id="bottomImgContainer">
-        <img id="bottomImg" height="175px" src="/img/bottomLogo.png" />
+        <img id="bottomImg" src="/img/bottomLogo.png" />
       </div>
     </div>
   )

@@ -76,6 +76,11 @@ body {
   text-decoration: none;
 }
 
+.linkLight {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .link:hover {
   text-decoration: underline;
 }
@@ -86,6 +91,11 @@ body {
 
 .linkDark:visited {
   color: #333333;
+  text-decoration: none;
+}
+
+.linkLight:visited {
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -109,7 +119,7 @@ label {
   width: 100vw;
 }
 
-#sidebar {
+.sidebar {
   background-color: #193b42;
   display: flex;
   flex-direction: column;
@@ -119,6 +129,54 @@ label {
   width: 20vw;
   margin: 0;
   position: fixed;
+  z-index: 999;
+}
+
+.mobileNav {
+  height: 48px;
+  padding: 6px;
+  background-color: #193b42;
+  width: 100vw;
+  display: none;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+.mobileNavSpacer {
+  background-color: #193b42;
+  height: 48px;
+  width: 100vw;
+  display: none;
+}
+
+.mobileNavMenu {
+  font-size: 2rem;
+  color: white;
+  background-color: #193b42;
+  display: none;
+  padding: 1rem 0.8rem 0 0.8rem;
+  height: 100vh;
+  width: 240px;
+  margin: 0;
+  position: fixed;
+  top: 48px;
+  left: -240px;
+  z-index: 999;
+  transition: left 500ms cubic-bezier(0.1, 0.6, 0, 1);
+}
+
+.mobileLogo {
+  position: relative;
+  left: -12px;
+}
+
+.menuText {
+  color: white;
+  transform: rotate(270deg);
+  font-size: 12px;
+}
+
+.mobileNavMenuOpen {
+  left: 0px;
 }
 
 #sidebarPlaceholder {
@@ -132,7 +190,7 @@ label {
   margin: 0;
 }
 
-#sidebar > *:not(:first-child) {
+.sidebar > *:not(:first-child) {
   color: white;
   margin-top: 1rem;
 }
@@ -228,6 +286,7 @@ form div {
 
 #bottomImg {
   align-self: flex-end;
+  height: 175px;
 }
 
 #content {
@@ -643,18 +702,15 @@ polyline {
   justify-content: space-between;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900pc) {
   html {
-    font-size: 0.9rem;
-  }
-  #signupImg {
-    width: 70%;
+    font-size: 0.75rem;
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   html {
-    font-size: 0.8rem;
+    font-size: 0.5rem;
   }
   form div {
     margin: 1em;
@@ -672,5 +728,54 @@ polyline {
   .loginButtonContainer {
     display: flex;
     justify-content: center;
+  }
+  #bottomImg {
+    display: none;
+  }
+  #topBar {
+    padding: 1rem 2%;
+  }
+  #cardHolder {
+    padding: 1rem 2%;
+  }
+  #footer {
+    padding: 0 2%;
+  }
+  .sidebar {
+    display: none;
+    width: 50vw;
+    max-width: 500px;
+    font-size: 1rem;
+    position: fixed;
+    left: 0px;
+    transition: left 333ms ease-out;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    background-color: #eeeeee;
+    width: 100vw;
+  }
+  #sidebarPlaceholder {
+    display: none;
+  }
+  .mobileNav {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+  }
+  .mobileNavMenu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobileNavMenu > * {
+    margin-bottom: 2rem;
+  }
+  .mobileNavSpacer {
+    display: block;
   }
 }

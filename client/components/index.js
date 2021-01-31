@@ -4,6 +4,7 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbar} from './navbar'
+export {default as MobileNavbar} from './MobileNavbar'
 export {default as Accounts} from './Accounts'
 export {default as AccountOverview} from './AccountOverview'
 export {default as AccountSmallPreview} from './AccountSmallPreview'

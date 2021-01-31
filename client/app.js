@@ -1,7 +1,7 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 
-import {Navbar, Footer} from './components'
+import {Navbar, MobileNavbar, Footer} from './components'
 import Routes from './routes'
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
     <div id="appContainer">
       <Navbar />
       <div className="main">
+        <MobileNavbar />
         {user.id && <div id="sidebarPlaceholder" />}
         <div id="content">
           <Routes />
