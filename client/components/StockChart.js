@@ -49,13 +49,14 @@ function StockChart({stock}) {
     const parent = d3.select(d3Container.current)
     const SVGParent = parent
       .append('svg')
-      .attr('height', 200)
+      .attr('height', 120)
       .attr('width', width - 30)
       .attr('id', 'container')
 
     const mainChart = SVGParent.append('g')
 
-    let mainHeight = 170
+    console.log(width)
+    let mainHeight = 100
     let mainWidth = width - 100
 
     let mainX = d3.scaleTime().range([0, mainWidth])

@@ -708,7 +708,7 @@ polyline {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   html {
     font-size: 0.5rem;
   }

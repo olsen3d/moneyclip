@@ -10,7 +10,7 @@ const App = () => {
     <div id="appContainer">
       <Navbar />
       <div className="main">
-        <MobileNavbar />
+        {user.id && <MobileNavbar />}
         {user.id && <div id="sidebarPlaceholder" />}
         <div id="content">
           <Routes />
