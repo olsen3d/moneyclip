@@ -76,7 +76,7 @@ export default function Signup() {
 
   return (
     <div id="landingPage">
-      <img width="60%" src="/img/moneyclipLogo.png" />
+      <img id="signupImg" src="/img/moneyclipLogo.png" />
       <form>
         <div>
           <label htmlFor="email">

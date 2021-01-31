@@ -10,7 +10,7 @@ const AuthForm = props => {
 
   return (
     <div id="landingPage">
-      <img width="60%" src="/img/moneyclipLogo.png" />
+      <img id="signupImg" src="/img/moneyclipLogo.png" />
       <form
         onSubmit={e => {
           handleSubmit(e)
@@ -29,7 +29,7 @@ const AuthForm = props => {
           </label>
           <input name="password" type="password" />
         </div>
-        <div>
+        <div className="loginButtonContainer">
           <button type="submit" className="loginButton green4 white lightFont">
             {displayName}
           </button>
