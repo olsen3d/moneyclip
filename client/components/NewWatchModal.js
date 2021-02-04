@@ -4,11 +4,20 @@ import * as d3 from 'd3'
 import {removeWatch} from '../store/thunks'
 
 export default function NewWatch({onSubmit, onCancel, watchList}) {
+  const [stockList, setStockList] = useState([])
+  const [filterList, setFilterList] = useState([])
   const [name, setName] = useState('')
-  const [stockList, setStockList] = useState('')
   const [display, setDisplay] = useState('')
   const [isValid, setIsValid] = useState(false)
   const dispatch = useDispatch()
+
+  console.log(filterList)
+
+  const filterResults = stockList.reduce((results, current) => {
+    if (current.symbol.startsWith(name))
+      results.push(`${current.symbol}, ${current.securityName}`)
+    return results
+  }, [])
 
   useEffect(() => {
     d3.csv('/api/watches/stocks/list').then(data => setStockList(data))
@@ -16,6 +25,13 @@ export default function NewWatch({onSubmit, onCancel, watchList}) {
     if (watchList.length >= 3)
       setDisplay('max of 3 symbols please delete one below')
   }, [])
+
+  useEffect(
+    () => {
+      setFilterList(filterResults)
+    },
+    [name]
+  )
 
   const updateName = e => {
     setName(e.target.value.toUpperCase())

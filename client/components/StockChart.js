@@ -1,6 +1,8 @@
 import React, {useRef, useEffect} from 'react'
 import * as d3 from 'd3'
 
+import {throttle} from '../../script/utils.js'
+
 function StockChart({stock}) {
   const d3Parent = useRef(null)
   const d3Container = useRef(null)
@@ -13,20 +15,21 @@ function StockChart({stock}) {
     return d3Parent.current.offsetHeight
   }
 
-  useEffect(() => {
-    const resizer = () => {
-      console.log('resized')
-      d3
-        .select(d3Container.current)
-        .selectAll('*')
-        .remove()
-      showData()
-    }
+  const resizer = () => {
+    d3
+      .select(d3Container.current)
+      .selectAll('*')
+      .remove()
+    showData()
+  }
 
-    window.addEventListener('resize', resizer)
+  const throttleResizer = throttle(resizer, 1000)
+
+  useEffect(() => {
+    window.addEventListener('resize', throttleResizer)
 
     return () => {
-      window.removeEventListener('resize', resizer)
+      window.removeEventListener('resize', throttleResizer)
     }
   }, [])
 
@@ -63,7 +66,7 @@ function StockChart({stock}) {
 
     const mainChart = SVGParent.append('g')
 
-    let mainHeight = height - 30
+    let mainHeight = height - (width > 500 ? 30 : 40)
     let mainWidth = width - 100
 
     let mainX = d3.scaleTime().range([0, mainWidth])
@@ -136,6 +139,8 @@ function StockChart({stock}) {
       .attr('transform', `translate(${mainWidth}, 0)`)
       .call(d3.axisRight(mainY))
 
+    const rotateTextDegrees = width > 500 ? -20 : -45
+
     mainChart
       .append('g')
       .attr('class', 'xAxis')
@@ -148,7 +153,7 @@ function StockChart({stock}) {
       .transition()
       .duration(750)
       .ease(easeMethod)
-      .attr('transform', 'rotate(-20)')
+      .attr('transform', `rotate(${rotateTextDegrees})`)
 
     d3
       .select(`#closing${stock.name}`)

@@ -49,4 +49,30 @@ const stockData = {
   }
 }
 
-export {formatter, strategies, stockData}
+function debounce(fn, time) {
+  let timer = null
+
+  return function() {
+    timer && clearTimeout(timer)
+
+    timer = setTimeout(() => {
+      fn.apply(this, arguments)
+      timer = null
+    }, time)
+  }
+}
+
+function throttle(fn, time) {
+  let timer = null
+
+  return function() {
+    if (timer) return
+
+    timer = setTimeout(() => {
+      fn.apply(this, arguments)
+      timer = null
+    }, time)
+  }
+}
+
+export {formatter, strategies, stockData, debounce, throttle}
