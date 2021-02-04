@@ -663,6 +663,10 @@ polyline {
   flex-direction: row;
 }
 
+.stockContainer {
+  height: 250px;
+}
+
 .flexColumn {
   display: flex;
   flex-direction: column;
@@ -702,15 +706,24 @@ polyline {
   justify-content: space-between;
 }
 
-@media screen and (max-width: 900pc) {
+@media screen and (max-width: 1200px) {
+  .stockContainer {
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 900px) {
   html {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+  }
+  .stockContainer {
+    height: 150px;
   }
 }
 
 @media screen and (max-width: 800px) {
   html {
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   }
   form div {
     margin: 1em;
@@ -777,5 +790,11 @@ polyline {
   }
   .mobileNavSpacer {
     display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 0.5rem;
   }
 }

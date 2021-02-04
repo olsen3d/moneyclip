@@ -9,8 +9,13 @@ function StockChart({stock}) {
     return d3Parent.current.offsetWidth
   }
 
+  const getHeight = () => {
+    return d3Parent.current.offsetHeight
+  }
+
   useEffect(() => {
     const resizer = () => {
+      console.log('resized')
       d3
         .select(d3Container.current)
         .selectAll('*')
@@ -46,17 +51,19 @@ function StockChart({stock}) {
     })
 
     const width = getWidth()
+    const height = getHeight()
+
     const parent = d3.select(d3Container.current)
+
     const SVGParent = parent
       .append('svg')
-      .attr('height', 120)
-      .attr('width', width - 30)
+      .attr('height', height)
+      .attr('width', width - 60)
       .attr('id', 'container')
 
     const mainChart = SVGParent.append('g')
 
-    console.log(width)
-    let mainHeight = 100
+    let mainHeight = height - 30
     let mainWidth = width - 100
 
     let mainX = d3.scaleTime().range([0, mainWidth])
@@ -150,7 +157,7 @@ function StockChart({stock}) {
   return (
     <React.Fragment>
       <div className="cardFull">
-        <div ref={d3Parent} className="flexRow">
+        <div ref={d3Parent} className="flexRow stockContainer">
           <div className="stockHeader">
             <div className="regularFont largerFont">{stock.name}</div>
             <div id={`closing${stock.name}`} className="lightFont" />

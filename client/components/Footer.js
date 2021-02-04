@@ -8,13 +8,19 @@ export default function Footer() {
         <span className="regularFont mediumLargeFont">Mike Olsen</span>
         <div className="spacer" />
         <span className="lightFont mediumLargeFont smallSpacer">
-          <a href="https://www.olsen.dev">Website</a>
+          <a className="linkDark" href="https://www.olsen.dev">
+            Website
+          </a>
         </span>
         <span className="lightFont mediumLargeFont smallSpacer">
-          <a href="https://github.com/olsen3d">Github</a>
+          <a className="linkDark" href="https://github.com/olsen3d">
+            Github
+          </a>
         </span>
         <span className="lightFont mediumLargeFont smallSpacer">
-          <a href="https://www.linkedin.com/in/olsen3d/">LinkedIn</a>
+          <a className="linkDark" href="https://www.linkedin.com/in/olsen3d/">
+            LinkedIn
+          </a>
         </span>
       </div>
       <div className="column lightFont footerText">
